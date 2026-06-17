@@ -1,0 +1,157 @@
+.opportunities-section{
+  padding:90px 32px;
+  background:#ffffff;
+}
+
+.opportunities-wrap{
+  max-width:1320px;
+  margin:0 auto;
+}
+
+.opportunities-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:30px;
+}
+
+.opp-eyebrow{
+  color:#16a34a;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.opportunities-header h2{
+  font-size:42px;
+  font-weight:950;
+  color:#0f172a;
+  margin-bottom:10px;
+}
+
+.opportunities-header p{
+  color:#64748b;
+}
+
+.opp-view-all{
+  text-decoration:none;
+  color:#16a34a;
+  font-weight:900;
+}
+
+.opp-tabs{
+  display:flex;
+  gap:12px;
+  margin-bottom:34px;
+  flex-wrap:wrap;
+}
+
+.opp-tabs button{
+  border:none;
+  background:#f1f5f9;
+  padding:12px 18px;
+  border-radius:999px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.opp-tabs .active{
+  background:#16a34a;
+  color:white;
+}
+
+.opp-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+.opp-card{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 15px 35px rgba(15,23,42,.06);
+}
+
+.opp-badge{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+
+.fellowship{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.grant{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.internship{
+  background:#fef3c7;
+  color:#b45309;
+}
+
+.job{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.opp-card h3{
+  font-size:20px;
+  color:#0f172a;
+  margin-bottom:10px;
+}
+
+.opp-card p{
+  color:#64748b;
+  line-height:1.7;
+  margin-bottom:20px;
+}
+
+.opp-details{
+  display:flex;
+  justify-content:space-between;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+.opp-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-top:18px;
+  border-top:1px solid #f1f5f9;
+}
+
+.opp-footer strong{
+  color:#16a34a;
+}
+
+.opp-footer a{
+  color:#16a34a;
+  text-decoration:none;
+  font-weight:900;
+}
+
+@media(max-width:1000px){
+  .opp-grid{
+    grid-template-columns:1fr;
+  }
+
+  .opportunities-header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
