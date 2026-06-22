@@ -7,6 +7,7 @@ import "../styles/testimonials.css";
   - organisations find volunteers
   - young people discover opportunities
   - project teams explain their SDG impact
+  ANOTHER IS FOR USER TO BE ABLE TO SLIDE BETW STORIES.....
 */
 
 export function renderTestimonials() {
@@ -24,6 +25,12 @@ export function renderTestimonials() {
             measurable progress in their communities.
           </p>
         </div>
+
+        </div>
+
+          <a href="#" class="view-all-makers">View All →</a>
+        </div>
+
 
         <div class="story-grid">
 

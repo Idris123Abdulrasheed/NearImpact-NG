@@ -19,15 +19,10 @@ export function renderFaq() {
           </div>
 
           <h2>
-            Questions people ask before getting started
+            Questions to get you started
           </h2>
 
-          <p>
-            Learn how NearImpact helps people discover projects,
-            meet changemakers, publish opportunities,
-            and support sustainable development.
-          </p>
-
+          
         </div>
 
         <div class="faq-grid">
@@ -62,9 +57,9 @@ export function renderFaq() {
           </details>
 
           <details class="faq-item">
-            <summary>Who are changemakers?</summary>
+            <summary>Who are Impactmakers?</summary>
             <p>
-              Changemakers are people actively contributing to impact work,
+              Impactmakers are people actively contributing to impact work,
               including volunteers, project leaders, researchers,
               educators, social entrepreneurs, and community organisers.
             </p>

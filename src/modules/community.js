@@ -40,8 +40,8 @@ export function renderCommunity() {
 
             <div class="maker-focus">
               <span>SDG 4</span>
-              <span>SDG 8</span>
-              <span>SDG 13</span>
+              <span>SDG 9</span>
+              <span>SDG 11</span>
             </div>
 
             <div class="maker-stats">
@@ -60,11 +60,11 @@ export function renderCommunity() {
 
           <article class="maker-card">
             <div class="maker-top">
-              <div class="maker-avatar green">AO</div>
+              <div class="maker-avatar green">MM</div>
               <span class="verified">✓ Verified</span>
             </div>
 
-            <h3>Amara Osei</h3>
+            <h3>Musa Mubarak</h3>
             <p>Climate Activist</p>
             <small>Green Futures Africa</small>
 
@@ -120,11 +120,11 @@ export function renderCommunity() {
 
           <article class="maker-card">
             <div class="maker-top">
-              <div class="maker-avatar blue">KA</div>
+              <div class="maker-avatar blue">AJ</div>
               <span class="verified">✓ Verified</span>
             </div>
 
-            <h3>Kwame Asante</h3>
+            <h3>Amoto Johnson</h3>
             <p>Solar Engineer</p>
             <small>SolarAfrica Initiative</small>
 

@@ -17,7 +17,7 @@ export function renderNav() {
 
         <div class="nav-search">
           <span>⌕</span>
-          <input type="text" placeholder="Search projects, SDGs, cities..." />
+          <input type="text" placeholder="Search projects...   , SDGs, cities..." />
         </div>
 
         <nav class="nav-links">

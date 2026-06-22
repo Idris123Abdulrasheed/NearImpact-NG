@@ -69,6 +69,16 @@
   gap:24px;
 }
 
+.view-all-makers {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 900;
+  background: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 999px;
+  padding: 13px 20px;
+}
+
 .opp-card{
   background:white;
   border:1px solid #e2e8f0;

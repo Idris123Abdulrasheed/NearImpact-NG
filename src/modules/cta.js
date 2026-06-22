@@ -8,7 +8,7 @@ export function renderCta() {
 
           <!-- Upper CTA feature -->
           <div class="cta-feature">
-            <div class="cta-badge">🚀 Join the Movement</div>
+            <div class="cta-badge">🌐 Join the Movement</div>
 
             <h2>
               Your Impact Starts Nearby.
