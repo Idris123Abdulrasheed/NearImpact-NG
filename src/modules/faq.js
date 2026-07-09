@@ -1,11 +1,5 @@
 import "../styles/faq.css";
 
-/*
-========================================
-Frequently Asked Questions
-========================================
-*/
-
 export function renderFaq() {
   return `
     <section class="faq-section" id="faq">
@@ -32,7 +26,7 @@ export function renderFaq() {
             <p>
               NearImpact Nigeria is a platform that helps people discover
               sustainability projects, volunteer opportunities, grants,
-              fellowships, internships, and changemakers working on
+              fellowships, internships, and impactmakers working on
               meaningful impact across communities.
             </p>
           </details>
@@ -78,7 +72,7 @@ export function renderFaq() {
             <summary>Do I need to pay to join?</summary>
             <p>
               No. Users can explore projects, learn about SDGs,
-              discover opportunities, and connect with changemakers
+              discover opportunities, and connect with impactmakers
               completely free.
             </p>
           </details>

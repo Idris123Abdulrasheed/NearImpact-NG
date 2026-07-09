@@ -1,14 +1,14 @@
-.changemakers-section {
+.impactmakers-section {
   background: #f8fafc;
   padding: 90px 32px;
 }
 
-.changemakers-wrap {
+.impactmakers-wrap {
   max-width: 1320px;
   margin: 0 auto;
 }
 
-.changemakers-header {
+.impactmakers-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -16,7 +16,7 @@
   margin-bottom: 36px;
 }
 
-.changemakers-eyebrow {
+.impactmakers-eyebrow {
   color: #16a34a;
   font-size: 13px;
   font-weight: 950;
@@ -25,21 +25,21 @@
   margin-bottom: 10px;
 }
 
-.changemakers-header h2 {
+.impactmakers-header h2 {
   color: #0f172a;
   font-size: 42px;
   font-weight: 950;
   margin: 0 0 10px;
 }
 
-.changemakers-header p {
+.impactmakers-header p {
   color: #64748b;
   font-size: 17px;
   max-width: 680px;
   margin: 0;
 }
 
-.view-all-makers {
+.view-all-impacters {
   color: #16a34a;
   text-decoration: none;
   font-weight: 900;
@@ -49,7 +49,7 @@
   padding: 13px 20px;
 }
 
-.changemakers-grid {
+.impactmakers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
@@ -176,12 +176,12 @@
 }
 
 @media (max-width: 1000px) {
-  .changemakers-header {
+  .impactmakers-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .changemakers-grid {
+  .impactmakers-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -24,11 +24,11 @@ export function renderCta() {
 
             <div class="cta-actions">
               <a href="#discover" class="btn-primary">
-                Explore Projects
+                List Your Project
               </a>
 
               <a href="#community" class="btn-secondary">
-                List Your Project
+                Explore Projects
               </a>
             </div>
           </div>

@@ -15,11 +15,11 @@ export function renderHero() {
 
           <h1>
             <span class="line-one">Discover <em>Impact.</em></span>
-            <span class="line-two">Create Change.</span>
+            <span class="line-two">Create impact.</span>
           </h1>
 
           <p>
-            Find sustainability opportunities, connect with changemakers, and explore SDG-aligned projects across Nigeria.
+            Find sustainability opportunities, connect with impactmakers, and explore SDG-aligned projects across Nigeria.
           </p>
 
           <div class="hero-actions">
@@ -31,7 +31,7 @@ export function renderHero() {
           <div class="hero-stats">
             <div class="stat-card">
               <div class="stat-icon">🤝</div>
-              <strong>5,000+</strong>
+              <strong>900+</strong>
               <span>Opportunities</span>
             </div>
 
@@ -55,13 +55,13 @@ export function renderHero() {
 
             <div class="stat-card">
               <div class="stat-icon">📈</div>
-              <strong>128+</strong>
+              <strong>108+</strong>
               <span>Active Projects</span>
             </div>
 
             <div class="stat-card">
               <div class="stat-icon">🌱</div>
-              <strong>6,000+</strong>
+              <strong>650+</strong>
               <span>Impact Makers</span>
             </div>
           </div>
@@ -87,7 +87,7 @@ export function renderHero() {
               <div class="mini-project-icon">🌱</div>
               <div>
                 <strong>Tree Planting Drive</strong>
-                <span>Lagos · 1.8km away</span>
+                <span>Ondo · 1.8km away</span>
                 <a href="#discover">View →</a>
               </div>
             </div>

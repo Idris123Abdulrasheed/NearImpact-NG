@@ -7,14 +7,14 @@ export function renderOpportunities() {
 
         <div class="opportunities-header">
           <div>
-            <div class="opp-eyebrow">🚀 Grow With Purpose</div>
-            <h2>Opportunities for Changemakers</h2>
+            <div class="opp-eyebrow">🌿 Growth Opportunities</div>
+            <h2>Opportunities for Impactmakers</h2>
             <p>
               Discover fellowships, grants, internships, jobs and leadership opportunities.
             </p>
           </div>
 
-          <a href="#" class="opp-view-all">View All →</a>
+          <a href="#" class="opp-view-all">View All </a>
         </div>
 
         <div class="opp-tabs">
@@ -30,7 +30,7 @@ export function renderOpportunities() {
           <article class="opp-card">
             <div class="opp-badge fellowship">Fellowship</div>
 
-            <h3>African Climate Fellowship 2026</h3>
+            <h3>African Climate Fellowship '26</h3>
 
             <p>
               Build leadership skills while working on real sustainability projects.
@@ -42,8 +42,8 @@ export function renderOpportunities() {
             </div>
 
             <div class="opp-footer">
-              <strong>$5,000 Grant</strong>
-              <a href="#">Apply →</a>
+              <strong>$500 Grant</strong>
+              <a href="#">Apply </a>
             </div>
           </article>
 
@@ -62,8 +62,8 @@ export function renderOpportunities() {
             </div>
 
             <div class="opp-footer">
-              <strong>$10,000 Funding</strong>
-              <a href="#">Apply →</a>
+              <strong>$14,000 Funding</strong>
+              <a href="#">Apply </a>
             </div>
           </article>
 
@@ -83,7 +83,7 @@ export function renderOpportunities() {
 
             <div class="opp-footer">
               <strong>₦150k / month</strong>
-              <a href="#">Apply →</a>
+              <a href="#">Apply </a>
             </div>
           </article>
 
@@ -103,7 +103,7 @@ export function renderOpportunities() {
 
             <div class="opp-footer">
               <strong>Full-time</strong>
-              <a href="#">Apply →</a>
+              <a href="#">Apply </a>
             </div>
           </article>
 
@@ -123,14 +123,14 @@ export function renderOpportunities() {
 
             <div class="opp-footer">
               <strong>12 Months</strong>
-              <a href="#">Apply →</a>
+              <a href="#">Apply </a>
             </div>
           </article>
 
           <article class="opp-card">
             <div class="opp-badge grant">Grant</div>
 
-            <h3>Community Innovation Challenge</h3>
+            <h3>Community Innov. Challenge</h3>
 
             <p>
               Grants for solutions addressing local environmental challenges.
@@ -142,8 +142,8 @@ export function renderOpportunities() {
             </div>
 
             <div class="opp-footer">
-              <strong>₦5M Fund</strong>
-              <a href="#">Apply →</a>
+              <strong>₦1.7M Fund</strong>
+              <a href="#">Apply </a>
             </div>
           </article>
 

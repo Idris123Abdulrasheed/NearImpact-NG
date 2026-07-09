@@ -1,32 +1,32 @@
 import "../styles/community.css";
 
 /*
-  Changemakers Network Section
+  impactmakers Network Section
 
   This section introduces real people users can connect with.
-  Homepage shows 6 featured changemakers.
+  Homepage shows 6 featured impactmakers.
   The "View All" button can later open the full directory.
 */
 
 export function renderCommunity() {
   return `
-    <section class="changemakers-section" id="community">
-      <div class="changemakers-wrap">
+    <section class="impactmakers-section" id="community">
+      <div class="impactmakers-wrap">
 
-        <div class="changemakers-header">
+        <div class="impactmakers-header">
           <div>
-            <div class="changemakers-eyebrow">🤝 Changemakers Network</div>
-            <h2>Meet the Changemakers</h2>
+            <div class="impactmakers-eyebrow">🤝 impactmakers Network</div>
+            <h2>Meet the impactmakers</h2>
             <p>
               Connect with people building sustainable communities, leading projects,
               and creating real impact across Africa.
             </p>
           </div>
 
-          <a href="#" class="view-all-makers">View All →</a>
+          <a href="#" class="view-all-impacters">View All </a>
         </div>
 
-        <div class="changemakers-grid">
+        <div class="impactmakers-grid">
 
           <article class="maker-card">
             <div class="maker-top">

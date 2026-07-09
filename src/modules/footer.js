@@ -13,7 +13,7 @@ export function renderFooter() {
             </div>
 
             <p>
-              Connecting people, projects, opportunities & communities to sustainable impact near them.
+              Connecting people, organisations and communities to sustainable impact near them.
             </p>
 
             <form class="newsletter">
@@ -44,7 +44,7 @@ export function renderFooter() {
             <h3>Social Links</h3>
             <a href="#">Instagram</a>
             <a href="#">Twitter(X)</a>
-            <a href="#">Facebook</a>
+            <!--<a href="#">Facebook</a>-->
             <a href="#">LinkedIn</a>
             <a href="#">YouTube</a>
           </div>
@@ -76,17 +76,17 @@ export function renderFooter() {
 
   <div class="footer-impact-cards">
     <div class="footer-impact-card">
-      <strong>128+</strong>
+      <strong>108+</strong>
       <small>Active Projects</small>
     </div>
 
     <div class="footer-impact-card">
-      <strong>48K+</strong>
+      <strong>4.8K+</strong>
       <small>Impact Makers</small>
     </div>
 
     <div class="footer-impact-card">
-      <strong>2.1M</strong>
+      <strong>1.7M</strong>
       <small>Impact Hours</small>
     </div>
   
@@ -98,24 +98,30 @@ export function renderFooter() {
   </div>
 
   <div class="footer-socials">
+
     <a href="#">
-    <img src="/socials/instagram.jpg" alt="Instagram">
+    <img src="/socials/youtube.png" alt="YouTube">
     </a>
+   
     <a href="#">
-      <img src="/socials/linkedin.jpeg" alt="LinkedIn">
+      <img src="/socials/linkedin.png" alt="LinkedIn">
     </a>
+
     <a href="#">
       <img src="/socials/facebook.png" alt="Facebook">
     </a>
-    <a href="#">
-      <img src="/socials/x.jpg" alt="X">
+
+     <a href="#">
+    <img src="/socials/instagram.jpg" alt="Instagram">
     </a>
-    <a href="#">
-      <img src="/socials/youtube.png" alt="YouTube">
-    </a>
+
+    <!--<a href="#">
+    <img src="/socials/x.png" alt="X">
+    </a>-->
+  
     <!--
     <a href="#">
-      <img src="/socials/tiktok.png" alt="TikTok">
+    <img src="/socials/tiktok.png" alt="TikTok">
     </a>
     -->
   </div>

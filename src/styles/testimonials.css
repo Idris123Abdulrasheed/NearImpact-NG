@@ -23,6 +23,16 @@
   margin-bottom: 12px;
 }
 
+.view-all-impacters {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 900;
+  background: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 999px;
+  padding: 13px 20px;
+}
+
 .stories-header h2 {
   color: #0f172a;
   font-size: 42px;

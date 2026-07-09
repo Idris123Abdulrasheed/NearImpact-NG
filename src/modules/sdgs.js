@@ -1,52 +1,78 @@
 import "../styles/sdgs.css";
 
-/*
-  SDG Learning Section
-
-  This section helps users explore all 17 Sustainable Development Goals.
-  The 18th card is for cross-SDG projects that combine multiple goals.
-*/
-
 export function renderSdgs() {
+  const sdgs = [
+    { id: 1, title: "No Poverty" },
+    { id: 2, title: "Zero Hunger" },
+    { id: 3, title: "Good Health & Well-being" },
+    { id: 4, title: "Quality Education" },
+    { id: 5, title: "Gender Equality" },
+    { id: 6, title: "Clean Water & Sanitation" },
+    { id: 7, title: "Affordable & Clean Energy" },
+    { id: 8, title: "Decent Work & Economic Growth" },
+    { id: 9, title: "Industry, Innovation & Infrastructure" },
+    { id: 10, title: "Reduced Inequalities" },
+    { id: 11, title: "Sustainable Cities & Communities" },
+    { id: 12, title: "Responsible Consumption & Production" },
+    { id: 13, title: "Climate Action" },
+    { id: 14, title: "Life Below Water" },
+    { id: 15, title: "Life on Land" },
+    { id: 16, title: "Peace, Justice & Strong Institutions" },
+    { id: 17, title: "Partnerships for the Goals" }
+  ];
+
   return `
     <section class="sdgs-section" id="sdgs">
+
       <div class="sdgs-wrap">
 
         <div class="sdgs-header">
+
           <div>
-            <div class="sdgs-eyebrow">🌍 Learn SDGs</div>
-            <h2>Explore by SDG Focus</h2>
+
+            <div class="sdgs-eyebrow">
+              🌍 Sustainable Development Goals
+            </div>
+
+            <h2>Explore the 17 Global Goals</h2>
+
             <p>
-              Learn the goals, discover related projects, and find opportunities
-              connected to each Sustainable Development Goal.
+              Every project on NearImpact contributes to one or more of the
+              United Nations Sustainable Development Goals. Browse the goals,
+              learn their purpose, and discover impact opportunities aligned
+              with each mission.
             </p>
+
           </div>
 
-          <a href="#" class="sdgs-learn-btn">Start Learning →</a>
+          <a href="#" class="sdgs-learn-btn">
+            Explore Projects 
+          </a>
+
         </div>
 
         <div class="sdg-grid">
-          <div class="sdg-card sdg-1"><span>1</span><h3>No Poverty</h3><p>End poverty everywhere.</p></div>
-          <div class="sdg-card sdg-2"><span>2</span><h3>Zero Hunger</h3><p>Food security for all.</p></div>
-          <div class="sdg-card sdg-3"><span>3</span><h3>Good Health</h3><p>Healthy lives and wellbeing.</p></div>
-          <div class="sdg-card sdg-4"><span>4</span><h3>Quality Education</h3><p>Inclusive lifelong learning.</p></div>
-          <div class="sdg-card sdg-5"><span>5</span><h3>Gender Equality</h3><p>Equal rights and opportunity.</p></div>
-          <div class="sdg-card sdg-6"><span>6</span><h3>Clean Water</h3><p>Safe water and sanitation.</p></div>
-          <div class="sdg-card sdg-7"><span>7</span><h3>Clean Energy</h3><p>Affordable sustainable energy.</p></div>
-          <div class="sdg-card sdg-8"><span>8</span><h3>Decent Work</h3><p>Jobs and economic growth.</p></div>
-          <div class="sdg-card sdg-9"><span>9</span><h3>Innovation</h3><p>Industry and infrastructure.</p></div>
-          <div class="sdg-card sdg-10"><span>10</span><h3>Reduced Inequalities</h3><p>Fairer societies for all.</p></div>
-          <div class="sdg-card sdg-11"><span>11</span><h3>Sustainable Cities</h3><p>Inclusive, safe communities.</p></div>
-          <div class="sdg-card sdg-12"><span>12</span><h3>Responsible Consumption</h3><p>Reduce waste and reuse.</p></div>
-          <div class="sdg-card sdg-13"><span>13</span><h3>Climate Action</h3><p>Act against climate change.</p></div>
-          <div class="sdg-card sdg-14"><span>14</span><h3>Life Below Water</h3><p>Protect oceans and coasts.</p></div>
-          <div class="sdg-card sdg-15"><span>15</span><h3>Life on Land</h3><p>Protect forests and wildlife.</p></div>
-          <div class="sdg-card sdg-16"><span>16</span><h3>Peace & Justice</h3><p>Strong and fair institutions.</p></div>
-          <div class="sdg-card sdg-17"><span>17</span><h3>Partnerships</h3><p>Collaborate for the goals.</p></div>
-          <div class="sdg-card sdg-18"><span>+</span><h3>Cross-SDG Projects</h3><p>Projects linking many goals.</p></div>
+
+          ${sdgs
+            .map(
+              (sdg) => `
+              <div class="sdg-card">
+
+  <img
+    class="sdg-image"
+    src="/sdgs/sdg${sdg.id}.png"
+    alt="SDG ${sdg.id} - ${sdg.title}"
+  >
+
+</div>
+            `
+            )
+            .join("")}
+
         </div>
 
       </div>
+
     </section>
   `;
 }

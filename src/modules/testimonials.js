@@ -24,14 +24,12 @@ export function renderTestimonials() {
             Stories from people and organisations using local action to create
             measurable progress in their communities.
           </p>
+
+
+          <a href="#" class="view-all-impacters">View All </a>
         </div>
 
-        </div>
-
-          <a href="#" class="view-all-makers">View All →</a>
-        </div>
-
-
+        
         <div class="story-grid">
 
           <article class="story-card featured-story">

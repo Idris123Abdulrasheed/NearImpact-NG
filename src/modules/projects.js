@@ -1,20 +1,5 @@
 import "../styles/projects.css";
 
-/*
-  Sustainability Projects Nearby Section
-
-  This section shows nearby projects/opportunities in Lagos.
-  Each card has:
-  - Project type
-  - Image/emoji area
-  - Distance
-  - Rating
-  - Project title
-  - Organisation/location
-  - SDG tags
-  - Volunteer count
-*/
-
 export function renderProjects() {
   return `
     <section class="projects-section" id="discover">
@@ -23,14 +8,14 @@ export function renderProjects() {
         <!-- Section header -->
         <div class="projects-header">
           <div>
-            <div class="projects-eyebrow">📍 Near You in Lagos</div>
+            <div class="projects-eyebrow">📍 Near You in Akure</div>
             <h2>Sustainability Projects Nearby</h2>
             <p>
               Community-verified opportunities within 25 km of your location.
             </p>
           </div>
 
-          <a href="#map" class="projects-map-btn">View map →</a>
+          <a href="#map" class="projects-map-btn">View map </a>
         </div>
 
         <!-- Project cards grid -->
@@ -46,11 +31,11 @@ export function renderProjects() {
             <div class="project-content">
               <div class="project-meta">
                 <span>📍 1.8 km</span>
-                <span>⭐ 4.9</span>
+                <span>⭐ 3.9</span>
               </div>
 
-              <h3>Lagos Urban Tree Planting</h3>
-              <p>Green Lagos Network · Victoria Island</p>
+              <h3>Urban Tree Planting</h3>
+              <p>Green Ondo Network · Akure South</p>
 
               <div class="project-footer">
                 <div class="sdg-tags">
@@ -74,11 +59,11 @@ export function renderProjects() {
             <div class="project-content">
               <div class="project-meta">
                 <span>📍 3.4 km</span>
-                <span>⭐ 4.8</span>
+                <span>⭐ 4.4</span>
               </div>
 
               <h3>Solar Micro-Grid for Rural Schools</h3>
-              <p>SolarAfrica Initiative · Badagry, Lagos</p>
+              <p>SolarAfrica Initiative · Owo, Ondo State</p>
 
               <div class="project-footer">
                 <div class="sdg-tags">
@@ -106,7 +91,7 @@ export function renderProjects() {
               </div>
 
               <h3>Ocean Plastic Cleanup Drive</h3>
-              <p>Clean Coasts Nigeria · Bar Beach, VI</p>
+              <p>Clean Gutters Nigeria · Stateline, FUTA South </p>
 
               <div class="project-footer">
                 <div class="sdg-tags">
@@ -134,7 +119,7 @@ export function renderProjects() {
               </div>
 
               <h3>Youth Climate Advocacy Training</h3>
-              <p>African Climate Foundation · Yaba, Lagos</p>
+              <p>African Climate Foundation · Oja, Akure</p>
 
               <div class="project-footer">
                 <div class="sdg-tags">
@@ -158,11 +143,11 @@ export function renderProjects() {
             <div class="project-content">
               <div class="project-meta">
                 <span>📍 6.1 km</span>
-                <span>⭐ 4.9</span>
+                <span>⭐ 4.2</span>
               </div>
 
               <h3>Community Food Garden Network</h3>
-              <p>Urban Food Co-op Lagos · Surulere</p>
+              <p>Urban Food Co-op Ondo · Owo</p>
 
               <div class="project-footer">
                 <div class="sdg-tags">
@@ -186,11 +171,11 @@ export function renderProjects() {
             <div class="project-content">
               <div class="project-meta">
                 <span>📍 14 km</span>
-                <span>⭐ 4.8</span>
+                <span>⭐ 3.3</span>
               </div>
 
               <h3>Women in Clean Energy</h3>
-              <p>PowerHer Foundation · Ikeja, Lagos</p>
+              <p>PowerHer Foundation · Akure, Ondo</p>
 
               <div class="project-footer">
                 <div class="sdg-tags">

@@ -24,7 +24,7 @@ export function renderMap() {
             </p>
           </div>
 
-          <a href="#" class="impact-map-button">Open full map →</a>
+          <a href="#" class="impact-map-button">Open full map </a>
         </div>
 
         <!-- Main content area -->
@@ -42,7 +42,7 @@ export function renderMap() {
                 <div class="nearby-icon">🌳</div>
                 <div>
                   <h3>Urban Tree Planting</h3>
-                  <p>Green Lagos</p>
+                  <p>Green Ondo</p>
                   <span>📍 1.8 km away</span>
                 </div>
               </article>
@@ -69,7 +69,7 @@ export function renderMap() {
                 <div class="nearby-icon pink">📣</div>
                 <div>
                   <h3>Youth Climate Camp</h3>
-                  <p>ACF Lagos</p>
+                  <p>ACF Akure</p>
                   <span>📍 8.5 km away</span>
                 </div>
               </article>
@@ -88,7 +88,7 @@ export function renderMap() {
                 <div>
                   <h3>Women in Energy Hub</h3>
                   <p>PowerHer Foundation</p>
-                  <span>📍 14 km away</span>
+                  <span>📍 5.4 km away</span>
                 </div>
               </article>
             </div>
@@ -106,7 +106,7 @@ export function renderMap() {
             <span class="city-pin pin-yellow">☀️</span>
             <span class="city-pin pin-orange">⚡</span>
 
-            <div class="map-credit">NearImpact Map · Lagos, Nigeria</div>
+            <div class="map-credit">NearImpact Map · Ondo, Nigeria</div>
           </div>
 
         </div>
