@@ -6,7 +6,7 @@ export function renderNav() {
       <div class="nav-inner">
         <a href="#" class="brand">
           <div class="brand-mark">
-            <img src="/src/assets/brand/logo.png" alt="NearImpact Nigeria logo" />
+            <img src="src/assets/brand/logo.png" alt="NearImpact Nigeria logo" />
           </div>
 
           <div class="brand-text">
