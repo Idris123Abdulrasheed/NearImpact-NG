@@ -89,7 +89,7 @@ export function renderProjects() {
               <button class="save-btn">♡</button>
 <img
   class="project-illustration"
-  src="/projects/ocean-cleanup.jpeg"
+  src="/projects/ocean-cleanup.png"
   alt="Ocean Cleanup"
 />            </div>
 
