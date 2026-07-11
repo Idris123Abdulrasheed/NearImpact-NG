@@ -75,12 +75,27 @@
 .project-image {
   height: 220px;
   position: relative;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
 }
 
-.project-emoji {
-  font-size: 58px;
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* fills the whole area */
+  display: block;
+}
+
+/* Keep the buttons above the image */
+.project-type,
+.save-btn {
+  z-index: 2;
+}
+
+.project-illustration {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  display: block;
 }
 
 /* Card background colours */

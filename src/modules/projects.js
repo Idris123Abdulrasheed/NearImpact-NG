@@ -25,7 +25,10 @@ export function renderProjects() {
             <div class="project-image soft-green">
               <span class="project-type volunteer">Volunteer</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">🌳</div>
+<img
+  class="project-illustration"
+  src="/projects/tree-planting.png"
+  alt="Urban Tree Planting"/>            
             </div>
 
             <div class="project-content">
@@ -53,8 +56,11 @@ export function renderProjects() {
             <div class="project-image soft-yellow">
               <span class="project-type project">Project</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">☀️</div>
-            </div>
+<img
+  class="project-illustration"
+  src="/projects/solar-grid.jpeg"
+  alt="Solar Micro Grid"
+/>            </div>
 
             <div class="project-content">
               <div class="project-meta">
@@ -81,8 +87,11 @@ export function renderProjects() {
             <div class="project-image soft-blue">
               <span class="project-type volunteer">Volunteer</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">🌊</div>
-            </div>
+<img
+  class="project-illustration"
+  src="/projects/ocean-cleanup.jpeg"
+  alt="Ocean Cleanup"
+/>            </div>
 
             <div class="project-content">
               <div class="project-meta">
@@ -109,8 +118,11 @@ export function renderProjects() {
             <div class="project-image soft-pink">
               <span class="project-type training">Training</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">📣</div>
-            </div>
+<img
+  class="project-illustration"
+  src="/projects/climate-training.png"
+  alt="Climate Training"
+/>            </div>
 
             <div class="project-content">
               <div class="project-meta">
@@ -137,8 +149,11 @@ export function renderProjects() {
             <div class="project-image soft-cream">
               <span class="project-type volunteer">Volunteer</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">🥬</div>
-            </div>
+<img
+  class="project-illustration"
+  src="/projects/community-garden.jpeg"
+  alt="Community Garden"
+/>            </div>
 
             <div class="project-content">
               <div class="project-meta">
@@ -165,8 +180,11 @@ export function renderProjects() {
             <div class="project-image soft-red">
               <span class="project-type fellowship">Fellowship</span>
               <button class="save-btn">♡</button>
-              <div class="project-emoji">⚡</div>
-            </div>
+<img
+  class="project-illustration"
+  src="/projects/clean-energy.jpeg"
+  alt="Women in Clean Energy"
+/>            </div>
 
             <div class="project-content">
               <div class="project-meta">
