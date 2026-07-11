@@ -126,6 +126,12 @@
   font-weight: 700;
 }
 
+.testimonials-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
 @media (max-width: 900px) {
   .story-grid {
     grid-template-columns: 1fr;

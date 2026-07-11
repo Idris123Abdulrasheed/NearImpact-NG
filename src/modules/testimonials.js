@@ -24,9 +24,6 @@ export function renderTestimonials() {
             Stories from people and organisations using local action to create
             measurable progress in their communities.
           </p>
-
-
-          <a href="#" class="view-all-impacters">View All </a>
         </div>
 
         
@@ -80,6 +77,10 @@ export function renderTestimonials() {
                 <strong>Kemi Adewale</strong>
                 <span>Social Founder, Lekki</span>
               </div>
+            </div>
+
+            <div class="testimonials-footer">
+              <a href="#" class="testimonials-btn">View All</a>
             </div>
           </article>
 
