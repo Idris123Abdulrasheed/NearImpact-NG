@@ -15,7 +15,7 @@ export function renderProjects() {
             </p>
           </div>
 
-          <a href="#map" class="projects-map-btn">View map </a>
+          <a href="#map" class="projects-map-btn">View more</a>
         </div>
 
         <!-- Project cards grid -->

@@ -1,5 +1,6 @@
 import "../styles/hero.css";
 import heroImage from "../assets/hero/hero-image.jpeg";
+import HeroMiniImage from "../assets/hero/hero-mini-image.png";
 
 export function renderHero() {
   return `
@@ -30,37 +31,37 @@ export function renderHero() {
           <!-- Six equal statistic cards: 3 cards up, 3 cards down -->
           <div class="hero-stats">
             <div class="stat-card">
-              <div class="stat-icon">🤝</div>
+              <!--<div class="stat-icon">🤝</div>-->
               <strong>900+</strong>
               <span>Opportunities</span>
             </div>
 
             <div class="stat-card">
-              <div class="stat-icon">🏢</div>
+              <!--<div class="stat-icon">🏢</div>-->
               <strong>400+</strong>
               <span>Organizations</span>
             </div>
 
             <div class="stat-card">
-              <div class="stat-icon">📍</div>
+              <!--<div class="stat-icon">📍</div>-->
               <strong>36</strong>
               <span>States</span>
             </div>
 
             <div class="stat-card">
-              <div class="stat-icon">🌍</div>
+              <!--<div class="stat-icon">🌍</div>-->
               <strong>17</strong>
               <span>SDGs</span>
             </div>
 
             <div class="stat-card">
-              <div class="stat-icon">📈</div>
+             <!-- <div class="stat-icon">📈</div>-->
               <strong>108+</strong>
               <span>Active Projects</span>
             </div>
 
             <div class="stat-card">
-              <div class="stat-icon">🌱</div>
+              <!--<div class="stat-icon">🌱</div>-->
               <strong>650+</strong>
               <span>Impact Makers</span>
             </div>
@@ -69,11 +70,11 @@ export function renderHero() {
 
         <!-- RIGHT SIDE: Nigeria map card -->
         <div class="hero-visual">
-          <div class="impact-map-card">
+          <!--<div class="impact-map-card">
             <div class="map-heading">
               <span>NearImpact Nigeria</span>
               <strong>Live Impact Map</strong>
-            </div>
+            </div>-->
 
             <div class="map-stage">
               <img
@@ -84,12 +85,19 @@ export function renderHero() {
             </div>
 
             <div class="mini-project-card">
-              <div class="mini-project-icon">🌱</div>
-              <div>
-                <strong>Tree Planting Drive</strong>
-                <span>Ondo · 1.8km away</span>
-                <a href="#discover">View </a>
+
+              <div class="mini-project-info">
+                 <strong>Nearest Project</strong>
+                 <span>📍 Ondo • 1.8 km away</span>
+                 <a href="#map">View MAP</a>
               </div>
+
+                <img
+                  src="${HeroMiniImage}"
+                  alt="Nearest Project"
+                  class="mini-project-image"
+                />
+
             </div>
           </div>
         </div>
