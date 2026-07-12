@@ -1,5 +1,5 @@
 import "../styles/hero.css";
-import nigeriaMap from "../assets/maps/nigeria-map.png";
+import heroImage from "../assets/hero/hero-image.jpeg";
 
 export function renderHero() {
   return `
@@ -23,7 +23,7 @@ export function renderHero() {
           </p>
 
           <div class="hero-actions">
-            <a href="#opportunities" class="hero-primary">Explore Opportunities →</a>
+            <a href="#opportunities" class="hero-primary">Explore Opportunities </a>
             <a href="#community" class="hero-secondary">Join NearImpact</a>
           </div>
 
@@ -77,7 +77,7 @@ export function renderHero() {
 
             <div class="map-stage">
               <img
-                src="${nigeriaMap}"
+                src="${heroImage}"
                 alt="Nigeria impact map"
                 class="nigeria-map-img"
               />
@@ -88,7 +88,7 @@ export function renderHero() {
               <div>
                 <strong>Tree Planting Drive</strong>
                 <span>Ondo · 1.8km away</span>
-                <a href="#discover">View →</a>
+                <a href="#discover">View </a>
               </div>
             </div>
           </div>
