@@ -1,4 +1,4 @@
-import "../styles/cta.css";
+import "./styles/cta.css";
 
 export function renderCta() {
   return `

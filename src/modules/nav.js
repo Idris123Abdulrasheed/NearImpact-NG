@@ -1,4 +1,4 @@
-import "../styles/nav.css";
+import "./styles/nav.css";
 import logo from "../assets/brand/logo.png"
 
 export function renderNav() {

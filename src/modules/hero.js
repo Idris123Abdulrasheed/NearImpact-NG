@@ -1,5 +1,7 @@
-import "../styles/hero.css";
+import "./styles/hero.css";
 import heroImage from "../assets/hero/hero-image.jpeg";
+import heroVideoWebm from "../assets/hero/hero-video.webm";
+import heroVideoMp4 from "../assets/hero/hero-video.mp4";
 import HeroMiniImage from "../assets/hero/hero-mini-image.png";
 
 export function renderHero() {
@@ -77,12 +79,27 @@ export function renderHero() {
             </div>-->
 
             <div class="map-stage">
-              <img
-                src="${heroImage}"
-                alt="Nigeria impact map"
-                class="nigeria-map-img"
-              />
-            </div>
+              <video
+            id="hero-video"
+    class="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="${heroImage}"
+  >
+    <source src="${heroVideoWebm}" type="video/webm">
+    <source src="${heroVideoMp4}" type="video/mp4">
+  </video>
+
+  <img
+    src="${heroImage}"
+    alt="NearImpact Hero"
+    class="hero-image-mobile"
+  />
+
+</div>
 
             <div class="mini-project-card">
 

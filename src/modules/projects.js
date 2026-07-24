@@ -1,4 +1,4 @@
-import "../styles/projects.css";
+import "./styles/projects.css";
 
 export function renderProjects() {
   return `
@@ -8,7 +8,7 @@ export function renderProjects() {
         <!-- Section header -->
         <div class="projects-header">
           <div>
-            <div class="projects-eyebrow">📍 Near You in Akure</div>
+            <!--<div class="projects-eyebrow">📍 Near You in Akure</div>-->
             <h2>Sustainability Projects Nearby</h2>
             <p>
               Community-verified opportunities within 25 km of your location.

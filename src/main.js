@@ -1,15 +1,15 @@
-import "./styles/base.css";
-import "./styles/nav.css";
-import "./styles/hero.css";
-import "./styles/projects.css";
-import "./styles/map.css";
-import "./styles/opportunities.css";
-import "./styles/sdgs.css";
-import "./styles/community.css";
-import "./styles/testimonials.css";
-import "./styles/cta.css";
-import "./styles/faq.css";
-import "./styles/footer.css";
+import "./modules/styles/base.css";
+import "./modules/styles/nav.css";
+import "./modules/styles/hero.css";
+import "./modules/styles/projects.css";
+import "./modules/styles/map.css";
+import "./modules/styles/opportunities.css";
+import "./modules/styles/sdgs.css";
+import "./modules/styles/community.css";
+import "./modules/styles/testimonials.css";
+import "./modules/styles/cta.css";
+import "./modules/styles/faq.css";
+import "./modules/styles/footer.css";
 
 import { renderNav } from "./modules/nav";
 import { renderHero } from "./modules/hero";
@@ -22,6 +22,7 @@ import { renderTestimonials } from "./modules/testimonials";
 import { renderCta } from "./modules/cta";
 import { renderFaq } from "./modules/faq.js";
 import { renderFooter } from "./modules/footer";
+import { initHeroVideo } from "./modules/hero-video";
 
 document.querySelector("#app").innerHTML = `
 ${renderNav()}
@@ -36,3 +37,4 @@ ${renderCta()}
 ${renderFaq()}
 ${renderFooter()}
 `; 
+initHeroVideo();

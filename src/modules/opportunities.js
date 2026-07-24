@@ -1,4 +1,4 @@
-import "../styles/opportunities.css";
+import "./styles/opportunities.css";
 
 export function renderOpportunities() {
   return `
@@ -7,8 +7,8 @@ export function renderOpportunities() {
 
         <div class="opportunities-header">
           <div>
-            <div class="opp-eyebrow">🌿 Growth Opportunities</div>
-            <h2>Opportunities for Impactmakers</h2>
+            <!--<div class="opp-eyebrow">🌿 Growth Opportunities</div>-->
+            <h2>🌿Opportunities for Impactmakers</h2>
             <p>
               Discover fellowships, grants, internships, jobs and leadership opportunities.
             </p>

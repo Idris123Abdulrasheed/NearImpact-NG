@@ -1,4 +1,4 @@
-import "../styles/map.css";
+import "./styles/map.css";
 
 /*
   Impact Around You Map Section
@@ -17,7 +17,7 @@ export function renderMap() {
         <!-- Section heading -->
         <div class="impact-map-header">
           <div>
-            <div class="impact-map-eyebrow">🗺 Explore the Map</div>
+            <!--<div class="impact-map-eyebrow">🗺 Explore the Map</div>-->
             <h2>Impact Around You</h2>
             <p>
               Every pin is a project, organisation, or opportunity helping communities grow.

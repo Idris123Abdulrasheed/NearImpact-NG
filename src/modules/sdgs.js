@@ -1,4 +1,4 @@
-import "../styles/sdgs.css";
+import "./styles/sdgs.css";
 
 export function renderSdgs() {
   const sdgs = [

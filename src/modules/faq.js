@@ -1,4 +1,4 @@
-import "../styles/faq.css";
+import "./styles/faq.css";
 
 export function renderFaq() {
   return `
@@ -7,13 +7,9 @@ export function renderFaq() {
       <div class="faq-wrap">
 
         <div class="faq-header">
-
-          <div class="faq-eyebrow">
-            ❓ Frequently Asked Questions
-          </div>
-
+          
           <h2>
-            Questions to get you started
+          ❓ Frequently Asked Questions
           </h2>
 
           
@@ -32,25 +28,6 @@ export function renderFaq() {
           </details>
 
           <details class="faq-item">
-            <summary>Can I list my own project?</summary>
-            <p>
-              Yes. NGOs, startups, schools, community groups,
-              and individuals can list projects so others can
-              learn from them, volunteer, collaborate,
-              or provide support.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>How do users find projects near them?</summary>
-            <p>
-              Users can browse nearby projects using location,
-              SDG categories, project type, distance,
-              and available opportunities.
-            </p>
-          </details>
-
-          <details class="faq-item">
             <summary>Who are Impactmakers?</summary>
             <p>
               Impactmakers are people actively contributing to impact work,
@@ -60,11 +37,11 @@ export function renderFaq() {
           </details>
 
           <details class="faq-item">
-            <summary>Is NearImpact only for Nigeria?</summary>
+            <summary>How do users find projects near them?</summary>
             <p>
-              NearImpact currently focuses on Nigeria,
-              but the platform is designed to support
-              impact communities across Africa over time.
+              Users can search nearby projects using location,
+              SDG categories, project type, distance,
+              and available opportunities.
             </p>
           </details>
 
@@ -74,6 +51,35 @@ export function renderFaq() {
               No. Users can explore projects, learn about SDGs,
               discover opportunities, and connect with impactmakers
               completely free.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How does NearImpact support the SDGs?</summary>
+            <p>
+              Every project and opportunity can be linked to
+              one or more Sustainable Development Goals,
+              helping users understand the impact areas
+              being addressed.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I list my own project?</summary>
+            <p>
+              Yes. NGOs, startups, schools, community groups,
+              and individuals can list (add or start) projects so others can
+              learn from them, volunteer, collaborate,
+              or provide support.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is NearImpact only for Nigeria?</summary>
+            <p>
+              NearImpact currently focuses on Nigeria,
+              but the platform is designed to support
+              impact communities across Africa over time.
             </p>
           </details>
 
@@ -95,16 +101,6 @@ export function renderFaq() {
               internships, grants, fellowships,
               training programs, events,
               and community projects for people to discover.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>How does NearImpact support the SDGs?</summary>
-            <p>
-              Every project and opportunity can be linked to
-              one or more Sustainable Development Goals,
-              helping users understand the impact areas
-              being addressed.
             </p>
           </details>
 

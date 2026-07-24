@@ -1,4 +1,4 @@
-import "../styles/testimonials.css";
+import "./styles/testimonials.css";
 
 /*
   Success Stories Section
@@ -16,7 +16,7 @@ export function renderTestimonials() {
       <div class="stories-wrap">
 
         <div class="stories-header">
-          <div class="stories-eyebrow">🌟 Success Stories</div>
+          <!--<div class="stories-eyebrow">🌟 Success Stories</div>-->
 
           <h2>What changed because of NearImpact?</h2>
 

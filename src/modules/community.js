@@ -1,4 +1,4 @@
-import "../styles/community.css";
+import "./styles/community.css";
 
 /*
   impactmakers Network Section
@@ -15,7 +15,7 @@ export function renderCommunity() {
 
         <div class="impactmakers-header">
           <div>
-            <div class="impactmakers-eyebrow">🤝 impactmakers Network</div>
+            <!--<div class="impactmakers-eyebrow">🤝 impactmakers Network</div>-->
             <h2>Meet the impactmakers</h2>
             <p>
               Connect with people building sustainable communities, leading projects,
