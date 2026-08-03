@@ -1,10 +1,20 @@
 import "./styles/nav.css";
-import logo from "../assets/brand/logo.png"
+import logo from "../assets/brand/logo.png";
+
+window.showSidebar = function () {
+  document.querySelector(".sidebar").style.display = "flex";
+};
+
+window.hideSidebar = function () {
+  document.querySelector(".sidebar").style.display = "none";
+};
 
 export function renderNav() {
   return `
     <header class="nav">
       <div class="nav-inner">
+
+        <!-- Logo -->
         <a href="#" class="brand">
           <div class="brand-mark">
             <img src="${logo}" alt="NearImpact Nigeria logo" />
@@ -16,22 +26,66 @@ export function renderNav() {
           </div>
         </a>
 
+        <!-- Desktop Search -->
         <div class="nav-search">
           <span>⌕</span>
-          <input type="text" placeholder="Search projects...   , SDGs, cities..." />
+          <input
+            type="text"
+            placeholder="Search projects, places..."
+          />
         </div>
 
+        <!-- Desktop Navigation -->
         <nav class="nav-links">
           <a href="#discover">Discover</a>
+          <a href="#map">View Map</a>
           <a href="#opportunities">Opportunities</a>
-          <a href="#community">Network</a>
           <a href="#sdgs">Learn SDGs</a>
         </nav>
 
+        <!-- Right Side -->
         <div class="nav-actions">
+
           <a href="#" class="login-btn">Log In</a>
-          <a href="#" class="signup-btn">Sign Up</a>
+
+          <button class="menu-button" onclick="showSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 height="26"
+                 viewBox="0 96 960 960"
+                 width="26">
+              <path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/>
+            </svg>
+          </button>
+
         </div>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+
+          <div class="close-btn" onclick="hideSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 height="26"
+                 viewBox="0 96 960 960"
+                 width="26">
+              <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/>
+            </svg>
+          </div>
+
+          <div class="sidebar-search">
+            <span>⌕</span>
+            <input
+              type="text"
+              placeholder="Search projects, places..."
+            />
+          </div>
+
+          <a href="#discover" onclick="hideSidebar()">Discover</a>
+          <a href="#map" onclick="hideSidebar()">View Map</a>
+          <a href="#opportunities" onclick="hideSidebar()">Opportunities</a>
+          <a href="#sdgs" onclick="hideSidebar()">Learn SDGs</a>
+
+        </nav>
+
       </div>
     </header>
   `;

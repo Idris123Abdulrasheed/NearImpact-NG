@@ -11,7 +11,7 @@ export function renderCta() {
             <div class="cta-badge">🌐 Join the Movement</div>
 
             <h2>
-              Your Impact Starts Nearby.
+              Discover Impacts & Create Impacts
             </h2>
           </div>
 

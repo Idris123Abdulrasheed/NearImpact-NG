@@ -1,13 +1,7 @@
 import "./styles/testimonials.css";
 
 /*
-  Success Stories Section
-
-  This section shows how NearImpact helps real users:
-  - organisations find volunteers
-  - young people discover opportunities
-  - project teams explain their SDG impact
-  ANOTHER IS FOR USER TO BE ABLE TO SLIDE BETW STORIES.....
+  CAn users SLIDE BETW STORIES.....
 */
 
 export function renderTestimonials() {
