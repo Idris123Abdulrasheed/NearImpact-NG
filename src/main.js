@@ -11,18 +11,18 @@ import "./modules/styles/cta.css";
 import "./modules/styles/faq.css";
 import "./modules/styles/footer.css";
 
-import { renderNav } from "./modules/nav";
-import { renderHero } from "./modules/hero";
-import { renderProjects } from "./modules/projects";
-import { renderMap } from "./modules/map";
-import { renderOpportunities } from "./modules/opportunities";
-import { renderSdgs } from "./modules/sdgs";
-import { renderCommunity } from "./modules/community";
-import { renderTestimonials } from "./modules/testimonials";
-import { renderCta } from "./modules/cta";
+import { renderNav } from "./modules/nav.js";
+import { renderHero } from "./modules/hero.js";
+import { renderProjects } from "./modules/projects.js";
+import { renderMap } from "./modules/map.js";
+import { renderOpportunities } from "./modules/opportunities.js";
+import { renderSdgs } from "./modules/sdgs.js";
+import { renderCommunity } from "./modules/community.js";
+import { renderTestimonials } from "./modules/testimonials.js";
+import { renderCta } from "./modules/cta.js";
 import { renderFaq } from "./modules/faq.js";
-import { renderFooter } from "./modules/footer";
-import { initHeroVideo } from "./modules/hero-video";
+import { renderFooter } from "./modules/footer.js";
+
 
 document.querySelector("#app").innerHTML = `
 ${renderNav()}

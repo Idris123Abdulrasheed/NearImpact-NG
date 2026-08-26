@@ -1,17 +1,89 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap");
+
+/* ===========================
+   DESIGN TOKENS
+   "Canopy & Contour" -- a forest-and-earth palette with a
+   topographic-ripple signature motif (impact radiating outward
+   from a single point, like a pin dropped on a map).
+=========================== */
+
+:root {
+  /* ink & text */
+  --ink: #12241c;
+  --ink-soft: #35473c;
+  --muted: #5b6b5f;
+  --muted-light: #8c9a8f;
+  --white: #ffffff;
+
+  /* canopy green -- primary brand */
+  --canopy: #1f5c3f;
+  --canopy-dark: #153f2b;
+  --canopy-light: #3e8464;
+  --canopy-tint: #e3ece1;
+
+  /* sun ochre -- energy, opportunity, warmth */
+  --sun: #d9a441;
+  --sun-dark: #b8842e;
+  --sun-tint: #faf0da;
+
+  /* indigo -- water, sky, the map */
+  --indigo: #2b4570;
+  --indigo-light: #4d6a9c;
+  --indigo-tint: #e2e8f2;
+
+  /* clay -- Nigerian earth, secondary warm accent */
+  --clay: #bd5b39;
+  --clay-dark: #9c4a2d;
+  --clay-tint: #f3e2da;
+
+  /* rose & plum -- used sparingly for a couple of accent badges */
+  --rose: #a34a5c;
+  --rose-tint: #f3e0e2;
+  --plum: #5f4d73;
+  --plum-tint: #eae3ee;
+
+  /* surfaces */
+  --paper: #f2f5ee;
+  --paper-deep: #e7ece0;
+  --line: #d8e0d2;
+  --line-green: #bcd0bd;
+
+  /* type */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
-
-body 
-{
-    font-family:Poppins, sans-serif;
-  background: #f8fafc;
-  color: #0f172a;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#app{
-    padding: 40px;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink-soft);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

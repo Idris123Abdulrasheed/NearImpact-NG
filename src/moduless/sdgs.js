@@ -31,7 +31,7 @@ export function renderSdgs() {
           <div>
 
             <div class="sdgs-eyebrow">
-              Sustainable Development Goals
+              🌍 Sustainable Development Goals
             </div>
 
             <h2>Explore the 17 Global Goals</h2>

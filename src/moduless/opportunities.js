@@ -8,7 +8,7 @@ export function renderOpportunities() {
         <div class="opportunities-header">
           <div>
             <!--<div class="opp-eyebrow">🌿 Growth Opportunities</div>-->
-            <h2>Opportunities for Impactmakers</h2>
+            <h2>🌿Opportunities for Impactmakers</h2>
             <p>
               Discover fellowships, grants, internships, jobs and leadership opportunities.
             </p>

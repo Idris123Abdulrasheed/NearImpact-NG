@@ -22,6 +22,8 @@ export function renderCommunity() {
               and creating real impact across Africa.
             </p>
           </div>
+
+          <a href="#" class="view-all-impacters">View All </a>
         </div>
 
         <div class="impactmakers-grid">
@@ -206,10 +208,6 @@ export function renderCommunity() {
             <button class="connect-btn">Connect</button>
           </article>
 
-        </div>
-
-        <div class="impactmakers-footer">
-          <a href="#" class="view-all-impacters">View All Impactmakers</a>
         </div>
       </div>
     </section>

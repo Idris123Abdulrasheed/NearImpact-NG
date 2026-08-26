@@ -1,5 +1,5 @@
 .footer {
-  background: #0f172a;
+  background: var(--ink);
   padding: 40px 32px 20px;
   color: #ffffff;
 }
@@ -9,10 +9,14 @@
   margin: 0 auto;
 }
 
+/* ===========================
+   TOP GRID (brand + link columns)
+=========================== */
+
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr repeat(3, 1fr);
-  gap: 150px;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 40px;
   padding-bottom: 36px;
   margin-top: 30px;
   border-bottom: 1px solid rgba(255,255,255,.1);
@@ -49,6 +53,7 @@
 
 .newsletter input {
   flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   background: transparent;
@@ -62,12 +67,17 @@
 
 .newsletter button {
   border: none;
-  background: #16a34a;
+  background: var(--canopy);
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 700;
   border-radius: 999px;
   padding: 12px 18px;
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+.footer-col {
+  min-width: 0;
 }
 
 .footer-col h3 {
@@ -83,98 +93,106 @@
   margin-bottom: 13px;
   font-size: 14px;
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .footer-col a:hover {
-  color: #22c55e;
+  color: var(--canopy-light);
 }
 
-/* PARTNERS + IMPACT */
+/* ===========================
+   PARTNERS + IMPACT
+=========================== */
+
 .footer-partners-row {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 16px;
-  padding: 30px 0;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 48px;
+  padding: 34px 0;
   border-bottom: 1px solid rgba(255,255,255,.08);
-  align-items: start;
+  align-items: center;
 }
-
 
 .footer-partners h3,
 .footer-impact h3 {
-  font-size: 18px;
-  font-weight: 900;
-  color: #ffffff;
-  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: .04em;
+  letter-spacing: .08em;
 }
 
-.footer-partner-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 120px);
-  gap: 14px;
-}
-
-.footer-partner-card {
-  width: 120px;
-  height: 120px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 18px;
-  overflow: hidden;
+/* Partner logos: these come with solid light backgrounds baked in
+   (not transparent), so we give them a small clean chip to sit on
+   rather than trying to blend them directly into the dark footer. */
+.footer-partner-row {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.footer-partner-card img {
-  width: 100%;
+.footer-partner-logo {
+  height: 52px;
+  padding: 8px 14px;
+  background: rgba(255,255,255,.95);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  opacity: 0.85;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.footer-partner-logo img {
   height: 100%;
-  object-fit: fill;
-
-  display: block;
+  width: auto;
+  object-fit: contain;
 }
 
-.footer-impact-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  
-}
-
-.footer-impact-card {
-  width: 90px;
-  height: 60px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 6px;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7.5px;
-  text-align: center;
-  padding: 10px 6px;
-}
-
-.footer-impact a:hover {
-  background: #16a34a;
+.footer-partner-logo:hover {
+  opacity: 1;
   transform: translateY(-2px);
 }
 
-.footer-impact-card strong {
-  color: #22c55e;
-  font-size: 20px;
-  font-weight: 900;
+/* Impact stats: a single organic row of numbers with thin dividers,
+   instead of boxed stat cards. Never wraps on tablet/desktop. */
+.footer-impact-row {
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  flex-wrap: nowrap;
+}
+
+.footer-impact-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.footer-impact-stat strong {
+  color: var(--canopy-light);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
   line-height: 1;
 }
 
-.footer-impact-card small {
-  color: rgba(255,255,255,.75);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.15;
+.footer-impact-stat span {
+  color: rgba(255,255,255,.6);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.footer-impact-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,.15);
+  flex-shrink: 0;
 }
 
 .footer-bottom {
@@ -185,61 +203,80 @@
   font-size: 13px;
 }
 
+/* Socials: dark square badges that already match the footer tone --
+   kept modest and slightly muted at rest, full presence on hover,
+   so they read as part of the footer rather than bolted-on buttons. */
 .footer-socials {
   display: flex;
   gap: 14px;
-  margin-top: 18px;
+  margin-top: 22px;
 }
 
 .footer-socials a {
-  width: 55px;
-  height: 55px;
-
-  border-radius: 15px;
-
-  background: rgba(255,255,255,.08);
-  border: 28px solid rgba(255,255,255,.12);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transition: .25s ease;
+  opacity: 0.7;
+  transition: opacity .25s ease, transform .25s ease;
 }
 
 .footer-socials a:hover {
-  background: #16a34a;
-  transform: translateY(-4px);
+  opacity: 1;
+  transform: translateY(-3px);
 }
 
 .footer-socials img {
-  width: 55px;
-  height: 55px;
-  object-fit: fill;
-  border-radius: 15px;
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 8px;
 }
+
+/* ===========================
+   RESPONSIVE
+=========================== */
 
 @media (max-width: 1100px) {
-  .footer-partners-row {
-    grid-template-columns: 1fr;
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 36px;
   }
 
-  .footer-impact-cards {
-    grid-template-columns: repeat(4, 90px);
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-partners-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-impact-row {
+    flex-wrap: wrap;
+    row-gap: 14px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 640px) {
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
 
-  .footer-partner-cards {
-    grid-template-columns: repeat(2, 120px);
+  .footer-partner-row {
+    gap: 26px;
   }
 
-  .footer-impact-cards {
-    grid-template-columns: repeat(2, 90px);
+  .footer-partner-logo {
+    height: 32px;
+  }
+
+  .footer-impact-row {
+    gap: 16px;
+  }
+
+  .footer-impact-stat strong {
+    font-size: 19px;
   }
 
   .footer-bottom {

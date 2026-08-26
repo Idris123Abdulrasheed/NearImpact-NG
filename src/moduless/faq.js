@@ -9,7 +9,7 @@ export function renderFaq() {
         <div class="faq-header">
           
           <h2>
-          Frequently Asked Questions
+          ❓ Frequently Asked Questions
           </h2>
 
           

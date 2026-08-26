@@ -1,5 +1,5 @@
 .stories-section {
-  background: var(--paper);
+  background: #f8fafc;
   padding: 90px 32px;
 }
 
@@ -15,34 +15,34 @@
 }
 
 .stories-eyebrow {
-  color: var(--canopy);
+  color: #16a34a;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 950;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
 
 .view-all-impacters {
-  color: var(--canopy);
+  color: #16a34a;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 900;
   background: #ffffff;
-  border: 1px solid var(--line-green);
+  border: 1px solid #86efac;
   border-radius: 999px;
   padding: 13px 20px;
 }
 
 .stories-header h2 {
-  color: var(--ink);
+  color: #0f172a;
   font-size: 42px;
   line-height: 1.12;
-  font-weight: 700;
+  font-weight: 950;
   margin: 0 0 14px;
 }
 
 .stories-header p {
-  color: var(--muted);
+  color: #64748b;
   font-size: 17px;
   line-height: 1.7;
   margin: 0;
@@ -56,33 +56,33 @@
 
 .story-card {
   background: #ffffff;
-  border: 1px solid var(--line);
+  border: 1px solid #e2e8f0;
   border-radius: 28px;
   padding: 30px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
 }
 
 .featured-story {
-  background: linear-gradient(135deg, #ffffff, var(--canopy-tint));
-  border-color: var(--line-green);
+  background: linear-gradient(135deg, #ffffff, #ecfdf5);
+  border-color: #bbf7d0;
 }
 
 .quote-mark {
   width: 48px;
   height: 48px;
-  background: var(--canopy-tint);
-  color: var(--canopy);
+  background: #ecfdf5;
+  color: #16a34a;
   border-radius: 16px;
   display: grid;
   place-items: center;
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 950;
   line-height: 1;
   margin-bottom: 22px;
 }
 
 .story-card p {
-  color: var(--ink-soft);
+  color: #334155;
   line-height: 1.8;
   font-size: 16px;
   margin: 0 0 30px;
@@ -98,30 +98,30 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--canopy);
+  background: #16a34a;
   color: #ffffff;
   display: grid;
   place-items: center;
-  font-weight: 700;
+  font-weight: 950;
 }
 
 .avatar.orange {
-  background: var(--sun-dark);
+  background: #f97316;
 }
 
 .avatar.blue {
-  background: var(--indigo);
+  background: #0284c7;
 }
 
 .story-person strong {
   display: block;
-  color: var(--ink);
+  color: #0f172a;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 950;
 }
 
 .story-person span {
-  color: var(--muted);
+  color: #64748b;
   font-size: 13px;
   font-weight: 700;
 }
@@ -130,17 +130,6 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 32px;
-}
-
-.testimonials-btn {
-  color: var(--canopy);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.testimonials-btn:hover {
-  color: var(--canopy-dark);
 }
 
 @media (max-width: 900px) {

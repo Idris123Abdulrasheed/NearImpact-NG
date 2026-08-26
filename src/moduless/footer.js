@@ -54,62 +54,64 @@ export function renderFooter() {
         <div class="footer-partners-row">
 
           <div class="footer-partners">
-            <h3>In Support &amp; Partnership With</h3>
+            <h3>In Support & Partnership With</h3>
 
-            <div class="footer-partner-row">
-              <div class="footer-partner-logo">
+            <div class="footer-partner-cards">
+              <div class="footer-partner-card">
                 <img src="/partners/sdgs.png" alt="SDGs logo" />
               </div>
 
-              <div class="footer-partner-logo">
+              <div class="footer-partner-card">
                 <img src="/partners/ngo.png" alt="NGO logo" />
               </div>
 
-              <div class="footer-partner-logo">
+              <div class="footer-partner-card">
                 <img src="/partners/leap.png" alt="LEAP logo" />
               </div>
             </div>
           </div>
 
           <div class="footer-impact">
-             <h3>Impact in Numbers</h3>
+             <h3>IMPACT IN NUMBERS</h3>
 
-  <div class="footer-impact-row">
-    <div class="footer-impact-stat">
+  <div class="footer-impact-cards">
+    <div class="footer-impact-card">
       <strong>108+</strong>
-      <span>Active Projects</span>
+      <small>Active Projects</small>
     </div>
 
-    <span class="footer-impact-divider"></span>
-
-    <div class="footer-impact-stat">
+    <div class="footer-impact-card">
       <strong>4.8K+</strong>
-      <span>Impact Makers</span>
+      <small>Impact Makers</small>
     </div>
 
-    <span class="footer-impact-divider"></span>
-
-    <div class="footer-impact-stat">
+    <div class="footer-impact-card">
       <strong>1.7M</strong>
-      <span>Impact Hours</span>
+      <small>Impact Hours</small>
     </div>
+  
+    <!--<div class="footer-impact-card">
+      <strong>$3.8M</strong>
+      <small>Grants Matched</small>
+    </div>-->
+  
   </div>
 
   <div class="footer-socials">
 
-    <a href="#" aria-label="YouTube">
+    <a href="#">
     <img src="/socials/youtube.png" alt="YouTube">
     </a>
    
-    <a href="#" aria-label="LinkedIn">
+    <a href="#">
       <img src="/socials/linkedin.png" alt="LinkedIn">
     </a>
 
-    <a href="#" aria-label="Facebook">
+    <a href="#">
       <img src="/socials/facebook.png" alt="Facebook">
     </a>
 
-     <a href="#" aria-label="Instagram">
+     <a href="#">
     <img src="/socials/instagram.jpg" alt="Instagram">
     </a>
 

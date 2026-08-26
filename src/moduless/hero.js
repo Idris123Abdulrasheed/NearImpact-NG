@@ -1,16 +1,16 @@
 import "./styles/hero.css";
-import heroBackground from "../assets/hero/hero-imagee.png";
+import heroBackground from "../assets/hero/hero-image.png";
 
 export function renderHero() {
   return `
     <section
       class="hero"
       style="background-image: linear-gradient(to right,
-      rgba(242,245,238,0.98) 0%,
-      rgba(242,245,238,0.95) 24%,
-      rgba(242,245,238,0.82) 38%,
-      rgba(242,245,238,0.30) 52%,
-      rgba(242,245,238,0) 66%),
+      rgba(248,250,252,0.98) 0%,
+      rgba(248,250,252,0.95) 24%,
+      rgba(248,250,252,0.82) 38%,
+      rgba(248,250,252,0.30) 52%,
+      rgba(255,255,255,0) 66%),
       url(${heroBackground});"
     >
 

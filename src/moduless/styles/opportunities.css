@@ -17,9 +17,9 @@
 }
 
 .opp-eyebrow{
-  color:var(--canopy);
+  color:#16a34a;
   font-size:13px;
-  font-weight: 700;
+  font-weight:900;
   letter-spacing:.12em;
   text-transform:uppercase;
   margin-bottom:10px;
@@ -27,29 +27,19 @@
 
 .opportunities-header h2{
   font-size:42px;
-  font-weight: 700;
-  color:var(--ink);
+  font-weight:950;
+  color:#0f172a;
   margin-bottom:10px;
 }
 
 .opportunities-header p{
-  color:var(--muted);
+  color:#64748b;
 }
 
 .opp-view-all{
   text-decoration:none;
-  color:var(--canopy);
-  font-weight: 700;
-  background: #ffffff;
-  border: 1px solid var(--line-green);
-  border-radius: 999px;
-  padding: 13px 20px;
-}
-
-.opportunities-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
+  color:#16a34a;
+  font-weight:900;
 }
 
 .opp-tabs{
@@ -61,7 +51,7 @@
 
 .opp-tabs button{
   border:none;
-  background:var(--paper-deep);
+  background:#f1f5f9;
   padding:12px 18px;
   border-radius:999px;
   font-weight:800;
@@ -69,7 +59,7 @@
 }
 
 .opp-tabs .active{
-  background:var(--canopy);
+  background:#16a34a;
   color:white;
 }
 
@@ -80,18 +70,18 @@
 }
 
 .view-all-makers {
-  color: var(--canopy);
+  color: #16a34a;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 900;
   background: #ffffff;
-  border: 1px solid var(--line-green);
+  border: 1px solid #86efac;
   border-radius: 999px;
   padding: 13px 20px;
 }
 
 .opp-card{
   background:white;
-  border:1px solid var(--line);
+  border:1px solid #e2e8f0;
   border-radius:24px;
   padding:24px;
   box-shadow:0 15px 35px rgba(15,23,42,.06);
@@ -101,42 +91,39 @@
   display:inline-block;
   padding:7px 12px;
   border-radius:999px;
-  font-family: var(--font-mono);
-  font-size:11px;
-  font-weight:600;
-  letter-spacing: .04em;
-  text-transform: uppercase;
+  font-size:12px;
+  font-weight:900;
   margin-bottom:16px;
 }
 
 .fellowship{
-  background:var(--canopy-tint);
-  color:var(--canopy-dark);
+  background:#dcfce7;
+  color:#15803d;
 }
 
 .grant{
-  background:var(--indigo-tint);
-  color:var(--indigo);
+  background:#dbeafe;
+  color:#1d4ed8;
 }
 
 .internship{
-  background:var(--sun-tint);
-  color:var(--sun-dark);
+  background:#fef3c7;
+  color:#b45309;
 }
 
 .job{
-  background:var(--clay-tint);
-  color:var(--clay);
+  background:#fee2e2;
+  color:#b91c1c;
 }
 
 .opp-card h3{
   font-size:20px;
-  color:var(--ink);
+  color:#0f172a;
   margin-bottom:10px;
 }
 
 .opp-card p{
-  color:var(--muted);
+  color:#64748b;
   line-height:1.7;
   margin-bottom:20px;
 }
@@ -144,10 +131,9 @@
 .opp-details{
   display:flex;
   justify-content:space-between;
-  color:var(--muted-light);
-  font-family: var(--font-mono);
+  color:#94a3b8;
   font-size:13px;
-  font-weight:500;
+  font-weight:700;
   margin-bottom:22px;
 }
 
@@ -156,17 +142,17 @@
   justify-content:space-between;
   align-items:center;
   padding-top:18px;
-  border-top:1px solid var(--paper-deep);
+  border-top:1px solid #f1f5f9;
 }
 
 .opp-footer strong{
-  color:var(--canopy);
+  color:#16a34a;
 }
 
 .opp-footer a{
-  color:var(--canopy);
+  color:#16a34a;
   text-decoration:none;
-  font-weight: 700;
+  font-weight:900;
 }
 
 @media(max-width:1000px){
