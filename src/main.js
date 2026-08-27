@@ -22,6 +22,7 @@ import { renderTestimonials } from "./modules/testimonials.js";
 import { renderCta } from "./modules/cta.js";
 import { renderFaq } from "./modules/faq.js";
 import { renderFooter } from "./modules/footer.js";
+import { initSearch } from "./modules/search.js";
 
 
 document.querySelector("#app").innerHTML = `
@@ -36,5 +37,6 @@ ${renderTestimonials()}
 ${renderCta()}
 ${renderFaq()}
 ${renderFooter()}
-`; 
-initHeroVideo();
+`;
+
+initSearch();

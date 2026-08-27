@@ -9,13 +9,22 @@ window.hideSidebar = function () {
   document.querySelector(".sidebar").style.display = "none";
 };
 
+window.goHome = function (event) {
+  event.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  const sidebar = document.querySelector(".sidebar");
+  if (sidebar && sidebar.style.display === "flex") {
+    hideSidebar();
+  }
+};
+
 export function renderNav() {
   return `
     <header class="nav">
       <div class="nav-inner">
 
         <!-- Logo -->
-        <a href="#" class="brand">
+        <a href="#" class="brand" onclick="goHome(event)" aria-label="NearImpact Nigeria home">
           <div class="brand-mark">
             <img src="${logo}" alt="NearImpact Nigeria logo" />
           </div>
@@ -31,8 +40,11 @@ export function renderNav() {
           <span>⌕</span>
           <input
             type="text"
+            id="nav-search-input"
             placeholder="Search projects, places..."
+            autocomplete="off"
           />
+          <div id="nav-search-results" class="search-dropdown" hidden></div>
         </div>
 
         <!-- Desktop Navigation -->
@@ -75,8 +87,11 @@ export function renderNav() {
             <span>⌕</span>
             <input
               type="text"
+              id="sidebar-search-input"
               placeholder="Search projects, places..."
+              autocomplete="off"
             />
+            <div id="sidebar-search-results" class="search-dropdown" hidden></div>
           </div>
 
           <a href="#discover" onclick="hideSidebar()">Discover</a>
