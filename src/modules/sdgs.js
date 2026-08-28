@@ -18,7 +18,8 @@ export function renderSdgs() {
     { id: 14, title: "Life Below Water" },
     { id: 15, title: "Life on Land" },
     { id: 16, title: "Peace, Justice & Strong Institutions" },
-    { id: 17, title: "Partnerships for the Goals" }
+    { id: 17, title: "Partnerships for the Goals" },
+    { id: 18, title: "Turning Global Goals into Local Actions" }
   ];
 
   return `

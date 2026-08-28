@@ -201,17 +201,17 @@ height:110px;
    Small Phones
 =========================== */
 
-@media (max-width:480px){
+@media (max-width:240px){
 
 .sdg-grid{
 
-grid-template-columns:1fr;
+grid-template-columns:2fr;
 
 }
 
 .sdg-image{
 
-height:120px;
+height:60px;
 
 }
 
