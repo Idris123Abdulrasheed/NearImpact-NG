@@ -1,0 +1,77 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/impact-stats.js for my class glossary*/
+
+
+.impact-stats {
+  padding: 64px 32px;
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--line);
+}
+
+.impact-stats__wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.impact-stats__wrap h2 {
+  margin-bottom: 8px;
+}
+
+.impact-stats__wrap > p {
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+.impact-stats__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.impact-stats__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.impact-stats__stat-value {
+  font-family: var(--font-mono);
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.impact-stats__stat span {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.impact-stats__stat-divider {
+  width: 1px;
+  height: 48px;
+  background: var(--line);
+}
+
+@media (max-width: 640px) {
+  .impact-stats {
+    padding: 48px 20px;
+  }
+  .impact-stats__row {
+    gap: 24px;
+  }
+  .impact-stats__stat-divider {
+    display: none;
+  }
+  .impact-stats__stat-value {
+    font-size: 34px;
+  }
+}
+
+

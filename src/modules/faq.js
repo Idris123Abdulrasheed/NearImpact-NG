@@ -1,113 +1,122 @@
 import "./styles/faq.css";
+// Native <details>/<summary> accordion DEVELOPERS NOTE at the bottom 
+// explains why it is our deliberate choice.
 
+// ① FAQ DATA:
+const faqItems = [
+  {
+    q: "What is NearImpact Nigeria?",
+    a: "NearImpact Nigeria is a platform that helps people discover sustainability projects, volunteer opportunities, grants, fellowships, internships, and impactmakers working on meaningful impact across communities."
+  },
+  {
+    q: "Who are Impactmakers?",
+    a: "Impactmakers are people actively contributing to impact work, including volunteers, project leaders, researchers, educators, social entrepreneurs, and community organisers."
+  },
+  {
+    q: "How do I find projects near me?",
+    a: "Users can search nearby projects using location, SDG categories, project type, distance, and available opportunities."
+  },
+  {
+    q: "Is there any fees to get started?",
+    a: "No. Users can explore projects, learn about SDGs, discover opportunities, and connect with impactmakers completely free."
+  },
+  {
+    q: " Do we support the SDGs?",
+    a: "Every project and opportunity can be linked to one or more Sustainable Development Goals, helping users understand the impact areas being addressed."
+  },
+  {
+    q: "Can I list my own project?",
+    a: "Yes. NGOs, startups, schools, community groups, and individuals can list projects so others can learn from them, volunteer, collaborate, or provide support."
+  },
+  {
+    q: "Is NearImpact only for Nigeria?",
+    a: "NearImpact currently focuses on Nigeria, but the platform is designed to support impact communities across Africa over time."
+  },
+  {
+    q: "Can I partner with NearImpact?",
+    a: "NearImpact welcomes partnerships with NGOs, schools, universities, youth networks, foundations, social enterprises, development organisations, and SDG-focused initiatives."
+  },
+  {
+    q: "Who can publish opportunities?",
+    a: "Yes. Organisations can publish volunteer roles, internships, grants, fellowships, training programs, events, and community projects for people to discover."
+  }
+];
+
+// ② RENDERING:
 export function renderFaq() {
   return `
-    <section class="faq-section" id="faq">
+    <section class="faq" id="faq">
+      <div class="faq__wrap">
 
-      <div class="faq-wrap">
-
-        <div class="faq-header">
-          
-          <h2>
-          Frequently Asked Questions
-          </h2>
-
-          
+        <div class="faq__header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Find answers to common questions about NearImpact and how to get involved.</p>
         </div>
 
-        <div class="faq-grid">
-
-          <details class="faq-item" open>
-            <summary>What is NearImpact Nigeria?</summary>
-            <p>
-              NearImpact Nigeria is a platform that helps people discover
-              sustainability projects, volunteer opportunities, grants,
-              fellowships, internships, and impactmakers working on
-              meaningful impact across communities.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Who are Impactmakers?</summary>
-            <p>
-              Impactmakers are people actively contributing to impact work,
-              including volunteers, project leaders, researchers,
-              educators, social entrepreneurs, and community organisers.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>How do users find projects near them?</summary>
-            <p>
-              Users can search nearby projects using location,
-              SDG categories, project type, distance,
-              and available opportunities.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Do I need to pay to join?</summary>
-            <p>
-              No. Users can explore projects, learn about SDGs,
-              discover opportunities, and connect with impactmakers
-              completely free.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>How does NearImpact support the SDGs?</summary>
-            <p>
-              Every project and opportunity can be linked to
-              one or more Sustainable Development Goals,
-              helping users understand the impact areas
-              being addressed.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Can I list my own project?</summary>
-            <p>
-              Yes. NGOs, startups, schools, community groups,
-              and individuals can list (add or start) projects so others can
-              learn from them, volunteer, collaborate,
-              or provide support.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Is NearImpact only for Nigeria?</summary>
-            <p>
-              NearImpact currently focuses on Nigeria,
-              but the platform is designed to support
-              impact communities across Africa over time.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Who can partner with NearImpact?</summary>
-            <p>
-              NearImpact welcomes partnerships with NGOs,
-              schools, universities, youth networks,
-              foundations, social enterprises,
-              development organisations,
-              and SDG-focused initiatives.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>Can organisations publish opportunities?</summary>
-            <p>
-              Yes. Organisations can publish volunteer roles,
-              internships, grants, fellowships,
-              training programs, events,
-              and community projects for people to discover.
-            </p>
-          </details>
-
+        <div class="faq__list">
+          ${faqItems
+            .map(
+              (item, i) => `
+              <details class="faq__item" name="faq-group" ${i === 0 ? "open" : ""}>
+                <summary>
+                  <span>${item.q}</span>
+                  <svg class="faq__chevron" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div class="faq__answer">
+                  <p>${item.a}</p>
+                </div>
+              </details>
+            `
+            )
+            .join("")}
         </div>
 
       </div>
-
     </section>
   `;
 }
+
+
+
+
+
+/*
+  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+
+  ARCHITECTURE OVERVIEW:
+  The FAQ accordion. No initFaq() here on purpose; this uses native
+  HTML <details>/<summary> elements, which already handle open/close
+  behavior, and the toggle state entirely on their own. That's "let the browser do it" 
+  the same philosophy behind partners.js's pure-CSS marquee, so there's zero JS needed for the
+  interactive part at all.
+
+  The name="faq-group" attribute on every <details> is what makes
+  them behave like an accordion (opening one auto-closes any other
+  with the same name) which is native browser behavior too, not
+  something this file implements.
+
+  Class names follow BEM where "faq" is the block. Note that [open] in
+  faq.css is an HTML ATTRIBUTE selector, not a CSS class i.e we have nothing to BEM-ify here, 
+  since it's not something this file ever adds or removes itself.
+
+  BLOCKS DEFINITIONS:
+  ① FAQ DATA    — the question/answer pairs. First item opens by
+                  default (i === 0 check below in RENDERING) so the
+                  accordion doesn't look empty on first load.
+  ② RENDERING    — builds the full list of <details> elements from
+                  faqItems.
+
+  CLASS NAME GLOSSARY:
+  .faq          The whole section.
+  .faq__wrap    Width-constrained inner wrapper.
+  .faq__header  Heading + intro text block.
+  .faq__list    Container holding every FAQ item.
+  .faq__item    One <details> element (one question/answer pair).
+  .faq__chevron The small arrow icon that rotates on open/close.
+  .faq__answer  The answer text wrapper inside an item.
+
+
+*/

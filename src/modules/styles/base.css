@@ -1,12 +1,12 @@
+ /* Global design tokens + resets: every other CSS file in this CODEBASE
+   reads from the variables defined here rather than hardcoding
+   colors/fonts directly. */
+
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap");
 
-/* ===========================
-   DESIGN TOKENS
-   "Canopy & Contour" -- a forest-and-earth palette with a
-   topographic-ripple signature motif (impact radiating outward
-   from a single point, like a pin dropped on a map).
-=========================== */
 
+/* DESIGN TOKENS
+   Our design system is called "Canopy & Contour", it should feel natural and earthy.*/
 :root {
   /* ink & text */
   --ink: #12241c;
@@ -21,22 +21,22 @@
   --canopy-light: #3e8464;
   --canopy-tint: #e3ece1;
 
-  /* sun ochre -- energy, opportunity, warmth */
+  /* sun ochre -- energy, warmth */
   --sun: #d9a441;
   --sun-dark: #b8842e;
   --sun-tint: #faf0da;
 
-  /* indigo -- water, sky, the map */
+  /* indigo -- water, sky, map */
   --indigo: #2b4570;
   --indigo-light: #4d6a9c;
   --indigo-tint: #e2e8f2;
 
-  /* clay -- Nigerian earth, secondary warm accent */
+  /* clay -- warm accent */
   --clay: #bd5b39;
   --clay-dark: #9c4a2d;
   --clay-tint: #f3e2da;
 
-  /* rose & plum -- used sparingly for a couple of accent badges */
+  /* rose/plum for accent badges */
   --rose: #a34a5c;
   --rose-tint: #f3e0e2;
   --plum: #5f4d73;
@@ -52,6 +52,68 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+
+/* SEMANTIC / COMPONENT TOKENS
+   A callable second layer name over the primitive ones above. */
+:root {
+  /* neutral surfaces & text */
+  --bg: var(--white);
+  --text: var(--muted);
+  --text-h: var(--ink);
+  --border: var(--line);
+  --code-bg: var(--paper-deep);
+  --social-bg: var(--paper-deep);
+
+  /* --accent is the name component CSS reaches for. */
+  --accent: var(--canopy);
+  --accent-bg: var(--canopy-tint);
+  --accent-border: var(--canopy-light);
+
+  /* the "explore" module (location filter + map) */
+  --explore-accent: var(--canopy);
+  --explore-accent-dark: var(--canopy-dark);
+  --explore-bg-soft: var(--canopy-tint);
+  --explore-bg-softer: color-mix(in srgb, var(--canopy-tint) 50%, var(--white) 50%);
+
+  /* typography aliases matching the names component CSS expects */
+  --sans: var(--font-body);
+  --heading: var(--font-display);
+  --mono: var(--font-mono);
+
+  /* shared shadow value for  map + project-list components */
+  --shadow: 0 10px 24px -8px rgba(18, 36, 28, 0.18), 0 2px 6px rgba(18, 36, 28, 0.08);
+}
+
+/* Dark mode: overrides only the surface/text tokens. Every component adapts automatically;
+   no per-component dark rules needed, which is our aim of a token system. */
+[data-theme="dark"] {
+  --ink: #eef2ea;
+  --ink-soft: #cfd8cb;
+  --muted: #9aa89b;
+  --muted-light: #74846f;
+  --white: #16221b;
+
+  --canopy-tint: #1c3327;
+  --sun-tint: #3a2f18;
+  --indigo-tint: #1c2636;
+  --clay-tint: #35211a;
+  --rose-tint: #33202a;
+  --plum-tint: #241f30;
+
+  --paper: #0f1712;
+  --paper-deep: #0b120e;
+  --line: #24352a;
+  --line-green: #2c4230;
+
+  /* The one semantic token above with no dual-mode primitive underneath
+     it, so it needs an explicit dark value here.  */
+  --shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  transition: background-color .25s ease, color .25s ease;
 }
 
 * {
@@ -87,3 +149,33 @@ h3 {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* =====================================================================
+   EXPLANATIONS
+
+   NOT A COMPONENT FILE: unlike every other CSS file in this codebase, this
+   one doesn't pair with a single JS file — it's imported once by
+   main.js, ahead of every component stylesheet, and every other CSS
+   file in the project reads its variables. 
+
+
+   TWO-LAYER TOKEN SYSTEM:
+     1. PRIMITIVES (first :root block): 
+        actual raw values: hex colors, font stacks. Named after what they 
+        physically ARE (--canopy, --sun, --clay), not what they're used FOR.
+     2. SEMANTIC ALIASES (second :root block): 
+        named after what they're used FOR (--accent, --bg, --text-h), each 
+        one just pointing at a primitive. Featured CSS-modules reference THESE 
+        semantic names, never the primitives directly, the whole point of this 
+        indirection is: when there is a chamge in primitive's value once here,
+        and every component using its semantic alias updates automatically.
+
+   DARK MODE: 
+   Applied via a single [data-theme="dark"] attribute on
+   <html> (set by theme.js). Only SURFACE and TEXT primitives get
+   dark-mode overrides; the brand hues (canopy, sun, indigo, clay,
+   rose, plum) intentionally stay the same in both modes, just
+   re-tinted, so the palette stays recognizable rather than becoming
+   a completely different color scheme at night. 
+   ===================================================================== */

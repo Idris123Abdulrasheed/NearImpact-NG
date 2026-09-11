@@ -1,39 +1,22 @@
-.stories-section {
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/testimonials.js for my class glossary*/
+
+.testimonials {
   background: var(--paper);
-  padding: 90px 32px;
+  padding: 40px 32px;
 }
 
-.stories-wrap {
+.testimonials__wrap {
   max-width: 1180px;
   margin: 0 auto;
 }
 
-.stories-header {
+.testimonials__header {
   text-align: center;
   max-width: 760px;
   margin: 0 auto 42px;
 }
 
-.stories-eyebrow {
-  color: var(--canopy);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.view-all-impacters {
-  color: var(--canopy);
-  text-decoration: none;
-  font-weight: 700;
-  background: #ffffff;
-  border: 1px solid var(--line-green);
-  border-radius: 999px;
-  padding: 13px 20px;
-}
-
-.stories-header h2 {
+.testimonials__header h2 {
   color: var(--ink);
   font-size: 42px;
   line-height: 1.12;
@@ -41,38 +24,49 @@
   margin: 0 0 14px;
 }
 
-.stories-header p {
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.7;
-  margin: 0;
+/* ===== Carousel shell ===== */
+.testimonials__carousel {
+  position: relative;
 }
 
-.story-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
+.testimonials__track {
+  display: flex;
   gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  padding: 4px 4px 12px;
+  margin: 0 -4px;
+  /* hide scrollbar visually; buttons + swipe still work */
+  scrollbar-width: none;
 }
 
-.story-card {
+.testimonials__track::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials__card {
+  flex: 0 0 min(360px, 86vw);
+  scroll-snap-align: start;
   background: #ffffff;
   border: 1px solid var(--line);
-  border-radius: 28px;
+  border-radius: 14px;
   padding: 30px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
 }
 
-.featured-story {
+/* modifier: the one card with a distinct gradient background */
+.testimonials__card--featured {
   background: linear-gradient(135deg, #ffffff, var(--canopy-tint));
   border-color: var(--line-green);
 }
 
-.quote-mark {
+.testimonials__quote-mark {
   width: 48px;
   height: 48px;
   background: var(--canopy-tint);
   color: var(--canopy);
-  border-radius: 16px;
+  border-radius: 10px;
   display: grid;
   place-items: center;
   font-size: 42px;
@@ -81,70 +75,97 @@
   margin-bottom: 22px;
 }
 
-.story-card p {
+.testimonials__card p {
   color: var(--ink-soft);
   line-height: 1.8;
   font-size: 16px;
   margin: 0 0 30px;
 }
 
-.story-person {
+.testimonials__person {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.testimonials__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
   background: var(--canopy);
   color: #ffffff;
   display: grid;
   place-items: center;
   font-weight: 700;
+  flex-shrink: 0;
 }
 
-.avatar.orange {
-  background: var(--sun-dark);
-}
+/* modifiers: avatar background per testimonial, value comes from
+   each entry's avatarClass field in testimonials.js */
+.testimonials__avatar--orange { background: var(--sun-dark); }
+.testimonials__avatar--blue   { background: var(--indigo); }
+.testimonials__avatar--clay   { background: var(--clay); }
+.testimonials__avatar--plum   { background: var(--plum); }
+.testimonials__avatar--rose   { background: var(--rose); }
 
-.avatar.blue {
-  background: var(--indigo);
-}
-
-.story-person strong {
+.testimonials__person strong {
   display: block;
   color: var(--ink);
   font-size: 15px;
   font-weight: 700;
 }
 
-.story-person span {
+.testimonials__person span {
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
 }
 
-.testimonials-footer {
+/* ===== Carousel controls ===== */
+.testimonials__nav {
   display: flex;
   justify-content: flex-end;
-  margin-top: 32px;
+  gap: 10px;
+  margin-top: 22px;
 }
 
-.testimonials-btn {
+.testimonials__nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--line-green);
+  background: #ffffff;
   color: var(--canopy);
-  text-decoration: none;
+  font-size: 18px;
   font-weight: 700;
-  font-size: 14px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.testimonials-btn:hover {
-  color: var(--canopy-dark);
+.testimonials__nav-btn:hover {
+  background: var(--canopy-tint);
 }
 
-@media (max-width: 900px) {
-  .story-grid {
-    grid-template-columns: 1fr;
+.testimonials__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: #ffffff;
+}
+
+
+@media (max-width: 640px) {
+  .testimonials__card {
+    padding: 24px;
+  }
+  
+  .testimonials__header h2 {
+    font-size: 33px;
+  }
+
+  .testimonials__header {
+  margin: 0 auto 32px;
   }
 }
+

@@ -1,22 +1,19 @@
-/* ===========================
-   SDGs Section
-=========================== */
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/sdgs.js for my class glossary*/
 
-.sdgs-section {
+
+.sdgs {
   background: #ffffff;
   padding: 100px 32px;
 }
 
-.sdgs-wrap {
+.sdgs__wrap {
   max-width: 1320px;
   margin: 0 auto;
 }
 
-/* ===========================
-   Header
-=========================== */
+/* Header */
 
-.sdgs-header {
+.sdgs__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -24,68 +21,37 @@
   margin-bottom: 60px;
 }
 
-.sdgs-eyebrow {
-  display: inline-block;
-  padding: 8px 18px;
-  background: var(--canopy-tint);
-  color: var(--canopy);
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.sdgs-header h2 {
+.sdgs__header h2 {
   font-size: 46px;
   color: var(--ink);
   font-weight: 700;
   margin-bottom: 14px;
 }
 
-.sdgs-header p {
+.sdgs__header p {
   max-width: 700px;
   color: var(--muted);
   line-height: 1.8;
   font-size: 17px;
 }
 
-.sdgs-learn-btn {
-  text-decoration: none;
-  color: var(--canopy);
-  border: 1px solid var(--line-green);
-  background: #ffffff;
-  padding: 14px 24px;
-  border-radius: 999px;
-  font-weight: 700;
-  transition: .3s;
-  white-space: nowrap;
-}
-
-.sdgs-learn-btn:hover {
-  background: var(--canopy);
-  color: #ffffff;
-}
-
-/* ===========================
-   Grid
-=========================== */
-
-.sdg-grid {
+.sdgs__grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 24px;
 }
 
-/* ===========================
-   Card
-=========================== */
+.sdgs__card--extra {
+  display: none;
+}
 
-.sdg-card {
+.sdgs__grid.is-expanded .sdgs__card--extra {
+  display: block;
+}
+
+.sdgs__card {
   background: #ffffff;
-  border-radius: 22px;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--line);
   box-shadow: 0 12px 35px rgba(15,23,42,.05);
@@ -93,50 +59,54 @@
   cursor: pointer;
 }
 
-.sdg-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--canopy-light);
-  box-shadow: 0 24px 50px rgba(34,197,94,.18);
-}
-
-.sdg-card:hover {
-
+.sdgs__card:hover {
   transform: translateY(-10px);
-
   border-color: var(--canopy-light);
-
-  box-shadow:
-      0 22px 55px rgba(34,197,94,.18);
-
+  box-shadow: 0 22px 55px rgba(34,197,94,.18);
 }
 
-/* ===========================
-   Image
-=========================== */
-
-.sdg-image {
+.sdgs__card-image {
   width: 100%;
-  height: 150px; 
+  height: 150px;
   object-fit: fill;
   display: block;
   transition: transform .4s ease;
 }
 
-.sdg-card:hover .sdg-image {
+.sdgs__card:hover .sdgs__card-image {
   transform: scale(1.05);
 }
 
+/* Toggle button */
+
+.sdgs__toggle-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.sdgs__toggle-btn {
+  border: 1px solid var(--line-green);
+  background: #ffffff;
+  color: var(--canopy);
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.sdgs__toggle-btn:hover {
+  background: var(--canopy-tint);
+}
 
 /* ===========================
    Tablet
 =========================== */
 
 @media (max-width:1200px){
-
-.sdg-grid{
-
+.sdgs__grid{
 grid-template-columns:repeat(4,1fr);
-
 }
 
 }
@@ -144,21 +114,14 @@ grid-template-columns:repeat(4,1fr);
 /* ===========================
    Small Tablet
 =========================== */
-
 @media (max-width:980px){
-
-.sdgs-header{
-
+.sdgs__header{
 flex-direction:column;
-
 align-items:flex-start;
-
 }
 
-.sdg-grid{
-
+.sdgs__grid{
 grid-template-columns:repeat(3,1fr);
-
 }
 
 }
@@ -168,31 +131,23 @@ grid-template-columns:repeat(3,1fr);
 =========================== */
 
 @media (max-width:700px){
+.sdgs{
+  padding: 32px 32px 50px;
+}
 
-.sdgs-section{
-
-padding:80px 20px;
+.sdgs__header h2{
+font-size:35px;
 
 }
 
-.sdgs-header h2{
-
-font-size:34px;
-
-}
-
-.sdg-grid{
-
+.sdgs__grid{
 grid-template-columns:repeat(2,1fr);
-
 gap:18px;
 
 }
 
-.sdg-image{
-
+.sdgs__card-image{
 height:110px;
-
 }
 
 }
@@ -200,19 +155,14 @@ height:110px;
 /* ===========================
    Small Phones
 =========================== */
-
 @media (max-width:240px){
-
-.sdg-grid{
-
+.sdgs__grid{
 grid-template-columns:2fr;
 
 }
 
-.sdg-image{
-
+.sdgs__card-image{
 height:60px;
-
 }
 
 }

@@ -1,0 +1,283 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/project-list.js for my class glossary*/
+
+
+.project-list__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0 28px;
+}
+
+.project-list__type-tabs-scroll {
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.project-list__type-tabs-scroll::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.project-list__scroll-hint {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .project-list__scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 34px;
+    font-size: 16px;
+    color: var(--accent);
+    background: linear-gradient(to right, transparent, var(--paper) 55%);
+    pointer-events: none;
+  }
+}
+
+.project-list__type-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  padding: 2px 16px; 
+  width: max-content;
+}
+
+.project-list__type-tabs button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: var(--accent-border);
+    color: var(--text-h);
+  }
+
+  
+  &.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.project-list__sort-tabs {
+  display: flex;
+  gap: 6px;
+  flex: none;
+  padding: 4px;
+  border-radius: 2px;
+  background: var(--code-bg);
+}
+
+@media (max-width: 640px) {
+  .project-list__type-tabs-scroll {
+    flex-basis: 100%; 
+  }
+
+  .project-list__sort-tabs {
+    margin-left: auto; 
+    gap: 1px;
+    padding: 1px;
+  }
+
+  .project-list__sort-tabs button {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+}
+
+.project-list__sort-tabs button {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 2px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--text-h);
+  }
+
+  &.active {
+    background: var(--bg);
+    color: var(--text-h);
+    box-shadow: var(--shadow);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Fallback for projects without a photo yet */
+.project-list__card-image-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  opacity: 0.55;
+}
+
+.project-list__card-image-icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.project-list__card-meta span,
+.project-list__card-volunteers {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-list__card-meta svg,
+.project-list__card-volunteers svg {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+/* Save/like toggle */
+.project-list__save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.project-list__save-btn svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* state: project-list.js toggles this on when a card gets saved/liked */
+.project-list__save-btn.is-saved {
+  color: var(--rose);
+}
+
+.project-list__view-btn {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+  padding: 9px 14px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--accent-bg);
+  }
+}
+
+
+.project-list__card.is-selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+
+.project-list__card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .project-list__card-image {
+    height: 144px; 
+  }
+
+  .project-list__card-content {
+    padding: 14px;
+  }
+
+  .project-list__card-content h3 {
+    font-size: 15px;
+  }
+
+  .project-list__grid {
+    gap: 14px;
+  }
+}
+
+.project-list__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.project-list__view-more {
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: var(--accent-border);
+    box-shadow: var(--shadow);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.project-list__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text);
+}
+
+.project-list__empty strong {
+  color: var(--text-h);
+}
+
+

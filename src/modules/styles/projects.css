@@ -1,19 +1,18 @@
-/* ================================
-   PROJECTS NEARBY SECTION
-================================ */
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/projects.js for my class glossary*/
 
-.projects-section {
+.project-list {
   background: var(--paper);
-  padding: 90px 32px;
+  padding: 20px 32px 64px;
+
 }
 
-.projects-wrap {
+.project-list__wrap {
   max-width: 1320px;
   margin: 0 auto;
 }
 
 /* Section heading */
-.projects-header {
+.project-list__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -21,7 +20,8 @@
   margin-bottom: 36px;
 }
 
-.projects-eyebrow {
+/* Not currently used in project-list.js's markup */
+.project-list__eyebrow {
   color: var(--canopy);
   font-size: 13px;
   font-weight: 700;
@@ -30,21 +30,22 @@
   margin-bottom: 10px;
 }
 
-.projects-header h2 {
+.project-list__header h2 {
   color: var(--ink);
-  font-size: 42px;
+  font-size: 34px;
   line-height: 1.1;
   font-weight: 700;
   margin: 0 0 10px;
 }
 
-.projects-header p {
+.project-list__header p {
   color: var(--muted);
   font-size: 17px;
   margin: 0;
 }
 
-.projects-map-btn {
+/* Not currently used in project-list.js's markup */
+.project-list__map-btn {
   flex-shrink: 0;
   text-decoration: none;
   color: var(--canopy);
@@ -56,75 +57,73 @@
 }
 
 /* Cards grid */
-.projects-grid {
+.project-list__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
 }
 
-/* Individual project card */
-.project-card {
+.project-list__card {
   background: #ffffff;
-  border-radius: 26px;
-  overflow: hidden;
+  border-radius: 10px; 
+  overflow: hidden; 
   border: 1px solid var(--line);
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
 }
 
 /* Top visual part of each card */
-.project-image {
+.project-list__card-image {
   height: 220px;
   position: relative;
   overflow: hidden;
 }
 
-.project-image img {
+.project-list__card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* fills the whole area */
+  object-fit: cover;  
   display: block;
 }
 
 /* Keep the buttons above the image */
-.project-type,
-.save-btn {
+.project-list__card-type,
+.project-list__save-btn {
   z-index: 2;
 }
 
-.project-illustration {
+.project-list__card-illustration {
   width: 130px;
   height: 130px;
   object-fit: contain;
   display: block;
 }
 
-/* Card background colours */
-.soft-green {
+.project-list__card-image--soft-green {
   background: var(--canopy-tint);
 }
 
-.soft-yellow {
+.project-list__card-image--soft-yellow {
   background: var(--sun-tint);
 }
 
-.soft-blue {
+.project-list__card-image--soft-blue {
   background: var(--indigo-tint);
 }
 
-.soft-pink {
+.project-list__card-image--soft-pink {
   background: var(--rose-tint);
 }
 
-.soft-cream {
+.project-list__card-image--soft-cream {
   background: var(--paper-deep);
 }
 
-.soft-red {
+.project-list__card-image--soft-red {
   background: var(--clay-tint);
 }
 
 /* Small type label */
-.project-type {
+.project-list__card-type {
   position: absolute;
   top: 18px;
   left: 18px;
@@ -138,24 +137,25 @@
   border-radius: 999px;
 }
 
-.project-type.volunteer {
+
+.project-list__card-type--volunteer {
   background: var(--canopy);
 }
 
-.project-type.project {
+.project-list__card-type--project {
   background: var(--indigo);
 }
 
-.project-type.training {
+.project-list__card-type--training {
   background: var(--plum);
 }
 
-.project-type.fellowship {
+.project-list__card-type--fellowship {
   background: var(--sun-dark);
 }
 
 /* Save/favourite button */
-.save-btn {
+.project-list__save-btn {
   position: absolute;
   top: 18px;
   right: 18px;
@@ -170,11 +170,11 @@
 }
 
 /* Card bottom content */
-.project-content {
+.project-list__card-content {
   padding: 20px 22px 22px;
 }
 
-.project-meta {
+.project-list__card-meta {
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -185,25 +185,25 @@
   margin-bottom: 10px;
 }
 
-.project-meta span:last-child {
+.project-list__card-meta span:last-child {
   color: var(--sun-dark);
 }
 
-.project-content h3 {
+.project-list__card-content h3 {
   color: var(--ink);
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 6px;
 }
 
-.project-content p {
+.project-list__card-content p {
   color: var(--muted);
   font-size: 14px;
   margin: 0;
 }
 
 /* Bottom row with SDGs and volunteers */
-.project-footer {
+.project-list__card-footer {
   border-top: 1px solid var(--paper-deep);
   margin-top: 18px;
   padding-top: 16px;
@@ -213,33 +213,36 @@
   gap: 12px;
 }
 
-.sdg-tags {
+/* SDG category badges */
+.project-list__card-sdg-tags {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
-.sdg-tags span {
-  width: 24px;
-  height: 24px;
-  border-radius: 7px;
-  background: var(--canopy);
-  color: #ffffff;
-  display: grid;
-  place-items: center;
+.project-list__card-sdg-tags span {
+  padding: 7px 12px;
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--canopy-tint);
+  color: var(--canopy-dark);
 }
 
-.sdg-tags span:nth-child(2) {
-  background: var(--canopy-light);
+.project-list__card-sdg-tags span:nth-child(2) {
+  background: var(--sun-tint);
+  color: var(--sun-dark);
 }
 
-.sdg-tags span:nth-child(3) {
-  background: var(--sun-dark);
+.project-list__card-sdg-tags span:nth-child(3) {
+  background: var(--indigo-tint);
+  color: var(--indigo);
 }
 
-.volunteers {
+.project-list__card-volunteers {
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
@@ -247,12 +250,13 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-  .projects-header {
+  .project-list__header {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .projects-grid {
+  .project-list__grid {
     grid-template-columns: 1fr;
   }
 }
+

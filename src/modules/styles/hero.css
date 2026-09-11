@@ -1,23 +1,15 @@
-/* ===========================
-   HERO
-=========================== */
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/hero.js for my class glossary*/
+
 
 .hero {
   position: relative;
   min-height: 650px;
-
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 
-/* Signature motif: contour rings rippling outward, as if impact
-   were spreading out from a single dropped pin. Pure CSS via the
-   box-shadow ring trick -- no extra markup needed. */
 .hero::after {
   content: "";
   position: absolute;
@@ -38,7 +30,7 @@
     0 0 0 254px transparent,
     0 0 0 255px rgba(31, 92, 63, 0.05);
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
 }
 
 @media (max-width: 1100px) {
@@ -47,56 +39,116 @@
   }
 }
 
-.hero-overlay {
+.hero__overlay {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
   padding: 40px 32px;
 }
 
-.hero-content {
+.hero__content {
   max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;   /* <-- up/down to control the
+                       whole panel's breathing room*/
 }
 
-/* ===========================
-   PILL
-=========================== */
-
-.hero-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px 18px;
-
-  background: var(--canopy-tint);
-  border: 1px solid var(--line-green);
-  border-radius: 999px;
-
-  color: var(--canopy-dark);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+/* SLIDESHOW BACKGROUND */
+.hero__bg-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-.hero-pill span{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:var(--canopy);
+.hero__bg-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
 }
 
-/* ===========================
-   TITLE
-=========================== */
+.hero__bg-layer.active {
+  opacity: 1;
+}
 
+.hero__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: linear-gradient(
+    to right,
+    rgba(242, 245, 238, 0.98) 0%,
+    rgba(242, 245, 238, 0.95) 24%,
+    rgba(242, 245, 238, 0.82) 38%,
+    rgba(242, 245, 238, 0.3) 52%,
+    rgba(242, 245, 238, 0) 66%
+  );
+}
+
+/* SLIDESHOW CONTROLS */
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.hero__arrow:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+.hero__arrow--prev { left: 20px; }
+.hero__arrow--next { right: 20px; }
+
+.hero__dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 12px;
+}
+
+.hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* state: hero.js toggles this to mark the current slide */
+.hero__dot.active {
+  background: var(--canopy);
+  transform: scale(1.2);
+}
+
+@media (max-width: 640px) {
+  .hero__arrow {
+    display: none;
+  }
+}
+
+/* TITLE */
 .hero h1{
-
-    margin:22px 0 18px;
 
     font-family:var(--font-display);
 
@@ -120,10 +172,7 @@
     font-style:normal;
 }
 
-/* ===========================
-   PARAGRAPH
-=========================== */
-
+/* PARAGRAPH */
 .hero p{
 
     max-width:520px;
@@ -133,27 +182,20 @@
     font-size:19px;
 
     line-height:1.65;
-
-    margin-bottom:30px;
 }
 
-/* ===========================
-   BUTTONS
-=========================== */
-
-.hero-actions{
+/* BUTTONS */
+.hero__actions{
 
     display:flex;
 
     gap:16px;
 
     flex-wrap:wrap;
-
-    margin-top:8px;
 }
 
-.hero-primary,
-.hero-secondary{
+.hero__cta--primary,
+.hero__cta--secondary{
 
     display:inline-flex;
 
@@ -174,7 +216,7 @@
     transition:.3s;
 }
 
-.hero-primary{
+.hero__cta--primary{
 
     background:var(--canopy);
 
@@ -183,12 +225,12 @@
     box-shadow:0 15px 35px rgba(31,92,63,.25);
 }
 
-.hero-primary:hover{
+.hero__cta--primary:hover{
 
     transform:translateY(-3px);
 }
 
-.hero-secondary{
+.hero__cta--secondary{
 
     background:#fff;
 
@@ -197,154 +239,98 @@
     border:1px solid var(--line);
 }
 
-.hero-secondary:hover{
+.hero__cta--secondary:hover{
 
     background:var(--paper);
-}
-
-/* ===========================
-   STATS
-=========================== */
-
-.hero-stats {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(120px, 180px));
-  gap: 28px;
-  justify-content: start;
-}
-
-.hero-stats {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(120px, 180px));
-  gap: 28px;
-  justify-content: start;
-}
-
-.stat-item strong{
-    display: block;
-    color: var(--canopy);
-    font-family: var(--font-mono);
-    font-size: 38px;
-    font-weight: 600;
-    line-height: 1;
-}
-
-.stat-item span{
-    display: block;
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.4;
 }
 
 /* ===========================
    RESPONSIVE
 =========================== */
 
-@media (max-width:1100px){
+@media (max-width: 1100px) {
 
-.hero{
-
-min-height:auto;
-
-background-position:right center;
-
-/* background-image: linear-gradient(to right,
-  var(--paper) 0%,
-  var(--paper) 45%,
-  rgba(242,245,238,0.75) 62%,
-  rgba(242,245,238,0.15) 82%) !important;
-
-} */
-
-.hero-overlay{
-
-padding:60px 24px;
-
-}
-
-.hero-content{
-
-max-width:460px;
-
-}
-
-.hero h1{
-
-font-size:48px;
-
-}
-
-.hero p{
-
-font-size:18px;
-
-max-width:440px;
-
-}
-
-.hero-stats{
-
-grid-template-columns:repeat(2,max-content);
-
-column-gap:42px;
-
-row-gap:26px;
-
-}
-
-}
-
-@media (max-width: 480px) {
   .hero {
-    /* The decorative illustration doesn't have room to breathe next
-       to readable text at true mobile widths, so we drop it in favour
-       of a clean brand-colour backdrop rather than cramping both. */
-    background-image: none !important;
-    background-color: var(--paper);
+    min-height: auto;
   }
 
-  .hero-content {
-    max-width: 100%;
+  .hero__overlay {
+    padding: 24px 24px 60px;
+  }
+
+  .hero__content {
+    gap: 26px; 
+  }
+
+  .hero__gradient {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(242, 245, 238, 0.25) 0%,
+      rgba(242, 245, 238, 0.15) 100%
+    );
+  }
+
+  /*  Legibility fix: the panel for the text by left. backdrop-filter blurs 
+      what's directly behind the panel, so the image stays sharp outside its edges.
+
+     CASE 1 — rgba(255, 255, 255, X). White panel opacity: 0 to 1
+     CASE 2 — blur(Xpx). How frosted the image looks behind the panel 
+
+     The image looks too washed out, lower opacity first. Only raise blur if 
+     the image is already clear but text still struggles against a busy photo. */
+  .hero__content {
+    max-width: 460px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 20px;
+    padding: 28px 26px 36px;
   }
 
   .hero h1 {
-    font-size: 40px;
+    font-size: 48px;
   }
 
-  .hero-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 40px;
+  .hero p {
+    font-size: 18px;
+    max-width: 440px;
   }
 
-  .stat-item strong {
-    font-size: 44px;
-  }
-
-  .stat-item span {
-    font-size: 16px;
-  }
 }
 
 @media (max-width: 480px) {
+
+  .hero__overlay {
+    padding: 55px 20px 55px;
+  }
+  .hero {
+    padding-bottom: 20px;
+  }
+
+  .hero__content {
+    gap: 26x;  
+  }
+
+  .hero__gradient {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(242, 245, 238, 0.3) 0%,
+      rgba(242, 245, 238, 0.2) 100%
+    );
+  }
+
+
+  .hero__content {
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    padding: 22px 18px 30px;
+    border-radius: 16px;
+  }
+
   .hero h1 {
-    font-size: 34px;
+    font-size: 39px;
   }
 
-  .hero-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .stat-item strong {
-    font-size: 38px;
-  }
-
-  .stat-item span {
-    font-size: 15px;
-  }
 }

@@ -1,19 +1,24 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/footer.js for my class glossary*/
+
+
 .footer {
   background: var(--ink);
-  padding: 40px 32px 20px;
+  padding: 16px 32px 20px;
   color: #ffffff;
+  text-align: left;
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
 }
 
-.footer-wrap {
+.footer__wrap {
   max-width: 1320px;
   margin: 0 auto;
 }
 
-/* ===========================
-   TOP GRID (brand + link columns)
-=========================== */
-
-.footer-grid {
+/* TOP GRID (brand + link columns + contact) */
+.footer__grid {
   display: grid;
   grid-template-columns: 1.4fr repeat(3, 1fr);
   gap: 40px;
@@ -22,36 +27,36 @@
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
-.footer-logo {
+.footer__logo {
   width: 80px;
   height: 80px;
   margin-bottom: 18px;
 }
 
-.footer-logo img {
+.footer__logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
 
-.footer-brand p {
+.footer__brand p {
   color: rgba(255,255,255,.65);
   line-height: 1.75;
   max-width: 380px;
   margin-bottom: 22px;
 }
 
-.newsletter {
+.footer__newsletter {
   display: flex;
   max-width: 420px;
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 999px;
+  border-radius: 9px;
   padding: 6px;
 }
 
-.newsletter input {
+.footer__newsletter input {
   flex: 1;
   min-width: 0;
   border: none;
@@ -61,158 +66,91 @@
   padding: 0 16px;
 }
 
-.newsletter input::placeholder {
+.footer__newsletter input::placeholder {
   color: rgba(255,255,255,.45);
+  font-size: 17px;
 }
 
-.newsletter button {
+.footer__newsletter button {
   border: none;
   background: var(--canopy);
   color: #ffffff;
   font-weight: 700;
-  border-radius: 999px;
+  border-radius: 9px;
   padding: 12px 18px;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-.footer-col {
+.footer__col {
   min-width: 0;
 }
 
-.footer-col h3 {
-  font-size: 15px;
-  margin-bottom: 18px;
-  color: #ffffff;
+.footer__col h3 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 20px;
 }
 
-.footer-col a {
+.footer__col a {
+  position: relative;
   display: block;
   color: rgba(255,255,255,.58);
   text-decoration: none;
-  margin-bottom: 13px;
+  margin-bottom: 12px;
+  padding-left: 14px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.footer-col a:hover {
+/* chevron marker, matching the reference footer's link style */
+.footer__col a::before {
+  content: "\203A";
+  position: absolute;
+  left: 0;
+  color: rgba(255,255,255,.32);
+}
+
+.footer__col a:hover {
   color: var(--canopy-light);
 }
 
-/* ===========================
-   PARTNERS + IMPACT
-=========================== */
-
-.footer-partners-row {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 48px;
-  padding: 34px 0;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  align-items: center;
-}
-
-.footer-partners h3,
-.footer-impact h3 {
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(255,255,255,.55);
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
-
-/* Partner logos: these come with solid light backgrounds baked in
-   (not transparent), so we give them a small clean chip to sit on
-   rather than trying to blend them directly into the dark footer. */
-.footer-partner-row {
+/* CONTACT US */
+.footer__contact-item {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: rgba(255,255,255,.65);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.footer-partner-logo {
-  height: 52px;
-  padding: 8px 14px;
-  background: rgba(255,255,255,.95);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  opacity: 0.85;
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-.footer-partner-logo img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-}
-
-.footer-partner-logo:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-/* Impact stats: a single organic row of numbers with thin dividers,
-   instead of boxed stat cards. Never wraps on tablet/desktop. */
-.footer-impact-row {
-  display: flex;
-  align-items: baseline;
-  gap: 22px;
-  flex-wrap: nowrap;
-}
-
-.footer-impact-stat {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  white-space: nowrap;
-}
-
-.footer-impact-stat strong {
-  color: var(--canopy-light);
-  font-family: var(--font-mono);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.footer-impact-stat span {
-  color: rgba(255,255,255,.6);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.footer-impact-divider {
-  width: 1px;
-  height: 22px;
-  background: rgba(255,255,255,.15);
+.footer__contact-item svg {
+  width: 17px;
+  height: 17px;
   flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--canopy-light);
 }
 
-.footer-bottom {
-  padding-top: 24px;
+.footer__socials {
   display: flex;
-  justify-content: space-between;
-  color: rgba(255,255,255,.5);
-  font-size: 13px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-/* Socials: dark square badges that already match the footer tone --
-   kept modest and slightly muted at rest, full presence on hover,
-   so they read as part of the footer rather than bolted-on buttons. */
-.footer-socials {
-  display: flex;
-  gap: 14px;
-  margin-top: 22px;
+.footer__socials a::before {
+  content: none;
 }
 
-.footer-socials a {
+.footer__socials a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,71 +158,88 @@
   transition: opacity .25s ease, transform .25s ease;
 }
 
-.footer-socials a:hover {
+.footer__socials a:hover {
   opacity: 1;
   transform: translateY(-3px);
 }
 
-.footer-socials img {
+.footer__socials img {
   width: 34px;
   height: 34px;
   object-fit: cover;
   border-radius: 8px;
 }
 
+/* Commented-out sibling rule for footer.js's own commented-out inline
+   SVG WhatsApp icon */
+/* .whatsapp-icon svg {
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  border-radius: 8px;
+  background: #25d366;
+  color: #ffffff;
+} */
+
+.footer__bottom {
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255,255,255,.5);
+  font-size: 13px;
+}
+
+
 /* ===========================
    RESPONSIVE
 =========================== */
 
 @media (max-width: 1100px) {
-  .footer-grid {
+  .footer__grid {
     grid-template-columns: 1fr 1fr;
     row-gap: 36px;
   }
 
-  .footer-brand {
+  .footer__brand {
     grid-column: 1 / -1;
-  }
-
-  .footer-partners-row {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-
-  .footer-impact-row {
-    flex-wrap: wrap;
-    row-gap: 14px;
   }
 }
 
 @media (max-width: 640px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  /* Quick Links and Resources sit side-by-side as a narrower 2-column
+     row instead of each stacking full-width; */
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "brand brand"
+      "quicklinks resources"
+      "contact contact";
+    gap: 28px 20px;
   }
-
-  .footer-partner-row {
-    gap: 26px;
+ 
+  .footer__brand {
+    grid-area: brand;
   }
-
-  .footer-partner-logo {
-    height: 32px;
+ 
+  .footer__col--quicklinks {
+    grid-area: quicklinks;
   }
-
-  .footer-impact-row {
-    gap: 16px;
+ 
+  .footer__col--resources {
+    grid-area: resources;
   }
-
-  .footer-impact-stat strong {
-    font-size: 19px;
+ 
+  .footer__col--contact {
+    grid-area: contact;
   }
-
-  .footer-bottom {
+ 
+  .footer__bottom {
     flex-direction: column;
     gap: 10px;
   }
-
-  .newsletter {
+ 
+  .footer__newsletter {
     max-width: 100%;
   }
 }

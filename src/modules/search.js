@@ -1,20 +1,12 @@
-/**
- * Live search dropdown.
- *
- * Responsibility: wire up the search inputs rendered by nav.js —
- * debounce keystrokes, call the search API, render results.
- * nav.js stays responsible for markup only; this file owns behavior.
- *
- * The fetch URL below is a relative path (/api/search) rather than
- * a full localhost URL. Because the frontend and the /api serverless
- * function deploy to the SAME Vercel project/domain, "same origin"
- * applies in both local dev (`vercel dev`) and production — no CORS
- * headers or environment-specific base URL needed.
- */
+ //Our Live search dropdown. Wires up the search inputs rendered by nav.js 
+ //DEVELOPERS NOTE at the buttom
+ 
 
+// ① CONFIG:
 const DEBOUNCE_MS = 300;
 const MIN_CHARS = 2;
 
+// ② HELPERS:
 function debounce(fn, delay) {
   let timer;
   return (...args) => {
@@ -29,11 +21,12 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// ③ RENDERING:
 function renderGroup(label, items, renderItem) {
   if (!items || items.length === 0) return "";
   return `
-    <div class="search-group">
-      <span class="search-group-label">${label}</span>
+    <div class="search-dropdown__group">
+      <span class="search-dropdown__group-label">${label}</span>
       ${items.map(renderItem).join("")}
     </div>
   `;
@@ -41,21 +34,21 @@ function renderGroup(label, items, renderItem) {
 
 function renderResults(data) {
   const projects = renderGroup("Projects", data.projects, (p) => `
-    <a href="#discover" class="search-result">
+    <a href="#discover" class="search-dropdown__result">
       <strong>${escapeHtml(p.title)}</strong>
       <span>${escapeHtml(p.organisation || "")}${p.location ? " · " + escapeHtml(p.location) : ""}</span>
     </a>
   `);
 
   const opportunities = renderGroup("Opportunities", data.opportunities, (o) => `
-    <a href="#opportunities" class="search-result">
+    <a href="#opportunities" class="search-dropdown__result">
       <strong>${escapeHtml(o.title)}</strong>
       <span>${escapeHtml(o.type || "")}${o.location ? " · " + escapeHtml(o.location) : ""}</span>
     </a>
   `);
 
   const impactmakers = renderGroup("Impactmakers", data.impactmakers, (m) => `
-    <a href="#community" class="search-result">
+    <a href="#community" class="search-dropdown__result">
       <strong>${escapeHtml(m.full_name)}</strong>
       <span>${escapeHtml(m.role || "")}${m.organisation ? " · " + escapeHtml(m.organisation) : ""}</span>
     </a>
@@ -64,12 +57,13 @@ function renderResults(data) {
   const hasAnyResults = projects || opportunities || impactmakers;
 
   if (!hasAnyResults) {
-    return `<div class="search-empty">No results found.</div>`;
+    return `<div class="search-dropdown__empty">No results found.</div>`;
   }
 
   return projects + opportunities + impactmakers;
 }
 
+// ④ WIRING:
 function wireSearchInput(inputId, resultsId) {
   const input = document.getElementById(inputId);
   const resultsBox = document.getElementById(resultsId);
@@ -84,7 +78,7 @@ function wireSearchInput(inputId, resultsId) {
     }
 
     resultsBox.hidden = false;
-    resultsBox.innerHTML = `<div class="search-loading">Searching…</div>`;
+    resultsBox.innerHTML = `<div class="search-dropdown__loading">Searching…</div>`;
 
     try {
       const response = await fetch(
@@ -99,7 +93,7 @@ function wireSearchInput(inputId, resultsId) {
       resultsBox.innerHTML = renderResults(data);
     } catch (err) {
       console.error("Search error:", err);
-      resultsBox.innerHTML = `<div class="search-empty">Something went wrong. Try again.</div>`;
+      resultsBox.innerHTML = `<div class="search-dropdown__empty">Something went wrong. Try again.</div>`;
     }
   }, DEBOUNCE_MS);
 
@@ -113,7 +107,54 @@ function wireSearchInput(inputId, resultsId) {
   });
 }
 
+// ⑤ INITIALIZATION:
 export function initSearch() {
   wireSearchInput("nav-search-input", "nav-search-results");
   wireSearchInput("sidebar-search-input", "sidebar-search-results");
 }
+
+
+
+
+
+/*
+  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+
+  ARCHITECTURE OVERVIEW:
+  Wires up BOTH search boxes nav.js renders (desktop nav bar + mobile
+  sidebar) with the exact same debounce/fetch/render logic with different 
+  id pairs rather than duplicating the logic per input.
+
+  IMPORTANT: this file does NOT own the "search-dropdown" block it lives in
+  nav.js. This file only fills that container's innerHTML using the
+  SAME class names nav.css already expects; search-dropdown__group,
+  __group-label, __result, __loading, __empty. If those class names
+  ever change over in nav.css, they need to change here too, in the
+  same edit 
+
+  BLOCKS DEFINITIONS:
+  ① CONFIG        — debounce delay and the minimum character count
+                    before a search actually fires.
+  ② HELPERS         — debounce() delays rapid-fire calls down to one;
+                    escapeHtml() sanitizes any text pulled from the
+                    API response before it's dropped into innerHTML,
+                    so search results can't inject arbitrary markup.
+  ③ RENDERING       — renderGroup() builds one labeled result group
+                    (Projects/Opportunities/Impactmakers); renderResults()
+                    assembles all three groups (or an empty-state
+                    message if nothing matched anything).
+  ④ WIRING          — wireSearchInput() is the whole pipeline for ONE
+                    input: debounced fetch, loading state, render
+                    results, and closing the dropdown on an outside
+                    click.
+  ⑤ INITIALIZATION  — calls wireSearchInput() for both the desktop and
+                    mobile search boxes.
+
+  CLASS NAME GLOSSARY:
+  This file doesn't own any classes, it only emits the
+  search-dropdown__* classes that belong to nav.css's "search-dropdown"
+  block. 
+
+ 
+*/

@@ -1,0 +1,93 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/partners.js for my class glossary*/
+
+
+.partners {
+  padding: 56px 0 64px;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.partners__wrap {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  text-align: center;
+  padding: 0 32px;
+}
+
+.partners__wrap h2 {
+  font-size: 28px;
+  letter-spacing: -0.3px;
+}
+
+.partners__track-outer {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.partners__track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: partners-scroll 28s linear infinite;
+}
+
+.partners__track:hover {
+  animation-play-state: paused;
+}
+
+/* Real logos sit directly on the section background.
+   We stick to transparent/pre-cropped PNGs */
+.partners__tile {
+  flex-shrink: 0;
+  height: 96px;
+  min-width: 150px;
+  padding: 4px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partners__tile img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* modifier: a placeholder tile with no real logo yet*/
+.partners__tile--placeholder {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--muted-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@keyframes partners-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .partners__track-outer {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .partners__track {
+    animation: none;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
+

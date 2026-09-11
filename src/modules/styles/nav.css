@@ -1,33 +1,26 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/nav.js for my class glossary*/
+
+
 .nav {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1200;
   background: #ffffff;
   border-bottom: 1px solid var(--line);
 }
 
-/* ===========================
-   NAV CONTAINER
-=========================== */
-
-.nav-inner {
+.nav__inner {
   max-width: 1320px;
   margin: 0 auto;
   padding: 18px 28px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 24px;
   flex-wrap: nowrap;
 }
 
-/* ===========================
-   LOGO
-=========================== */
-
-.brand {
+.nav__brand {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -35,41 +28,41 @@
   flex-shrink: 0;
 }
 
-.brand-mark {
-  width: 54px;
-  height: 54px;
+.nav__brand-mark {
+  width: 55px;
+  height: 55px;
   border-radius: 16px;
-  background: var(--canopy);
   overflow: hidden;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 13px;
 }
 
-.brand-mark img {
+.nav__brand-mark img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  display: block;
 }
 
-.brand-text {
+.nav__brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1;
 }
 
-.brand-text strong {
+.nav__brand-text strong {
   font-size: 22px;
   font-weight: 700;
   color: var(--ink);
 }
 
-.brand-text strong span {
+.nav__brand-text strong span {
   color: var(--canopy);
 }
 
-.brand-text small {
+.nav__brand-text small {
   margin-top: 6px;
   color: var(--canopy);
   font-size: 13px;
@@ -78,328 +71,242 @@
   text-transform: uppercase;
 }
 
-/* ===========================
-   SEARCH
-=========================== */
-
-.nav-search {
-
+.nav__search {
   flex: 1;
-
   max-width: 230px;
-
   height: 48px;
-
   border-radius: 999px;
-
   background: var(--paper);
-
   border: 1px solid var(--line);
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   padding: 0 18px;
-
   position: relative;
 }
 
-.nav-search span {
+.nav__search span {
   color: var(--muted);
   font-size: 18px;
 }
 
-.nav-search input {
-
+.nav__search-input {
   flex: 1;
-
   border: none;
-
   outline: none;
-
   background: transparent;
-
   font-size: 15px;
-
   color: var(--ink);
 }
 
-.nav-search input::placeholder {
+.nav__search-input::placeholder {
   color: var(--muted-light);
 }
 
-/* ===========================
-   NAV LINKS
-=========================== */
-
-.nav-links {
-
+.nav__links {
   display: flex;
-
   align-items: center;
-
   gap: 26px;
-
   flex-shrink: 0;
 }
 
-.nav-links a {
-
+.nav__link {
   text-decoration: none;
-
   color: var(--ink-soft);
-
   font-size: 15px;
-
   font-weight: 800;
-
   transition: .25s;
 }
 
-.nav-links a:hover {
+.nav__link:hover {
   color: var(--canopy);
 }
 
-/* ===========================
-   ACTIONS
-=========================== */
-
-.nav-actions {
-
+.nav__actions {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   flex-shrink: 0;
 }
 
-.login-btn {
-
+.nav__login-btn {
   background: var(--canopy);
-
   color: white;
-
   text-decoration: none;
-
   padding: 14px 24px;
-
   border-radius: 999px;
-
   font-weight: 700;
-
   transition: .25s;
 }
 
-.login-btn:hover {
+.nav__login-btn:hover {
   background: var(--canopy-dark);
 }
 
-/* ===========================
-   MENU BUTTON
-=========================== */
-
-.menu-button {
-
+.nav__menu-button {
   display: none;
-
   background: none;
-
   border: none;
-
   cursor: pointer;
-
   padding: 6px;
 }
 
-.menu-button svg {
+.nav__menu-button svg {
   fill: var(--ink);
 }
 
-/* ===========================
-   SIDEBAR
-=========================== */
-
-.sidebar {
-
+.nav__sidebar {
   position: fixed;
-
-  top: 0;
-
+  top: var(--nav-h, 84px);
+  left: 0;
   right: 0;
-
-  width: 320px;
-
-  height: 100vh;
-
+  height: calc(100vh - var(--nav-h, 84px));
   background: white;
-
-  display: none;
-
+  display: flex;
   flex-direction: column;
-
-  border-left: 1px solid var(--line);
-
-  box-shadow: -10px 0 25px rgba(0,0,0,.08);
-
+  border-top: 1px solid var(--line);
+  box-shadow: 0 20px 40px rgba(0,0,0,.12);
   z-index: 1100;
-
   overflow-y: auto;
+
+  /* Closed state kept in the DOM (not display:none) so this can animate. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
 }
 
-.close-btn {
+.nav__sidebar.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity .22s ease, transform .22s ease, visibility 0s linear 0s;
+}
 
+.nav__backdrop {
+  position: fixed;
+  top: var(--nav-h, 84px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 6, 13, .35);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease;
+}
+
+.nav__backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.nav.menu-open .nav__menu-button {
+  display: none;
+}
+
+.nav.menu-open .nav__login-btn {
+  display: none;
+}
+
+.nav.menu-open .user-menu {
+  display: flex;
+}
+
+.nav__close-btn {
   padding: 20px 24px;
-
   cursor: pointer;
 }
 
-.close-btn svg {
+.nav__close-btn svg {
   fill: var(--ink);
 }
 
-/* ===========================
-   SIDEBAR SEARCH
-=========================== */
-
-.sidebar-search {
-
+.nav__sidebar-search {
   margin: 0 20px 22px;
-
   height: 48px;
-
   border-radius: 999px;
-
   background: var(--paper);
-
   border: 1px solid var(--line);
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   padding: 0 16px;
-
   position: relative;
 }
 
-.sidebar-search span {
+.nav__sidebar-search span {
   color: var(--muted);
 }
 
-.sidebar-search input {
-
+.nav__sidebar-search-input {
   flex: 1;
-
   border: none;
-
   outline: none;
-
   background: transparent;
-
   font-size: 15px;
 }
 
-/* ===========================
-   SIDEBAR LINKS
-=========================== */
-
-.sidebar a {
-
+.nav__sidebar-link {
   width: 100%;
-
   padding: 16px 28px;
-
   color: var(--ink-soft);
-
   text-decoration: none;
-
   font-weight: 700;
-
   transition: .2s;
 }
 
-.sidebar a:hover {
-
+.nav__sidebar-link:hover {
   background: var(--paper);
-
   color: var(--canopy);
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+/* ===== Responsive ===== */
 
 /* Hide search first */
 @media (max-width:1050px){
-
-  .nav-search{
+  .nav__search{
     display:none;
   }
-
 }
 
 /* Mobile Navigation */
 @media (max-width:850px){
-
-  .nav-links,
-  .nav-search{
+  .nav__links,
+  .nav__search{
     display:none;
   }
-
-  .menu-button{
+  .nav__menu-button{
     display:flex;
   }
-
-  .nav-inner{
-
+  .nav__inner{
     padding:16px 22px;
-
     gap:18px;
   }
-
 }
 
 /* Small phones */
 @media (max-width:480px){
-
-  .sidebar{
-    width:100%;
-  }
-
-  .brand-mark{
-
+  .nav__brand-mark{
     width:46px;
-
     height:46px;
   }
-
-  .brand-text strong{
-
+  .nav__brand-text strong{
     font-size:19px;
   }
-
-  .brand-text small{
-
+  .nav__brand-text small{
     font-size:11px;
   }
-
-  .nav-inner{
-
+  .nav__inner{
     padding:14px 18px;
   }
-
 }
-
-/* ===========================
-   SEARCH DROPDOWN
-=========================== */
 
 .search-dropdown {
   position: absolute;
@@ -416,15 +323,15 @@
   z-index: 1200;
 }
 
-.search-group {
+.search-dropdown__group {
   padding: 10px 0;
 }
 
-.search-group + .search-group {
+.search-dropdown__group + .search-dropdown__group {
   border-top: 1px solid var(--line);
 }
 
-.search-group-label {
+.search-dropdown__group-label {
   display: block;
   padding: 6px 18px;
   font-size: 11px;
@@ -434,7 +341,7 @@
   color: var(--muted);
 }
 
-.search-result {
+.search-dropdown__result {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -443,23 +350,25 @@
   color: var(--ink);
 }
 
-.search-result:hover {
+.search-dropdown__result:hover {
   background: var(--paper);
 }
 
-.search-result strong {
+.search-dropdown__result strong {
   font-size: 14px;
   font-weight: 700;
 }
 
-.search-result span {
+.search-dropdown__result span {
   font-size: 12.5px;
   color: var(--muted);
 }
 
-.search-loading,
-.search-empty {
+.search-dropdown__loading,
+.search-dropdown__empty {
   padding: 16px 18px;
   font-size: 13.5px;
   color: var(--muted);
 }
+
+
