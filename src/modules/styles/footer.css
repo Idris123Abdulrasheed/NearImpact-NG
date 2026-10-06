@@ -2,14 +2,10 @@
 
 
 .footer {
-  background: var(--ink);
-  padding: 16px 32px 20px;
+  background: #12241c;
+  padding: 48px 32px 20px;
   color: #ffffff;
   text-align: left;
-  position: relative;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
 }
 
 .footer__wrap {
@@ -23,8 +19,6 @@
   grid-template-columns: 1.4fr repeat(3, 1fr);
   gap: 40px;
   padding-bottom: 36px;
-  margin-top: 30px;
-  border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
 .footer__logo {
@@ -41,19 +35,24 @@
 }
 
 .footer__brand p {
-  color: rgba(255,255,255,.65);
+  color: rgba(255, 255, 255, .65);
   line-height: 1.75;
   max-width: 380px;
   margin-bottom: 22px;
 }
 
+/* NEWSLETTER */
 .footer__newsletter {
   display: flex;
   max-width: 420px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 9px;
   padding: 6px;
+}
+
+.footer__newsletter:focus-within {
+  border-color: rgba(255, 255, 255, .45);
 }
 
 .footer__newsletter input {
@@ -63,25 +62,75 @@
   outline: none;
   background: transparent;
   color: #ffffff;
+  font: inherit;
   padding: 0 16px;
 }
 
 .footer__newsletter input::placeholder {
-  color: rgba(255,255,255,.45);
-  font-size: 17px;
+  color: rgba(255, 255, 255, .45);
 }
 
 .footer__newsletter button {
   border: none;
   background: var(--canopy);
   color: #ffffff;
+  font: inherit;
   font-weight: 700;
   border-radius: 9px;
   padding: 12px 18px;
   cursor: pointer;
   flex-shrink: 0;
+  transition: background-color .2s ease;
 }
 
+.footer__newsletter button:hover {
+  background: var(--canopy-light);
+}
+
+.footer__newsletter button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.footer__newsletter button:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.footer__newsletter-status {
+  min-height: 1.5em;
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, .65);
+}
+
+.footer__brand .footer__newsletter-status {
+  margin-bottom: 0;
+}
+
+/* state: footer.js toggles these on the status line */
+.footer__newsletter-status.is-error {
+  color: #f0a8a0;
+}
+
+.footer__newsletter-status.is-success {
+  color: #9fd4b5;
+}
+
+/* visually hidden, still announced by screen readers */
+.footer__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* LINK COLUMNS */
 .footer__col {
   min-width: 0;
 }
@@ -91,34 +140,40 @@
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.85);
+  color: rgba(255, 255, 255, .85);
   margin-bottom: 20px;
 }
 
-.footer__col a {
+.footer__link {
   position: relative;
   display: block;
-  color: rgba(255,255,255,.58);
+  color: rgba(255, 255, 255, .58);
   text-decoration: none;
   margin-bottom: 12px;
   padding-left: 14px;
   font-size: 14px;
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  transition: color .2s ease;
 }
 
-/* chevron marker, matching the reference footer's link style */
-.footer__col a::before {
+/* chevron marker */
+.footer__link::before {
   content: "\203A";
   position: absolute;
   left: 0;
-  color: rgba(255,255,255,.32);
+  color: rgba(255, 255, 255, .32);
 }
 
-.footer__col a:hover {
+.footer__link:hover {
   color: var(--canopy-light);
+}
+
+.footer__link:focus-visible,
+.footer__contact-link:focus-visible,
+.footer__social:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* CONTACT US */
@@ -127,7 +182,7 @@
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 16px;
-  color: rgba(255,255,255,.65);
+  color: rgba(255, 255, 255, .65);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -140,54 +195,72 @@
   color: var(--canopy-light);
 }
 
+.footer__contact-item span {
+  min-width: 0;
+}
+
+.footer__contact-link {
+  display: block;
+  color: rgba(255, 255, 255, .65);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color .2s ease;
+}
+
+.footer__contact-link:hover {
+  color: var(--canopy-light);
+  text-decoration: underline;
+}
+
+/* SOCIALS: row of outlined circles, divider line underneath */
 .footer__socials {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 8px 0 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
-.footer__socials a::before {
-  content: none;
-}
-
-.footer__socials a {
+.footer__social {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
-  transition: opacity .25s ease, transform .25s ease;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .18);
+  transition: border-color .25s ease, transform .25s ease, background-color .25s ease;
 }
 
-.footer__socials a:hover {
-  opacity: 1;
+.footer__social img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+  /* any downloaded icon renders white, whatever its original colour */
+  filter: brightness(0) invert(1);
+}
+
+.footer__social:hover {
+  border-color: rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, .06);
   transform: translateY(-3px);
 }
 
-.footer__socials img {
-  width: 34px;
-  height: 34px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* Commented-out sibling rule for footer.js's own commented-out inline
-   SVG WhatsApp icon */
-/* .whatsapp-icon svg {
-  box-sizing: border-box;
-  width: 34px;
-  height: 34px;
-  padding: 7px;
-  border-radius: 8px;
-  background: #25d366;
-  color: #ffffff;
-} */
-
+/* BOTTOM BAR */
 .footer__bottom {
   padding-top: 24px;
   display: flex;
   justify-content: space-between;
-  color: rgba(255,255,255,.5);
+  gap: 10px;
+  color: rgba(255, 255, 255, .5);
   font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__social:hover {
+    transform: none;
+  }
 }
 
 
@@ -207,8 +280,10 @@
 }
 
 @media (max-width: 640px) {
-  /* Quick Links and Resources sit side-by-side as a narrower 2-column
-     row instead of each stacking full-width; */
+  .footer {
+    padding: 36px 20px 20px;
+  }
+
   .footer__grid {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -217,29 +292,53 @@
       "contact contact";
     gap: 28px 20px;
   }
- 
+
   .footer__brand {
     grid-area: brand;
   }
- 
+
   .footer__col--quicklinks {
     grid-area: quicklinks;
   }
- 
+
   .footer__col--resources {
     grid-area: resources;
   }
- 
+
   .footer__col--contact {
     grid-area: contact;
   }
- 
-  .footer__bottom {
-    flex-direction: column;
-    gap: 10px;
-  }
- 
+
   .footer__newsletter {
     max-width: 100%;
   }
+
+  .footer__socials {
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  .footer__social {
+    width: 48px;
+    height: 48px;
+  }
+
+  .footer__social img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+  }
+}
+
+/* small "WhatsApp" tag next to the WhatsApp number */
+.footer__contact-link small {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--canopy-light);
 }

@@ -1,0 +1,44 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/ui/pagination.js for my class glossary*/
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.pagination__page,
+.pagination__gap {
+  min-width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pagination__page {
+  border: 1px solid var(--line-green);
+  background: var(--bg);
+  color: var(--canopy);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.pagination__page:hover {
+  background: var(--canopy-tint);
+}
+
+/* state: marks the page being viewed */
+.pagination__page.is-current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.pagination__gap {
+  color: var(--muted);
+}

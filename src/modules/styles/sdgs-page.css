@@ -1,0 +1,194 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/sdgs-page.js for my class glossary*/
+
+.sdgs-page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 20px 64px;
+}
+
+.sdgs-page__crumbs {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.sdgs-page__crumbs a {
+  color: var(--canopy);
+  text-decoration: none;
+}
+
+.sdgs-page__hero {
+  margin-bottom: 36px;
+}
+
+.sdgs-page__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--canopy);
+  margin-bottom: 10px;
+}
+
+.sdgs-page__hero h1 {
+  font-size: 36px;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.sdgs-page__lead {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.sdgs-page__stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.sdgs-page__stats li {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sdgs-page__stats strong {
+  font-family: var(--font-mono);
+  font-size: 30px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.sdgs-page__stats span {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.sdgs-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sdgs-page__tile {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.sdgs-page__tile:hover,
+.sdgs-page__tile:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--sdg-color);
+}
+
+.sdgs-page__tile:focus-visible {
+  outline: 2px solid var(--sdg-color);
+  outline-offset: 2px;
+}
+
+.sdgs-page__tile-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.sdgs-page__tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px 14px;
+  border-top: 4px solid var(--sdg-color);
+}
+
+.sdgs-page__tile-body strong {
+  font-size: 13.5px;
+  line-height: 1.35;
+  color: var(--text-h);
+}
+
+.sdgs-page__tile-body span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.sdgs-page__note {
+  margin-top: 48px;
+  background: var(--canopy-tint);
+  border: 1px solid var(--line-green);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+.sdgs-page__note h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.sdgs-page__note p {
+  max-width: 720px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.sdgs-page__cta {
+  display: inline-block;
+  background: var(--canopy);
+  color: #fff; /* white on the always-dark brand fill, the one allowed exception */
+  text-decoration: none;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 999px;
+}
+
+@media (min-width: 700px) {
+  .sdgs-page {
+    padding: 32px 32px 80px;
+  }
+  .sdgs-page__hero h1 {
+    font-size: 48px;
+  }
+  .sdgs-page__stats {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 720px;
+  }
+  .sdgs-page__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .sdgs-page__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .sdgs-page__tile--wide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 699px) {
+  .sdgs-page__tile--wide {
+    grid-column: 1 / -1;
+  }
+}

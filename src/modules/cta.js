@@ -18,10 +18,10 @@ export function renderCta() {
           </p>
 
           <div class="cta__actions">
-            <a href="#discover" class="cta__btn--primary">
+            <a href="/list-project.html" class="cta__btn--primary">
               List Your Project
             </a>
-            <a href="#community" class="cta__btn--secondary">
+            <a href="/impactmakers.html" class="cta__btn--secondary">
               Join Community
             </a>
           </div>

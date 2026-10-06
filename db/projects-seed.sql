@@ -1,0 +1,17 @@
+-- SAMPLE DATA ONLY: the 12 mock projects from data/projects.js, already APPROVED so they show up.
+-- Run ONCE, after projects.sql. Running it twice fails on the unique slug (that is a safety net, not a problem).
+-- slug is the public id used in URLs (p001...). Keep the same slugs as the mock list so the homepage
+-- cards and the database rows point at the same detail pages.
+INSERT INTO projects (slug, title, organisation, state, lga, lat, lng, types, sdgs, volunteers, rating, benefits, image, description, status) VALUES
+('p001','Urban Tree Planting','Green Ondo Network','Ondo','Akure South',7.2571,5.2058,'volunteer','13,15,11',142,3.9,'Certificate of participation','/projects/tree-planting.png','Community tree-planting drives across Akure to restore green cover.','approved'),
+('p002','Solar Micro-Grid for Rural Schools','SolarAfrica Initiative','Ondo','Owo',7.1944,5.5833,'project,internship','7,4,1',38,4.4,'Technical mentorship + stipend','/projects/solar-grid.jpeg','Installing solar micro-grids to power rural school classrooms.','approved'),
+('p003','Ocean Plastic Cleanup Drive','Clean Gutters Nigeria','Ondo','Akure South',7.25,5.195,'volunteer','14,12,13',289,5,'Free branded gear','/projects/ocean-cleanup.png','Coastal and waterway cleanup exercises near FUTA South.','approved'),
+('p004','Youth Climate Advocacy Training','African Climate Foundation','Ondo','Akure South',7.265,5.21,'training','13,4,16',67,4.7,'Certification + networking','/projects/climate-training.png','Advocacy and public-speaking training for young climate leaders.','approved'),
+('p005','Community Food Garden Network','Urban Food Co-op Ondo','Ondo','Owo',7.2,5.59,'volunteer','2,3,11',204,4.2,'Take-home produce','/projects/community-garden.jpeg',NULL,'approved'),
+('p006','Women in Clean Energy','PowerHer Foundation','Ondo','Akure North',7.32,5.23,'fellowship','5,7,8',91,3.3,'12-month paid fellowship','/projects/clean-energy.jpeg','Fellowship placing women in clean-energy technical roles.','approved'),
+('p007','Lagos Lagoon Restoration Project','Blue Water Collective','Lagos','Eti-Osa',6.45,3.47,'volunteer,internship','14,15,6',312,4.6,'Transport stipend','/projects/lagos-lagoon.jpeg','Mangrove replanting and water-quality monitoring in the lagoon.','approved'),
+('p008','Tech for Good Internship','Impact Builders Lab','Lagos','Yaba',6.5095,3.3711,'internship','8,9,17',54,4.5,'₦120k/month stipend','/projects/tech-intenship.jpeg','Building digital tools for NGOs and social enterprises.','approved'),
+('p009','Abuja Clean Water Initiative','Clean Water Collective','FCT','Municipal Area Council',9.0765,7.3986,'volunteer,grant','3,6,12',178,4.1,'Grant funding available','/projects/abuja-water.jpeg','Borehole installation and water-safety education in Abuja communities.','approved'),
+('p010','Kano Youth Solar Jobs','SolarAfrica Initiative','Kano','Nassarawa',12.0022,8.592,'job','7,8,1',22,4,'Full-time employment','/projects/kano-solar.jpeg','Solar panel installation and maintenance jobs for local youth.','approved'),
+('p011','Rivers State Mangrove Watch','Green Futures Africa','Rivers','Port Harcourt',4.8156,7.0498,'volunteer','13,14,15',96,4.3,'Field gear provided','/projects/rivers-mangrove.jpeg','Monitoring and replanting mangrove ecosystems along the Niger Delta.','approved'),
+('p012','Enugu Girls in STEM Fellowship','Youth SDG Hub','Enugu','Enugu East',6.4413,7.4986,'fellowship','4,5,9',41,4.8,'Laptop + mentorship','/projects/clean-energy.jpeg','STEM mentorship fellowship for secondary school girls.','approved');

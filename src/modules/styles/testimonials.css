@@ -48,7 +48,7 @@
 .testimonials__card {
   flex: 0 0 min(360px, 86vw);
   scroll-snap-align: start;
-  background: #ffffff;
+  background: var(--bg);  
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 30px;
@@ -57,7 +57,7 @@
 
 /* modifier: the one card with a distinct gradient background */
 .testimonials__card--featured {
-  background: linear-gradient(135deg, #ffffff, var(--canopy-tint));
+  background: linear-gradient(135deg, var(--bg), var(--canopy-tint));
   border-color: var(--line-green);
 }
 
@@ -134,7 +134,7 @@
   height: 42px;
   border-radius: 10px;
   border: 1px solid var(--line-green);
-  background: #ffffff;
+  background: var(--bg);  
   color: var(--canopy);
   font-size: 18px;
   font-weight: 700;
@@ -151,7 +151,7 @@
 .testimonials__nav-btn:disabled {
   opacity: 0.35;
   cursor: default;
-  background: #ffffff;
+  background: var(--bg);  
 }
 
 

@@ -1,0 +1,224 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/detail.js for my class glossary*/
+
+.detail {
+  background: var(--paper);
+  min-height: 60vh;
+}
+
+.detail__status {
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--muted);
+}
+
+.detail__status a {
+  color: var(--canopy);
+  font-weight: 700;
+}
+
+/* Title band. #fff on the always-dark brand fill, same as other brand-fill buttons */
+.detail__header {
+  background: var(--canopy-dark);
+  padding: 32px 20px 40px;
+}
+
+.detail__header-wrap,
+.detail__wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.detail__back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #fff;
+  opacity: 0.8;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.detail__back:hover {
+  opacity: 1;
+}
+
+.detail__badge {
+  display: block;
+  width: max-content;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--sun);
+  color: var(--canopy-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detail__header h1 {
+  color: #fff;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.detail__org {
+  margin-top: 10px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Content column */
+.detail__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px 20px 64px;
+}
+
+.detail__facts,
+.detail__about {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.detail__sdgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.detail__sdg {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--canopy-tint);
+  color: var(--canopy-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.detail__facts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail__fact {
+  display: grid;
+  grid-template-columns: 20px 90px 1fr;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.detail__fact-icon {
+  display: inline-flex;
+  color: var(--canopy);
+}
+
+.detail__fact-label {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.detail__fact-value {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.detail__about h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.detail__about p {
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+
+.detail__about p + p {
+  margin-top: 12px;
+}
+
+/* Register / apply box */
+.detail__action {
+  background: var(--canopy-tint);
+  border: 1px solid var(--line-green);
+  border-radius: 14px;
+  padding: 24px 20px;
+}
+
+.detail__action h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.detail__action p {
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.detail__action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.detail__btn {
+  flex: 1 1 160px;
+  min-height: 48px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--canopy);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.detail__btn:hover {
+  filter: brightness(1.05);
+}
+
+.detail__btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.detail__btn--primary {
+  background: var(--canopy);
+  color: #fff;
+}
+
+.detail__btn--secondary {
+  background: var(--bg);
+  color: var(--canopy);
+}
+
+@media (min-width: 768px) {
+  .detail__header {
+    padding: 40px 20px 48px;
+  }
+  .detail__header h1 {
+    font-size: 40px;
+  }
+  .detail__facts,
+  .detail__about,
+  .detail__action {
+    padding: 28px;
+  }
+}

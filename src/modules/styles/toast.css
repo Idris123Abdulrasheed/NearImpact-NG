@@ -11,13 +11,9 @@
   align-items: center;
   gap: 14px;
   padding: 14px 18px;
-  background: var(--ink);
-  color: var(--paper);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  background: #12241c; /* always dark, same reasoning as footer.css */
+  color: #f2f5ee;
 }
-
 
 .toast.visible { opacity: 1; transform: translate(-50%, 0); }
 

@@ -1,0 +1,247 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/impactmaker-profile.js for my class glossary*/
+
+
+.maker-profile {
+  padding: 40px 24px 96px;
+}
+
+.maker-profile__wrap {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.maker-profile__wrap--narrow {
+  max-width: 640px;
+}
+
+.maker-profile__back {
+  display: inline-block;
+  color: var(--canopy);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+
+.maker-profile__back:hover {
+  text-decoration: underline;
+}
+
+.maker-profile a:focus-visible {
+  outline: 2px solid var(--canopy);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* HERO */
+.maker-profile__hero {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+.maker-profile__photo {
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--paper-deep);
+  box-shadow: var(--shadow);
+}
+
+.maker-profile__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.maker-profile__sdg {
+  display: inline-block;
+  background: var(--canopy-tint);
+  color: var(--canopy-dark);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.maker-profile__intro h1,
+.maker-profile__wrap--narrow h1 {
+  font-size: 42px;
+  line-height: 1.12;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.maker-profile__meta {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.maker-profile__bio {
+  color: var(--ink-soft);
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 600px;
+}
+
+/* STATS */
+.maker-profile__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 48px;
+  margin-top: 44px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.maker-profile__stat {
+  display: flex;
+  flex-direction: column-reverse; /* number first, label under it */
+  gap: 6px;
+}
+
+.maker-profile__stat dd {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.maker-profile__stat dt {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* SECTIONS */
+.maker-profile__section {
+  margin-top: 48px;
+}
+
+.maker-profile__section h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.maker-profile__empty {
+  color: var(--muted);
+  font-size: 16px;
+  padding: 20px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+}
+
+/* CONTRIBUTIONS TIMELINE */
+.maker-profile__timeline {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.maker-profile__item {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.maker-profile__item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.maker-profile__year {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--canopy);
+  padding-top: 3px;
+}
+
+.maker-profile__item h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.maker-profile__item p {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* SKILLS + LINKS */
+.maker-profile__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.maker-profile__chips li {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.maker-profile__links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+
+.maker-profile__links a {
+  color: var(--canopy);
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .maker-profile__hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .maker-profile__photo {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .maker-profile {
+    padding: 28px 20px 72px;
+  }
+
+  .maker-profile__intro h1,
+  .maker-profile__wrap--narrow h1 {
+    font-size: 32px;
+  }
+
+  .maker-profile__stats {
+    gap: 20px 32px;
+  }
+
+  .maker-profile__stat dd {
+    font-size: 30px;
+  }
+
+  .maker-profile__item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

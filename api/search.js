@@ -31,24 +31,26 @@ export default async function handler(req, res) {
   try {
     const [projects] = await pool.query(
       `SELECT id, title, organisation, location FROM projects
-       WHERE title LIKE ? OR organisation LIKE ? OR location LIKE ?
+       WHERE (title LIKE ? OR organisation LIKE ? OR location LIKE ?) AND status = 'approved'
        LIMIT ?`,
       [like, like, like, limit]
     );
 
     const [opportunities] = await pool.query(
       `SELECT id, title, type, location FROM opportunities
-       WHERE title LIKE ? OR type LIKE ? OR location LIKE ?
+       WHERE (title LIKE ? OR type LIKE ? OR location LIKE ?) AND status = 'approved'
        LIMIT ?`,
       [like, like, like, limit]
     );
 
     const [impactmakers] = await pool.query(
-      `SELECT id, full_name, role, organisation FROM impactmakers
-       WHERE full_name LIKE ? OR role LIKE ? OR organisation LIKE ?
-       LIMIT ?`,
-      [like, like, like, limit]
-    );
+     `SELECT id, slug, full_name, role,  organisation FROM impactmaker_profiles
+
+   WHERE status = 'approved'
+     AND (full_name LIKE ? OR role LIKE ? OR organisation LIKE ?)
+   LIMIT ?`,
+  [like, like, like, limit]
+  );
 
     return res.status(200).json({ projects, opportunities, impactmakers });
   } catch (err) {
@@ -108,3 +110,7 @@ export default async function handler(req, res) {
 
 
 */
+
+
+
+

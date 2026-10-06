@@ -1,111 +1,50 @@
 import "./styles/sdgs.css";
-// The file contain straightforward show-more grid,
-// The DEVELOPERS NOTE at the bottom might be helpful as well.
+import { ALL_GOALS, goalUrl } from "./data/sdg-data.js";
+// Homepage SDG teaser. Every card is a real link to its goal page, and
+// the old Show More toggle is now a "View more" link to the full SDG
+// page. DEVELOPERS NOTE at the bottom has the full story.
 
-// ① SDG DATA:
+// ① CONFIG:
 const INITIAL_VISIBLE = 10; // ~2 rows at the 5-col desktop breakpoint
 
 // ② RENDERING:
-export function renderSdgs() {
-  const sdgs = [
-    { id: 1, title: "No Poverty" },
-    { id: 2, title: "Zero Hunger" },
-    { id: 3, title: "Good Health & Well-being" },
-    { id: 4, title: "Quality Education" },
-    { id: 5, title: "Gender Equality" },
-    { id: 6, title: "Clean Water & Sanitation" },
-    { id: 7, title: "Affordable & Clean Energy" },
-    { id: 8, title: "Decent Work & Economic Growth" },
-    { id: 9, title: "Industry, Innovation & Infrastructure" },
-    { id: 10, title: "Reduced Inequalities" },
-    { id: 11, title: "Sustainable Cities & Communities" },
-    { id: 12, title: "Responsible Consumption & Production" },
-    { id: 13, title: "Climate Action" },
-    { id: 14, title: "Life Below Water" },
-    { id: 15, title: "Life on Land" },
-    { id: 16, title: "Peace, Justice & Strong Institutions" },
-    { id: 17, title: "Partnerships for the Goals" },
-    { id: 18, title: "The Global Goals" }
-  ];
-
+function sdgCard(goal, index) {
+  const extra = index >= INITIAL_VISIBLE ? " sdgs__card--extra" : "";
+  const label = goal.id === 18 ? "The Global Goals: what can I do?" : `Goal ${goal.id}: ${goal.name}`;
   return `
-    <section class="sdgs" id="sdgs">
-
-      <div class="sdgs__wrap">
-
-        <div class="sdgs__header">
-
-          <div>
-            <h2>Explore the 17 Global Goals</h2>
-
-            <p>
-              Every project on NearImpact connects to one or more of the UN Sustainable Development Goals. Learn their purpose and discover impacts or opportunities aligned
-              with each mission.
-            </p>
-          </div>
-
-        </div>
-
-        <div class="sdgs__grid" id="sdg-grid">
-
-          ${sdgs
-            .map(
-              (sdg, index) => `
-              <div class="sdgs__card${index >= INITIAL_VISIBLE ? " sdgs__card--extra" : ""}">
-
-  <img
-    class="sdgs__card-image"
-    src="/sdgs/sdg${sdg.id}.png"
-    alt="SDG ${sdg.id} - ${sdg.title}"
-  >
-
-</div>
-            `
-            )
-            .join("")}
-
-        </div>
-
-        <div class="sdgs__toggle-wrap">
-          <button
-            class="sdgs__toggle-btn"
-            id="sdgs-toggle-btn"
-            type="button"
-          >
-            Show More
-          </button>
-        </div>
-
-      </div>
-
-    </section>
+    <a class="sdgs__card${extra}" href="${goalUrl(goal.id)}" aria-label="${label}">
+      <img class="sdgs__card-image" src="/sdgs/sdg${goal.id}.png" alt="SDG ${goal.id} - ${goal.name}">
+    </a>
   `;
 }
 
-// ③ INITIALIZATION:
-export function initSdgsToggle() {
-  const grid = document.getElementById("sdg-grid");
-  const button = document.getElementById("sdgs-toggle-btn");
+export function renderSdgs() {
+  return `
+    <section class="sdgs" id="sdgs">
+      <div class="sdgs__wrap">
 
-  if (!grid || !button) return;
+        <div class="sdgs__header">
+          <div>
+            <h2>Explore the Global Goals</h2>
+            <p>
+              Every project on NearImpact connects to one or more of the UN Sustainable Development Goals.
+              Open any goal to learn its purpose, see the facts, and find projects and opportunities aligned
+              with it. The last card shows what you can do to help.
+            </p>
+          </div>
+        </div>
 
-  const extraCount = grid.querySelectorAll(".sdgs__card--extra").length;
-  if (extraCount === 0) {
-    button.style.display = "none";
-    return;
-  }
+        <div class="sdgs__grid" id="sdg-grid">
+          ${ALL_GOALS.map(sdgCard).join("")}
+        </div>
 
-  button.addEventListener("click", () => {
-    const isExpanded = grid.classList.contains("is-expanded");
+        <div class="sdgs__toggle-wrap">
+          <a class="sdgs__toggle-btn" href="/sdgs.html">View more</a>
+        </div>
 
-    if (isExpanded) {
-      grid.classList.remove("is-expanded");
-      button.textContent = "Show More";
-    } else {
-      grid.classList.add("is-expanded");
-      button.textContent = "Show Less";
-    }
-  });
+      </div>
+    </section>
+  `;
 }
 
 
@@ -117,42 +56,22 @@ export function initSdgsToggle() {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  The "Explore the 17 Global Goals" grid: Our static list of SDG cards
-  with a Show More toggle that reveals everything past the first
-  INITIAL_VISIBLE. 
+  The homepage SDG grid. Cards were dead images; each is now an <a>
+  to sdg.html?n=<id>, so keyboard, middle-click and "open in new tab"
+  work with no JavaScript. That is why initSdgsToggle() is gone: with
+  links and a "View more" link there is nothing left to wire. Remove
+  its import and call from main.js.
 
-  Class names follow BEM where "sdgs" is the block. 
+  Goal data (titles, ids) comes from data/sdg-data.js, replacing the
+  titles that used to live inline here. INITIAL_VISIBLE still hides
+  cards past the first 10 (sdgs__card--extra); the rest are one click
+  away on /sdgs.html.
 
   BLOCKS DEFINITIONS:
-  ① SDG DATA        — just the INITIAL_VISIBLE cutoff. The actual SDG
-                      titles live inline inside renderSdgs() rather
-                      than as a separate constant, since this data
-                      never needs to be filtered/sorted/reused
-                      elsewhere the way project or opportunity data
-                      does.
-  ② RENDERING        — builds the full grid, marking any card past
-                      INITIAL_VISIBLE with the --extra modifier so
-                      CSS can hide it by default.
-  ③ INITIALIZATION   — initSdgsToggle() checks whether there are any
-                      --extra cards at all — if the grid is short
-                      enough that nothing's hidden, the toggle button
-                      just hides itself entirely rather than sitting
-                      there uselessly. 
+  ① CONFIG     — how many cards show before "View more".
+  ② RENDERING  — sdgCard() builds one link card; renderSdgs() builds the
+                 section shell and the View more link.
 
   CLASS NAME GLOSSARY:
-  .sdgs               The whole section.
-  .sdgs__wrap         Width-constrained inner wrapper.
-  .sdgs__header       Heading + intro paragraph block.
-  .sdgs__grid         The grid container holding every SDG card.
-  .sdgs__card         One SDG card.
-  .sdgs__card--extra  Modifier on any card past INITIAL_VISIBLE;
-                      hidden until Show More is pressed.
-  .sdgs__card-image   The SDG artwork inside a card.
-  .sdgs__toggle-wrap  Wrapper around the toggle button.
-  .sdgs__toggle-btn   The Show More/Show Less button itself.
-
-  State class "is-expanded" (on the grid) is deliberately not
-  BEM-ified; initSdgsToggle() flips it on and off directly in
-  response to the button click, so it's a flag, not a permanent
-  structural name.
+  Unchanged from before. .sdgs__toggle-btn is now an <a>, not a button.
 */

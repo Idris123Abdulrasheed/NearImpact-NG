@@ -2,7 +2,7 @@
 
 .opportunities{
   padding: 40px 32px 64px;
-  background:#ffffff;
+  background: var(--bg);  
 }
 
 .opportunities__wrap{
@@ -121,22 +121,15 @@
 }
 
 .opportunities__card{
-  background: #ffffff;
+  background: var(--bg);  
   border: 1px solid var(--line);
   border-radius: 10px;
   box-shadow: 0 15px 35px rgba(15,23,42,.06);
 }
 
-/* modifier: hidden beyond the first 4 of whatever's currently filtered,
-   until Show More is pressed */
-.opportunities__card--extra {
-  display: none;
-}
-
-.opportunities__grid.expanded .opportunities__card--extra {
-  display: block;
-}
-
+.opportunities__card-title { color: inherit; text-decoration: none; }
+.opportunities__card-title:hover { color: var(--canopy); }
+.opportunities__status { grid-column: 1 / -1; text-align: center; padding: 32px 0; color: var(--muted); }
 
 .opportunities__badge{
   display: inline-block;
@@ -150,10 +143,10 @@
   margin-bottom: 14px;
 }
 
-.opportunities__badge--fellowship{ background: var(--canopy-tint); color: var(--canopy-dark); }
-.opportunities__badge--grant{ background: var(--indigo-tint); color: var(--indigo); }
-.opportunities__badge--internship{ background: var(--sun-tint); color: var(--sun-dark); }
-.opportunities__badge--job{ background: var(--clay-tint); color: var(--clay); }
+.opportunities__badge--fellowship{ background: var(--canopy); color: #ffffff; }
+.opportunities__badge--grant{ background: var(--indigo); color: #ffffff; }
+.opportunities__badge--internship{ background: var(--sun); color: #ffffff; }
+.opportunities__badge--job{ background: var(--clay); color: #ffffff; }
 
 .opportunities__card-content {
   padding: 18px 20px 18px;
@@ -176,6 +169,18 @@
   margin-bottom:16px;
 }
 
+.align__icon{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.align__icon svg{
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
 .opportunities__card-footer{
   display:flex;
   justify-content:space-between;
@@ -193,7 +198,7 @@
   text-decoration:none;
   font-weight: 700;
   font-size: 13px;
-  background: #ffffff;
+  background: var(--bg);  
   border: 1px solid var(--line-green);
   border-radius: 999px;
   padding: 8px 16px;
@@ -206,8 +211,12 @@
 }
 
 .opportunities__show-more {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.2;
   border: 1px solid var(--line-green);
-  background: #ffffff;
+  background: var(--bg);  
   color: var(--canopy);
   font-weight: 700;
   border-radius: 6px;

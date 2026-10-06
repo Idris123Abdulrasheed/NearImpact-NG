@@ -1,33 +1,20 @@
 import "./styles/community.css";
-import { requireAuth } from "./auth.js";
-// Card clicks are gated behind requireAuth() since profile pages
-// don't exist yet. DEVELOPERS NOTE at the bottom has the full story.
+import { fetchImpactmakers, FALLBACK_PHOTO } from "./data/impactmakers.js";
+import { escapeHtml } from "./ui/escape-html.js";
+// The homepage carousel of impactmakers, loaded from the database.
+// DEVELOPERS NOTE at the bottom has the full story.
 
-// ① IMPACTMAKERS DATA:
-// `slug` must match the photo filename in public/impactmakers/<slug>.jpg
-const IMPACTMAKERS = [
-  { slug: "favour-adeyemi",     name: "Favour Adeyemi",     sdg: "Gender Equality" },
-  { slug: "chidera-james-edeh", name: "Chidera James-Edeh", sdg: "Good Health and Well-being" },
-  { slug: "idris-abdulrasheed", name: "Idris Abdulrasheed", sdg: "Quality Education" },
-  { slug: "musa-mubarak",       name: "Musa Mubarak",       sdg: "Climate Action" },
-  { slug: "omeiza-christianah", name: "Omeiza Christianah", sdg: "Affordable and Clean Energy" },
-  { slug: "fatima-al-hassan",   name: "Fatima Al-Hassan",   sdg: "Clean Water and Sanitation" },
-  { slug: "iloke-emmanuel",       name: "Iloke Emmanuel",       sdg: "Reduced Inequalities" },
-  { slug: "bankole-oluwakemi",  name: "Bankole Oluwakemi",  sdg: "Decent Work and Economic Growth" },
-  { slug: "tunde-balogun",      name: "Tunde Balogun",      sdg: "Life on Land" },
-];
-
-// Fallback image(generic silhouette/avatar) shown if a real photo is missing or fails to load.
-const FALLBACK_PHOTO = "/impactmakers/placeholder.jpg";
+// ① CONFIG:
+const CAROUSEL_LIMIT = 12; // the full list lives on impactmakers.html
 
 // ② RENDERING — CARD:
 function makerCard({ slug, name, sdg }) {
   return `
-    <a href="#" class="community__card" data-maker-slug="${slug}">
+    <a href="/impactmaker.html?slug=${encodeURIComponent(slug)}" class="community__card">
       <div class="community__card-photo">
         <img
-          src="/impactmakers/${slug}.jpg"
-          alt="${name}"
+          src="/impactmakers/${encodeURIComponent(slug)}.jpg"
+          alt="${escapeHtml(name)}"
           loading="lazy"
           onerror="this.onerror=null; this.src='${FALLBACK_PHOTO}';"
         />
@@ -37,8 +24,8 @@ function makerCard({ slug, name, sdg }) {
           </svg>
         </span>
       </div>
-      <h3>${name}</h3>
-      <p class="community__card-sdg">${sdg}</p>
+      <h3>${escapeHtml(name)}</h3>
+      <p class="community__card-sdg">${escapeHtml(sdg)}</p>
     </a>
   `;
 }
@@ -65,11 +52,12 @@ export function renderCommunity() {
         </div>
 
         <div class="community__track" id="impactmakers-track" aria-label="Impactmakers carousel">
-          ${IMPACTMAKERS.map(makerCard).join("")}
+          <p role="status">Loading impactmakers…</p>
         </div>
 
         <div class="community__footer">
-          <a href="#" class="community__view-all">See the whole network</a>
+          <a href="/become-impactmaker.html" class="community__view-all">Become an impactmaker</a>
+          <a href="/impactmakers.html" class="community__view-all">See the whole network</a>
         </div>
       </div>
     </section>
@@ -81,8 +69,18 @@ export function initCommunityCarousel() {
   const track = document.getElementById("impactmakers-track");
   if (!track) return;
 
-  // arrow scroll buttons
-  document.querySelectorAll(".community__arrow").forEach((btn) => {
+  const arrows = [...document.querySelectorAll(".community__arrow")];
+  const prevBtn = arrows.find((b) => b.dataset.direction === "prev");
+  const nextBtn = arrows.find((b) => b.dataset.direction === "next");
+
+  // arrows are disabled at either end, like the testimonials carousel
+  function updateArrows() {
+    const maxScroll = track.scrollWidth - track.clientWidth - 1;
+    prevBtn.disabled = track.scrollLeft <= 0;
+    nextBtn.disabled = track.scrollLeft >= maxScroll;
+  }
+
+  arrows.forEach((btn) => {
     btn.addEventListener("click", () => {
       const card = track.querySelector(".community__card");
       const cardWidth = card?.offsetWidth ?? 220;
@@ -94,16 +92,25 @@ export function initCommunityCarousel() {
     });
   });
 
-  // card click — auth gate (no profile pages yet)
-  track.addEventListener("click", (e) => {
-    const card = e.target.closest(".community__card");
-    if (!card) return;
-    e.preventDefault();
-    requireAuth(() => {
-      // No profile pages yet, we will wire real navigation here once they exist.
-      window.location.href = `#profile-${card.dataset.makerSlug}`;
-    });
-  });
+  track.addEventListener("scroll", updateArrows, { passive: true });
+  window.addEventListener("resize", updateArrows);
+
+  // Fire-and-forget: fill the track once the data arrives. Nothing else
+  // on the page waits for this.
+  loadCards(track).then(updateArrows);
+}
+
+async function loadCards(track) {
+  try {
+    const makers = await fetchImpactmakers();
+    track.innerHTML =
+      makers.length > 0
+        ? makers.slice(0, CAROUSEL_LIMIT).map(makerCard).join("")
+        : `<p>No impactmakers yet. <a href="/become-impactmaker.html">Be the first.</a></p>`;
+  } catch (err) {
+    console.error("Failed to load impactmakers:", err);
+    track.innerHTML = `<p>Couldn't load impactmakers right now. Please try again later.</p>`;
+  }
 }
 
 
@@ -115,51 +122,48 @@ export function initCommunityCarousel() {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  The "People Behind the Impacts" carousel which is a horizontal scroll of
-  impactmaker cards (photo, name, SDG focus). Clicking a card is
-  gated behind requireAuth() (see auth.js) since profile pages don't
-  exist yet. This just tells anonymous users to log in and remembers
-  where to send them back to once login exists. 
+  The "People Behind the Impacts" carousel: a horizontal scroll of
+  impactmaker cards (photo, name, SDG focus). The shell renders
+  instantly with a "Loading…" line; initCommunityCarousel() then
+  fetches the approved impactmakers from the database
+  (data/impactmakers.js) and swaps the cards in. Only the first
+  CAROUSEL_LIMIT are shown; "See the whole network" leads to the full
+  directory, and "Become an impactmaker" to the application form.
 
-  The data is a placeholder set of 9; each entry's `slug` has to match a real 
-  photo filename dropped into public/impactmakers/, or the onerror handler falls
-  back to a generic placeholder avatar instead of a broken image icon.
+  What changed: the hardcoded list is gone, and cards are now plain
+  links to each person's profile page instead of auth-gated stubs,
+  because profile pages exist. To make profiles members-only again,
+  bring back requireAuth() in a click handler on the track.
+
+  Every name and SDG goes through escapeHtml() because profile text is
+  typed in by visitors.
 
   Class names follow BEM where "community" is the block, and the file
-  keeps that name even though the visible heading text says "Impactmakers," 
-  since the block name is meant to track the filename/component, not the copy.
+  keeps that name even though the visible heading text says
+  "Impactmakers", since the block name tracks the filename.
 
   BLOCKS DEFINITIONS:
-  ① IMPACTMAKERS DATA  — the placeholder person records + the fallback
-                        photo path used when a real one is missing or
-                        fails to load.
-  ② RENDERING — CARD    — makerCard() builds one impactmaker card:
-                        photo (with fallback), a small checkmark
-                        badge, name, and SDG focus line.
-  ③ RENDERING — SHELL    — renderCommunity() builds the section's outer
-                        shell: heading, prev/next arrows, the
-                        scrollable card track, and the "see whole
-                        network" footer link.
-  ④ CAROUSEL CONTROL     — wires up the prev/next arrow buttons (native
-                        scrollBy, matching the track's own gap value)
-                        and the auth gate on card clicks.
+  ① CONFIG               — how many cards the homepage shows.
+  ② RENDERING — CARD      — makerCard() builds one escaped card.
+  ③ RENDERING — SHELL     — renderCommunity(): heading, arrows, the
+                            track (starts as a loading line), and the
+                            two footer links.
+  ④ CAROUSEL CONTROL      — arrow scrolling, arrows disabling at the
+                            ends, and loadCards(), which fetches and
+                            fills the track (with empty and error
+                            messages).
 
   CLASS NAME GLOSSARY:
   .community            The whole section.
   .community__wrap      Width-constrained inner wrapper.
   .community__header    Heading + intro text + arrow controls row.
   .community__nav       Wrapper around the prev/next arrow buttons.
-  .community__arrow      One arrow button. Both prev and next share
-                        this exact same class 
+  .community__arrow     One arrow button (prev and next share it).
   .community__track     The horizontally-scrolling row of cards.
-  .community__card       One impactmaker card.
-  .community__card-photo Image container inside a card (photo +
-                        fallback + badge).
-  .community__card-badge The small checkmark badge overlaid on a
-                        card's photo.
-  .community__card-sdg   The SDG focus line under a card's name.
-  .community__footer     Wrapper around the "see whole network" link.
-  .community__view-all   The link itself.
-
-
+  .community__card      One impactmaker card (a link to their profile).
+  .community__card-photo  Image container inside a card.
+  .community__card-badge  The small arrow badge on a card's photo.
+  .community__card-sdg    The SDG focus line under a card's name.
+  .community__footer    Wrapper around the two footer links.
+  .community__view-all  Both footer links share this style.
 */

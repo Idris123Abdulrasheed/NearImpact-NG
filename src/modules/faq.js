@@ -6,39 +6,39 @@ import "./styles/faq.css";
 const faqItems = [
   {
     q: "What is NearImpact Nigeria?",
-    a: "NearImpact Nigeria is a platform that helps people discover sustainability projects, volunteer opportunities, grants, fellowships, internships, and impactmakers working on meaningful impact across communities."
+    a: "NearImpact Nigeria is a platform that helps people discover sustainability projects, volunteer opportunities, grants, fellowships, internships and impactmakers working on meaningful impact across communities."
   },
   {
     q: "Who are Impactmakers?",
-    a: "Impactmakers are people actively contributing to impact work, including volunteers, project leaders, researchers, educators, social entrepreneurs, and community organisers."
+    a: "Impactmakers are people actively contributing to impact work, including volunteers, project leaders, researchers, educators, social entrepreneurs and community organisers."
   },
   {
     q: "How do I find projects near me?",
-    a: "Users can search nearby projects using location, SDG categories, project type, distance, and available opportunities."
+    a: "Using the search and map; users can search nearby projects using location, SDG categories, project type, distance and available opportunities."
   },
   {
     q: "Is there any fees to get started?",
-    a: "No. Users can explore projects, learn about SDGs, discover opportunities, and connect with impactmakers completely free."
+    a: "No. Users can explore projects, learn about SDGs, discover opportunities, and connect with impactmakers for completely free."
   },
   {
-    q: " Do we support the SDGs?",
-    a: "Every project and opportunity can be linked to one or more Sustainable Development Goals, helping users understand the impact areas being addressed."
+    q: "Do we support the UN SDGs?",
+    a: "Yes. Every project and opportunity in this platform can be linked to one or more Sustainable Development Goals, helping users understand the impact areas being addressed."
   },
   {
     q: "Can I list my own project?",
-    a: "Yes. NGOs, startups, schools, community groups, and individuals can list projects so others can learn from them, volunteer, collaborate, or provide support."
+    a: "Yes. NGOs, startups, schools, community groups and individuals can list projects so others can learn from them, volunteer, collaborate, or provide support."
   },
   {
     q: "Is NearImpact only for Nigeria?",
-    a: "NearImpact currently focuses on Nigeria, but the platform is designed to support impact communities across Africa over time."
+    a: "Currently NearImpact Nigeria focuses on Nigeria, but the platform is designed to impact communities across Africa as we grow."
   },
   {
     q: "Can I partner with NearImpact?",
-    a: "NearImpact welcomes partnerships with NGOs, schools, universities, youth networks, foundations, social enterprises, development organisations, and SDG-focused initiatives."
+    a: "NearImpact welcomes partnerships with NGOs, schools, universities, foundations, social enterprises, development organisations and SDG-focused initiatives."
   },
   {
     q: "Who can publish opportunities?",
-    a: "Yes. Organisations can publish volunteer roles, internships, grants, fellowships, training programs, events, and community projects for people to discover."
+    a: "Anyone can publish volunteer roles, internships, grants, fellowships, training programs, events and community projects for people to discover."
   }
 ];
 

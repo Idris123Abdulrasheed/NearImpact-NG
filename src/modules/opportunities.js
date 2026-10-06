@@ -1,64 +1,14 @@
 import "./styles/opportunities.css";
-// If the "index >= 4" our logic looks arbitrary, the DEVELOPERS NOTE below explains in detail.
+import { fetchOpportunities } from "./data/opportunities.js";
+import { renderOpportunityCard } from "./ui/opportunity-card.js";
+// Landing-page preview: first 4 OPEN opportunities per category, and
+// "Show More" is now a link to the full page. DEVELOPERS NOTE below.
 
-// ① OPPORTUNITIES DATA:
-const opportunities = [
-  { badge: "fellowship", label: "Fellowship", title: "Climate Fellowship '26", location: "📍 Africa", closes: "⏳ Closes Jul 30", reward: "$500 Grant" },
-  { badge: "fellowship", label: "Fellowship", title: "Young SDG Leaders Program", location: "📍 Africa", closes: "⏳ Rolling", reward: "12 Months" },
-  { badge: "fellowship", label: "Fellowship", title: "Global Leaders Fellowship", location: "📍 Abuja", closes: "⏳ Closes Sep 5", reward: "$1,200 Stipend" },
-  { badge: "fellowship", label: "Fellowship", title: "Women in Tech Fellowship", location: "📍 Lagos", closes: "⏳ Closes Oct 10", reward: "₦300k Stipend" },
+// ① CONFIG:
+const PREVIEW_COUNT = 4;
+const ALL_PAGE = "/all-opportunities.html";
 
-  { badge: "grant", label: "Grant", title: "Youth Impact Fund", location: "📍 Nigeria", closes: "⏳ Closes Aug 12", reward: "$14,000 Funding" },
-  { badge: "grant", label: "Grant", title: "Community Innov. Challenge", location: "📍 Nigeria", closes: "⏳ Closes Aug 20", reward: "₦1.7M Fund" },
-  { badge: "grant", label: "Grant", title: "Clean Water Access Grant", location: "📍 Ondo", closes: "⏳ Closes Sep 15", reward: "₦2.3M Fund" },
-  { badge: "grant", label: "Grant", title: "Renewable Energy Grant", location: "📍 Kano", closes: "⏳ Closes Nov 1", reward: "$8,000 Funding" },
-
-  { badge: "internship", label: "Internship", title: "SDGs Research Intern", location: "📍 Lagos", closes: "⏳ Open Now", reward: "₦150k / month" },
-  { badge: "internship", label: "Internship", title: "Climate Data Intern", location: "📍 Abuja", closes: "⏳ Open Now", reward: "₦120k / month" },
-  { badge: "internship", label: "Internship", title: "Environmental Policy Intern", location: "📍 Port Harcourt", closes: "⏳ Closes Aug 30", reward: "₦100k / month" },
-  { badge: "internship", label: "Internship", title: "Green Design Intern", location: "📍 Ibadan", closes: "⏳ Closes Sep 10", reward: "₦130k / month" },
-
-  { badge: "job", label: "Job", title: "Program Coordinator", location: "📍 Abuja", closes: "⏳ Closes Jul 18", reward: "Full-time" },
-  { badge: "job", label: "Job", title: "Field Operations Manager", location: "📍 Akure", closes: "⏳ Closes Aug 25", reward: "Full-time" },
-  { badge: "job", label: "Job", title: "Communications Officer", location: "📍 Lagos", closes: "⏳ Closes Sep 1", reward: "Full-time" },
-];
-
-// ② DATA HELPERS:
-function getByCategory(category) {
-  return category === "all"
-    ? opportunities
-    : opportunities.filter((opp) => opp.badge === category);
-}
-
-// ③ RENDERING — CARD:
-function renderOppCard(opp, index) {
-  const extraModifier = index >= 4 ? " opportunities__card--extra" : "";
-  return `
-    <article class="opportunities__card${extraModifier}">
-      <div class="opportunities__card-content">
-        <span class="opportunities__badge opportunities__badge--${opp.badge}">${opp.label}</span>
-        <h3>${opp.title}</h3>
-
-        <div class="opportunities__card-details">
-          <span>${opp.location}</span>
-          <span>${opp.closes}</span>
-        </div>
-
-        <div class="opportunities__card-footer">
-          <strong>${opp.reward}</strong>
-          <a href="#">Apply</a>
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-// ④ RENDERING — GRID:
-function renderGridHTML(category) {
-  return getByCategory(category).map(renderOppCard).join("");
-}
-
-// ⑤ RENDERING — SHELL:
+// ② RENDERING — SHELL:
 export function renderOpportunities() {
   return `
     <section class="opportunities" id="opportunities">
@@ -83,11 +33,11 @@ export function renderOpportunities() {
         </div>
 
         <div class="opportunities__grid" id="opp-grid">
-          ${renderGridHTML("all")}
+          <p class="opportunities__status">Loading opportunities…</p>
         </div>
 
         <div class="opportunities__footer">
-          <button class="opportunities__show-more" id="opp-show-more" type="button">Show More</button>
+          <a class="opportunities__show-more" id="opp-show-more" href="${ALL_PAGE}">Show More</a>
         </div>
 
       </div>
@@ -95,40 +45,54 @@ export function renderOpportunities() {
   `;
 }
 
-// ⑥ INITIALIZATION:
-// Switching category re-renders the grid from filtered data and resets
-// the show-more state.
-export function initOpportunities() {
-  const grid = document.getElementById("opp-grid");
-  const showMoreBtn = document.getElementById("opp-show-more");
-  const tabs = document.querySelectorAll(".opportunities__tabs button");
+// ③ DATA LOADING:
+const cache = new Map(); // category -> items, so re-clicking a tab is instant
+let latestRequest = 0;   // ignores a slow response if the user already switched tab
 
-  function resetShowMore() {
-    grid.classList.remove("expanded");
-    if (showMoreBtn) showMoreBtn.textContent = "Show More";
+async function loadCategory(category) {
+  const grid = document.getElementById("opp-grid");
+  const showMore = document.getElementById("opp-show-more");
+  if (!grid || !showMore) return;
+
+  showMore.href = category === "all" ? ALL_PAGE : `${ALL_PAGE}?type=${category}`;
+  const requestId = ++latestRequest;
+
+  try {
+    if (!cache.has(category)) {
+      grid.innerHTML = `<p class="opportunities__status">Loading opportunities…</p>`;
+      const data = await fetchOpportunities({
+        type: category === "all" ? "" : category,
+        status: "open",
+        pageSize: PREVIEW_COUNT,
+      });
+      cache.set(category, data.items);
+    }
+    if (requestId !== latestRequest) return;
+
+    const items = cache.get(category);
+    grid.innerHTML = items.length
+      ? items.map(renderOpportunityCard).join("")
+      : `<p class="opportunities__status">No open opportunities in this category yet.</p>`;
+  } catch (err) {
+    if (requestId !== latestRequest) return;
+    console.error("Failed to load opportunities:", err);
+    grid.innerHTML = `<p class="opportunities__status">Couldn't load opportunities. Please try again later.</p>`;
   }
+}
+
+// ④ INITIALIZATION:
+export function initOpportunities() {
+  const tabs = document.querySelectorAll(".opportunities__tabs button");
 
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       tabs.forEach((btn) => btn.classList.remove("active"));
       tab.classList.add("active");
-      grid.innerHTML = renderGridHTML(tab.dataset.category);
-      resetShowMore();
+      loadCategory(tab.dataset.category);
     });
   });
 
-  if (showMoreBtn && grid) {
-    showMoreBtn.addEventListener("click", () => {
-      const isExpanded = grid.classList.contains("expanded");
-      if (isExpanded) {
-        grid.classList.remove("expanded");
-        showMoreBtn.textContent = "Show More";
-      } else {
-        grid.classList.add("expanded");
-        showMoreBtn.textContent = "Show Less";
-      }
-    });
-  }
+  loadCategory("all");
 }
 
 
@@ -140,63 +104,52 @@ export function initOpportunities() {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  The "Opportunities for Impactmakers" section: category tabs over a
-  card grid, with a Show More toggle that reveals cards beyond the
-  first 4. 
+  The "Opportunities for Impactmakers" preview on the homepage. It no
+  longer owns any data or card markup: data comes from
+  api/opportunities.js (via data/opportunities.js) and the card from
+  ui/opportunity-card.js, which the all-opportunities page reuses.
+  Each tab asks the API for the first 4 OPEN listings of that type
+  (status=open, so a closed deadline never leads the homepage).
 
-  Class names follow BEM where "opportunities" is the block. The one modifier here,
-  .opportunities__card--extra, is applied once at render time based
-  on a card's POSITION in whatever list is currently showing (4th
-  card onward).
+  "Show More" used to toggle a CSS class that revealed hidden cards.
+  It is now a plain link to /all-opportunities.html; on a tab other
+  than All it carries ?type=..., so the full page opens on the same
+  category. The old --extra modifier and "expanded" class are gone
+  from the CSS too.
 
+  main.js is unchanged: it still imports renderOpportunities and
+  initOpportunities.
 
   BLOCKS DEFINITIONS:
-  ① OPPORTUNITIES DATA  — the local mock data array. Kept separate
-                          from markup specifically so filtering by
-                          category and slicing to "first 4" are just
-                          plain array operations 
-  ② DATA HELPERS         — getByCategory() is the one function that
-                          actually filters the data. "all" returns
-                          everything, anything else filters by badge.
-  ③ RENDERING — CARD      — renderOppCard() builds one card. Whether it
-                          gets the "extra" modifier depends purely on
-                          its index in whatever array it's called
-                          against 
-  ④ RENDERING — GRID      — renderGridHTML() is the thin glue between
-                          the data helper and the card renderer.
-  ⑤ RENDERING — SHELL     — renderOpportunities() builds the section's
-                          outer shell: heading, tabs, the grid,
-                           and the Show More button.
-  ⑥ INITIALIZATION        — wires up tab clicks (re-renders the grid
-                          from filtered data, resets Show More back to
-                          collapsed) and the Show More toggle itself.
-                          
+  ① CONFIG             — preview size and the full page's path.
+  ② RENDERING — SHELL   — heading, tabs, empty grid (shows "Loading…"
+                          until the first response) and the link.
+  ③ DATA LOADING        — loadCategory() fetches (or reads the cache),
+                          renders the cards, updates the link, and
+                          shows a message for loading / empty / error.
+                          latestRequest stops a slow, stale response
+                          from overwriting a newer tab's cards.
+  ④ INITIALIZATION      — wires the tabs, then loads "all".
 
   CLASS NAME GLOSSARY:
   .opportunities                The whole section.
   .opportunities__wrap          Width-constrained inner wrapper.
   .opportunities__header        Heading + intro paragraph block.
-  .opportunities__tabs-scroll   Horizontally-scrollable container for
-                                 the category tab row.
-  .opportunities__tabs          The actual row of category tab buttons.
-  .opportunities__tabs-chevron  Small chevron hint, mobile only,
-                                 signaling there's more to scroll.
+  .opportunities__tabs-scroll   Scrollable container for the tab row.
+  .opportunities__tabs          The row of category tab buttons.
+  .opportunities__tabs-chevron  Mobile-only "more to scroll" hint.
   .opportunities__grid          The card grid container.
-  .opportunities__card          One opportunity card.
-  .opportunities__card--extra   Modifier on any card beyond the first
-                                 4 — hidden until Show More is pressed.
+  .opportunities__status        Loading / empty / error message that
+                                spans the whole grid. (new)
+  .opportunities__card          One card (rendered by opportunity-card.js).
   .opportunities__card-content  Padding wrapper inside a card.
-  .opportunities__badge         The colored category pill on a card
-                                 ("Fellowship", "Grant", etc).
-  .opportunities__badge--*      Modifier setting that pill's color per
-                                 category (fellowship/grant/internship/job).
-  .opportunities__card-details  Row showing location + closing date.
-  .opportunities__card-footer   Row holding the reward text + Apply link.
-  .opportunities__footer        Wrapper around the Show More button.
-  .opportunities__show-more     The Show More/Show Less button itself.
+  .opportunities__card-title    The title link inside the card's h3. (new)
+  .opportunities__badge         Coloured category pill.
+  .opportunities__badge--*      Pill colour per category.
+  .opportunities__card-details  Row with location + closing date.
+  .opportunities__card-footer   Row with reward text + Apply link.
+  .opportunities__footer        Wrapper around the Show More link.
+  .opportunities__show-more     The Show More link (styled as a button).
 
-  State classes "active" (on a tab) and "expanded" (on the grid) are
-  deliberately not BEM-ified they flips on and off directly in response 
-  to clicks, so they're flags, not permanent structural names.
-
+  State class "active" (on a tab) is deliberately not BEM-ified.
 */

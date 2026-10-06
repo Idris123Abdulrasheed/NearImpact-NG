@@ -1,0 +1,138 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/impactmakers-page.js for my class glossary*/
+
+
+.impactmakers-page {
+  padding: 56px 24px 96px;
+}
+
+.impactmakers-page__wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.impactmakers-page__header {
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.impactmakers-page__header h1 {
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.impactmakers-page__header p {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.impactmakers-page__header .impactmakers-page__count {
+  margin-top: 14px;
+  color: var(--canopy);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.impactmakers-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 28px 20px;
+}
+
+.impactmakers-page__card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.impactmakers-page__photo {
+  border-radius: 3px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--paper-deep);
+  box-shadow: var(--shadow);
+}
+
+.impactmakers-page__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.impactmakers-page__card:hover .impactmakers-page__photo img {
+  transform: scale(1.04);
+}
+
+.impactmakers-page__card:focus-visible {
+  outline: 2px solid var(--canopy);
+  outline-offset: 4px;
+}
+
+.impactmakers-page__card h2 {
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+  margin: 14px 0 3px;
+}
+
+.impactmakers-page__card p {
+  color: var(--canopy);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impactmakers-page__photo img {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .impactmakers-page {
+    padding: 36px 20px 72px;
+  }
+
+  .impactmakers-page__header h1 {
+    font-size: 32px;
+  }
+
+  .impactmakers-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 14px;
+  }
+}
+
+/* JOIN LINK + GRID STATUS LINE */
+.impactmakers-page__join {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: filter .15s ease;
+}
+
+.impactmakers-page__join:hover {
+  filter: brightness(1.06);
+}
+
+.impactmakers-page__join:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.impactmakers-page__status {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 16px;
+  padding: 24px 0;
+}

@@ -2,7 +2,7 @@
 
 
 .sdgs {
-  background: #ffffff;
+  background: var(--bg);  
   padding: 100px 32px;
 }
 
@@ -50,7 +50,8 @@
 }
 
 .sdgs__card {
-  background: #ffffff;
+  display: block;
+  background: var(--bg);  
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -86,8 +87,10 @@
 }
 
 .sdgs__toggle-btn {
+  display: inline-block;
+  text-decoration: none;
   border: 1px solid var(--line-green);
-  background: #ffffff;
+  background: var(--bg);  
   color: var(--canopy);
   font-weight: 700;
   border-radius: 6px;

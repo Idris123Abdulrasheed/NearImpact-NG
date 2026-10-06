@@ -40,11 +40,11 @@ export function renderLocationFilter() {
 
           <div class="location-filter__actions">
             <button type="button" id="use-location-btn" class="location-filter__locate-btn">
-              <span aria-hidden="true">${icon("location")}</span> Use current location
+              <span class="align__icon" aria-hidden="true">${icon("location")}</span> Use current location
             </button>
 
             <button type="button" id="clear-filter-btn" class="location-filter__clear-btn" hidden>
-              <span aria-hidden="true">${icon("refresh")}</span> Clear
+              <span class="align__icon" aria-hidden="true">${icon("refresh")}</span> Clear
             </button>
           </div>
 
@@ -59,7 +59,7 @@ export function renderLocationFilter() {
   `;
 }
 
-const LOCATE_LABEL = `<span aria-hidden="true">${icon("locate")}</span> Use current location`;
+const LOCATE_LABEL = `<span aria-hidden="true">${icon("location")}</span> Use current location`;
 
 // ② EVENT WIRING:
 export function initLocationFilter() {
@@ -182,9 +182,6 @@ export function initLocationFilter() {
   since the LGA field is styled identically to the State field except
   for a wider flex-basis 
 
-  Note:   button's initial render calls icon("location"), but icons.js 
-  only defines a "locate" icon key which makes it silently falls back to 
-  the default pin icon (ICONS.pin for any unrecognized key) on the first render. 
 
   BLOCKS DEFINITIONS:
   ① RENDERING     — builds the whole component's markup: state

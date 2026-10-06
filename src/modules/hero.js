@@ -58,8 +58,8 @@ export function renderHero() {
           </p>
 
           <div class="hero__actions">
-            <a href="#opportunities" class="hero__cta--primary">Explore Opportunities</a>
-            <a href="#community" class="hero__cta--secondary">Join NearImpact</a>
+            <a href="/all-opportunities.html" class="hero__cta--primary">Explore Opportunities</a>
+            <a href="/become-impactmaker.html" class="hero__cta--secondary">Join NearImpact</a>
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--line);
-  background: #ffffff;
+  background: var(--bg);  
   color: var(--ink);
   font-size: 16px;
   cursor: pointer;
@@ -151,9 +151,11 @@
   .community__card { flex-basis: 160px; }
   .community__nav {
     display: flex;
-    gap: 248px;
+    width: 100%; 
+    justify-content: space-between;     
     flex-shrink: 0;
   }
+  
   .community__footer {
     margin-top: 0px;
   }
@@ -161,3 +163,4 @@
 }
 
 
+.community__arrow:disabled { opacity: .35; cursor: default; }

@@ -61,6 +61,7 @@
 
 .map__frame {
   position: relative;
+  z-index: 0;
   margin-bottom: 24px;
 
   @media (max-width: 1024px) {

@@ -1,16 +1,14 @@
-// If the auth stub or dropdown wiring below looks odd, the
+// If the auth wiring or dropdown wiring below looks odd, the
 // DEVELOPERS NOTE at the bottom covers the "why."
 
 import "./styles/user-menu.css";
-import { getTheme, toggleTheme } from "./theme.js";
+import { icon } from "./data/icons.js";
+import { escapeHtml } from "./ui/escape-html.js";
+import { getCurrentUser, isLoggedIn, logout, subscribe } from "./auth.js";
 
-// ① AUTH STUB:
-// Stand-in for a logged-in session, no backend yet, see DEVELOPERS NOTE.
-let mockUser = null; // e.g. { name: "Idris Abdulrasheed" } once "logged in"
-
-// ② HELPERS:
-function getInitials(name) {
-  return name
+// ① HELPERS:
+export function getInitials(name) {
+  return String(name ?? "")
     .split(" ")
     .filter(Boolean)
     .map((word) => word[0])
@@ -19,88 +17,46 @@ function getInitials(name) {
     .toUpperCase();
 }
 
-function avatarIconSvg() {
-  return `
-    <svg class="user-menu__avatar-icon" viewBox="0 0 40 40" aria-hidden="true">
-      <defs>
-        <clipPath id="avatarClip">
-          <circle cx="20" cy="20" r="18" />
-        </clipPath>
-      </defs>
-      <circle class="user-menu__avatar-ring" cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.6"/>
-      <g clip-path="url(#avatarClip)">
-        <circle cx="20" cy="16" r="6.2" fill="currentColor"/>
-        <path d="M6 34c2-8 7-12.5 14-12.5S32 26 34 34Z" fill="currentColor"/>
-      </g>
-    </svg>
-  `;
-}
-
-// ③ RENDERING:
-function renderAvatarContent() {
-  if (mockUser) {
-    return `<span class="user-menu__avatar-initials">${getInitials(mockUser.name)}</span>`;
-  }
-  return avatarIconSvg();
-}
-
+// ② RENDERING:
 function renderDropdownItems() {
-  const isDark = getTheme() === "dark";
+  const user = getCurrentUser();
+  if (!user) return "";
 
-  // dark mode row — shown in both logged-in and logged-out states
-  const darkModeRow = `
-    <button class="user-menu__dropdown-item" data-action="dark-mode" role="menuitem" type="button">
-      <span class="user-menu__item-icon">🌙</span>
-      <span class="user-menu__item-label">Dark Mode</span>
-      <span class="user-menu__toggle ${isDark ? "is-on" : ""}" id="dark-mode-toggle" aria-hidden="true"></span>
-    </button>
-  `;
-
-  // logged-in item set
-  if (mockUser) {
-    return `
-      ${darkModeRow}
-      <button class="user-menu__dropdown-item" data-action="profile" role="menuitem" type="button">
-        <span class="user-menu__item-icon">👤</span>
-        <span class="user-menu__item-label">My Profile</span>
-      </button>
-      <button class="user-menu__dropdown-item" data-action="sign-out" role="menuitem" type="button">
-        <span class="user-menu__item-icon">🚪</span>
-        <span class="user-menu__item-label">Sign Out</span>
-      </button>
-    `;
-  }
-
-  // logged-out item set
   return `
-    ${darkModeRow}
-    <button class="user-menu__dropdown-item" data-action="login" role="menuitem" type="button">
-      <span class="user-menu__item-icon">🔑</span>
-      <span class="user-menu__item-label">Log In</span>
-    </button>
-    <button class="user-menu__dropdown-item" data-action="create-account" role="menuitem" type="button">
-      <span class="user-menu__item-icon">✨</span>
-      <span class="user-menu__item-label">Create Account</span>
+    <div class="user-menu__header">
+      <strong>${escapeHtml(user.name)}</strong>
+      <span>${escapeHtml(user.email)}</span>
+    </div>
+    <a class="user-menu__dropdown-item" href="/list-project.html">
+      <span class="user-menu__item-icon">${icon("sparkle")}</span>
+      <span class="user-menu__item-label">List Your Project</span>
+    </a>
+    <button class="user-menu__dropdown-item" data-action="sign-out" type="button">
+      <span class="user-menu__item-icon">${icon("logout")}</span>
+      <span class="user-menu__item-label">Sign Out</span>
     </button>
   `;
 }
 
+// Rendered even when logged out (but `hidden`), so nav.js always has a
+// slot to put it in and the re-render below has something to replace.
 export function renderUserMenu() {
+  const user = getCurrentUser();
+
   return `
-    <div class="user-menu" id="user-menu">
+    <div class="user-menu" id="user-menu" ${isLoggedIn() ? "" : "hidden"}>
       <button
         class="user-menu__avatar-btn"
         id="avatar-btn"
         type="button"
-        aria-haspopup="true"
         aria-expanded="false"
         aria-controls="user-dropdown"
         aria-label="Account menu"
       >
-        ${renderAvatarContent()}
+        <span class="user-menu__avatar-initials">${user ? escapeHtml(getInitials(user.name)) : ""}</span>
       </button>
 
-      <div class="user-menu__dropdown" id="user-dropdown" role="menu" aria-hidden="true">
+      <div class="user-menu__dropdown" id="user-dropdown" aria-hidden="true">
         ${renderDropdownItems()}
       </div>
     </div>
@@ -114,50 +70,18 @@ function rerenderUserMenu() {
   wireEvents();
 }
 
-// ④ DROPDOWN STATE:
+// ③ DROPDOWN STATE:
 function setDropdownOpen(open) {
   const dropdown = document.getElementById("user-dropdown");
   const avatarBtn = document.getElementById("avatar-btn");
-  const navEl = document.querySelector(".nav");
   if (!dropdown || !avatarBtn) return;
 
   dropdown.classList.toggle("is-open", open);
   dropdown.setAttribute("aria-hidden", String(!open));
   avatarBtn.setAttribute("aria-expanded", String(open));
-
-  // Grey out the mobile menu links while the dropdown is open 
-  navEl?.classList.toggle("dropdown-open", open);
 }
 
-// ⑤ ACTIONS:
-function handleAction(action) {
-  switch (action) {
-    case "dark-mode": {
-      toggleTheme();
-      const toggle = document.getElementById("dark-mode-toggle");
-      toggle?.classList.toggle("is-on", getTheme() === "dark");
-      return; // keep dropdown open — flipping a switch isn't a "done" action
-    }
-    case "login":
-      // TEMPORARY: simulates a logged-in state for frontend testing.
-      // Replace with a real login form + API call later.
-      mockUser = { name: "Idris Abdulrasheed" };
-      rerenderUserMenu();
-      break;
-    case "sign-out":
-      mockUser = null;
-      rerenderUserMenu();
-      break;
-    case "create-account":
-    case "profile":
-      // Stubs — wire to real routes/pages once they exist.
-      console.log(`${action} clicked (not yet implemented)`);
-      break;
-  }
-  setDropdownOpen(false);
-}
-
-// ⑥ INITIALIZATION:
+// ④ INITIALIZATION:
 function wireEvents() {
   const avatarBtn = document.getElementById("avatar-btn");
   const dropdown = document.getElementById("user-dropdown");
@@ -165,12 +89,15 @@ function wireEvents() {
 
   avatarBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = dropdown.classList.contains("is-open");
-    setDropdownOpen(!isOpen);
+    setDropdownOpen(!dropdown.classList.contains("is-open"));
   });
 
-  dropdown.querySelectorAll(".user-menu__dropdown-item").forEach((item) => {
-    item.addEventListener("click", () => handleAction(item.dataset.action));
+  // One listener for every item; links navigate on their own.
+  dropdown.addEventListener("click", (e) => {
+    const item = e.target.closest(".user-menu__dropdown-item");
+    if (!item) return;
+    if (item.dataset.action === "sign-out") logout(); // UI refreshes via subscribe() below
+    setDropdownOpen(false);
   });
 }
 
@@ -179,14 +106,23 @@ export function initUserMenu() {
 
   document.addEventListener("click", (e) => {
     const menu = document.getElementById("user-menu");
-    if (menu && !menu.contains(e.target)) {
-      setDropdownOpen(false);
-    }
+    if (menu && !menu.contains(e.target)) setDropdownOpen(false);
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setDropdownOpen(false);
+    if (e.key !== "Escape") return;
+    const dropdown = document.getElementById("user-dropdown");
+    if (!dropdown?.classList.contains("is-open")) return;
+    setDropdownOpen(false);
+    document.getElementById("avatar-btn")?.focus();
   });
+
+  // Re-renders the avatar/dropdown whenever login state changes,
+  // regardless of what caused it — a successful login in the modal, a
+  // sign-out click, or initAuth() recovering an existing session on page
+  // load. Same "react to the store, don't care who triggered it" pattern
+  // project-list.js and map.js already use for map-store.js.
+  subscribe(() => rerenderUserMenu());
 }
 
 
@@ -198,68 +134,47 @@ export function initUserMenu() {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  The avatar + account dropdown, shown in place of the hamburger
-  icon once the mobile menu is open (nav.css controls that swap via
-  .nav.menu-open, this file only owns what happens once the avatar
-  itself is visible and clicked).
+  The signed-in avatar + its dropdown. It reads real state through
+  auth.js (getCurrentUser()/isLoggedIn()) and only changes it by calling
+  logout(); it never sets user state itself.
 
-  There's no real auth backend yet, so mockUser is a placeholder
-  that lets the "logged in" vs "logged out" UI get built and tested
-  now. 
-  
-  Class names follow BEM: "user-menu" is the block, and
-  every element specific to it like the avatar button, the dropdown,
-  each dropdown item; is user-menu__something.
+  WHAT CHANGED IN THE NAV UPGRADE:
+  - The menu is now for SIGNED-IN users only. Logged out, it renders
+    `hidden`. Log In / Sign Up live in the nav bar and the drawer
+    (nav.js), and Dark Mode has its own button there, so the old
+    dropdown rows for them are gone. That also fixes the bug where the
+    whole menu was display:none on desktop.
+  - "My Profile" is removed instead of staying a dead button. Add it
+    back as a normal <a> once a profile page exists.
+  - The dropdown is a disclosure (button + aria-expanded), not
+    role="menu", because role="menu" promises arrow-key behaviour this
+    file doesn't implement.
+  - Every piece of user text goes through escapeHtml() (initials too).
+  - The old "dim the mobile sidebar links" coupling to .nav is gone.
+
+  Class names follow BEM: "user-menu" is the block.
 
   BLOCKS DEFINITIONS:
-  ① AUTH STUB       — the mockUser placeholder standing in for a real
-                       session.
-  ② HELPERS         — getInitials() turns a name into a 2-letter
-                       avatar label; avatarIconSvg() is the fallback
-                       icon shown when nobody's "logged in."
-  ③ RENDERING       — builds the avatar button and its dropdown
-                       (renderUserMenu), including the two different
-                       item sets depending on login state
-                       (renderDropdownItems), plus a full re-render
-                       used after login/logout changes what should
-                       show (rerenderUserMenu).
-  ④ DROPDOWN STATE  — the single function that opens/closes the
-                       dropdown and keeps its aria attributes + the
-                       nav's dimming effect in sync.
-  ⑤ ACTIONS         — what happens when a dropdown item gets
-                       clicked: toggling dark mode, faking a login/
-                       logout, or logging a stub message for routes
-                       that don't exist yet.
-  ⑥ INITIALIZATION  — wireEvents() attaches the click/keyboard
-                       handlers; initUserMenu() is what main.js
-                       actually calls, and also handles closing the
-                       dropdown on an outside click or Escape.
-
+  ① HELPERS         — getInitials(): 2-letter avatar label. Exported,
+                       nav.js reuses it for the drawer's user card.
+  ② RENDERING       — the avatar button + dropdown (renderUserMenu),
+                       its items (renderDropdownItems), and the full
+                       re-render used when login state changes.
+  ③ DROPDOWN STATE  — setDropdownOpen(): the one place that opens/closes
+                       it and keeps aria-expanded / aria-hidden in sync.
+  ④ INITIALIZATION  — wireEvents() binds clicks on the current markup;
+                       initUserMenu() adds outside-click, Escape (focus
+                       returns to the avatar) and the auth subscription.
 
   CLASS NAME GLOSSARY:
   .user-menu                   The whole avatar + dropdown component.
-  .user-menu__avatar-btn       The circular button showing the avatar.
-  .user-menu__avatar-icon      The fallback person-outline SVG icon
-                                (shown when nobody's "logged in").
-  .user-menu__avatar-ring      The thin outline ring drawn around
-                                that fallback icon.
-  .user-menu__avatar-initials  The 2-letter initials shown instead of
-                                the icon once mockUser is set.
-  .user-menu__dropdown         The dropdown panel itself.
-  .user-menu__dropdown-item    One clickable row inside the dropdown
-                                (Dark Mode, My Profile, Sign Out, etc).
-  .user-menu__item-icon        The small emoji icon inside a row.
-  .user-menu__item-label       The text label inside a row.
-  .user-menu__toggle           The pill-shaped on/off switch used
-                                specifically for the Dark Mode row.
+  .user-menu__avatar-btn       The round button.
+  .user-menu__avatar-initials  The 2-letter initials inside it.
+  .user-menu__dropdown         The panel.
+  .user-menu__header           Name + email block at the top of it.
+  .user-menu__dropdown-item    One row (link or button).
+  .user-menu__item-icon        The row's icon.
+  .user-menu__item-label       The row's text.
 
-  One class you'll see referenced here but not owned by this file:
-  .nav — this file reads/toggles .dropdown-open on it, but the
-  element and its other classes belong to nav.js.
-
-  State classes .is-open (on the dropdown) and .is-on (on the dark
-  mode toggle) aren't part of the BEM naming above on purpose ;
-  they're flags this file flips as the user interacts with the menu,
-  not permanent names for what the elements are. Same applicable for
-  .dropdown-open, which this file adds to the nav element itself.
+  State classes .is-open (dropdown) is a flag this file flips.
 */
