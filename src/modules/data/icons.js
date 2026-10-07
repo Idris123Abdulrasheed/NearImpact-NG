@@ -118,6 +118,10 @@ export const ICONS = {
   monkeyClosed: wrap(`<path d="M5.4 10.2A2.7 2.7 0 1 0 5.4 14.8M18.6 10.2A2.7 2.7 0 1 1 18.6 14.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12.5" r="7" stroke="currentColor" stroke-width="1.5"/><ellipse cx="12" cy="14.6" rx="4.2" ry="3" stroke="currentColor" stroke-width="1.5"/><path d="M8.4 10.8q1 1 2 0M13.6 10.8q1 1 2 0M10.8 15.6q1.2.9 2.4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`),
 
   monkeyOpen: wrap(`<path d="M5.4 10.2A2.7 2.7 0 1 0 5.4 14.8M18.6 10.2A2.7 2.7 0 1 1 18.6 14.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12.5" r="7" stroke="currentColor" stroke-width="1.5"/><ellipse cx="12" cy="14.6" rx="4.2" ry="3" stroke="currentColor" stroke-width="1.5"/><circle cx="9.4" cy="10.8" r="1" fill="currentColor"/><circle cx="14.6" cy="10.8" r="1" fill="currentColor"/><path d="M10.8 15.6q1.2.9 2.4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`),
+
+    // carousel arrows: bold, drawn dead-centre in a 24x24 box so they sit centred in a round button
+  arrowLeft: wrap(`<path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`),
+  arrowRight: wrap(`<path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`),
       
 };
 

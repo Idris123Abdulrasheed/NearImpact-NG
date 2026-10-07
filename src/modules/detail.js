@@ -2,6 +2,7 @@ import "./styles/detail.css";
 import { icon } from "./data/icons.js";
 import { PROJECTS } from "./data/projects.js";
 import { fetchOpportunity } from "./data/opportunities.js";
+import { getMockOpportunity } from "./data/opportunities-mock.js";
 import { getTypeMeta } from "./data/type-meta.js";
 import { isLoggedIn, subscribe } from "./auth.js";
 import { escapeHtml } from "./ui/escape-html.js";
@@ -53,9 +54,16 @@ function fromProject(p) {
 
 async function loadRecord(kind, id) {
   if (kind === "opportunity") {
-    const { item } = await fetchOpportunity(id);
-    return fromOpportunity(item);
+    // Database first; the mock list is the fallback while the homepage still uses it.
+    try {
+      const { item } = await fetchOpportunity(id);
+      return fromOpportunity(item);
+    } catch {
+      const item = getMockOpportunity(id);
+      return item ? fromOpportunity(item) : null;
+    }
   }
+  
    if (kind === "project") {
     // Database first; tyhe mock list is the fallback while the hompage still uses it
     try{

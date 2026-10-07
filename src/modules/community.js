@@ -1,13 +1,32 @@
 import "./styles/community.css";
-import { fetchImpactmakers, FALLBACK_PHOTO } from "./data/impactmakers.js";
 import { escapeHtml } from "./ui/escape-html.js";
-// The homepage carousel of impactmakers, loaded from the database.
-// DEVELOPERS NOTE at the bottom has the full story.
+import { icon } from "./data/icons.js";
+// The homepage carousel of impactmakers, rendered from the LOCAL array
+// below (no API call), the same way the homepage project list renders
+// from projects.js. DEVELOPERS NOTE at the bottom has the full story.
 
-// ① CONFIG:
-const CAROUSEL_LIMIT = 12; // the full list lives on impactmakers.html
+// ① IMPACTMAKERS DATA:
+// `slug` is the JOIN KEY with the database: it must match the photo
+// filename in public/impactmakers/<slug>.jpg AND the slug of the same
+// person in the impactmaker_profiles table (see db/impactmaker-profiles.sql),
+// so a card here opens the same profile the directory page shows.
+const IMPACTMAKERS = [
+  { slug: "favour-adeyemi",     name: "Favour Adeyemi",     sdg: "Gender Equality" },
+  { slug: "chidera-james-edeh", name: "Chidera James-Edeh", sdg: "Good Health and Well-being" },
+  { slug: "idris-abdulrasheed", name: "Idris Abdulrasheed", sdg: "Quality Education" },
+  { slug: "musa-mubarak",       name: "Musa Mubarak",       sdg: "Climate Action" },
+  { slug: "omeiza-christianah", name: "Omeiza Christianah", sdg: "Affordable and Clean Energy" },
+  { slug: "fatima-al-hassan",   name: "Fatima Al-Hassan",   sdg: "Clean Water and Sanitation" },
+  { slug: "iloke-emmanuel",     name: "Iloke Emmanuel",     sdg: "Reduced Inequalities" },
+  { slug: "bankole-oluwakemi",  name: "Bankole Oluwakemi",  sdg: "Decent Work and Economic Growth" },
+  { slug: "tunde-balogun",      name: "Tunde Balogun",      sdg: "Life on Land" },
+];
+
+// Fallback image (generic silhouette/avatar) shown if a real photo is missing or fails to load.
+const FALLBACK_PHOTO = "/impactmakers/placeholder.jpg";
 
 // ② RENDERING — CARD:
+// Each card is a plain link to that person's profile page.
 function makerCard({ slug, name, sdg }) {
   return `
     <a href="/impactmaker.html?slug=${encodeURIComponent(slug)}" class="community__card">
@@ -46,17 +65,16 @@ export function renderCommunity() {
           </div>
 
           <div class="community__nav">
-            <button class="community__arrow" data-direction="prev" aria-label="Previous impactmakers">←</button>
-            <button class="community__arrow" data-direction="next" aria-label="Next impactmakers">→</button>
+            <button class="community__arrow" data-direction="prev" aria-label="Previous impactmakers">${icon("arrowLeft")}</button>
+            <button class="community__arrow" data-direction="next" aria-label="Next impactmakers">${icon("arrowRight")}</button>
           </div>
         </div>
 
         <div class="community__track" id="impactmakers-track" aria-label="Impactmakers carousel">
-          <p role="status">Loading impactmakers…</p>
+          ${IMPACTMAKERS.map(makerCard).join("")}
         </div>
 
         <div class="community__footer">
-          <a href="/become-impactmaker.html" class="community__view-all">Become an impactmaker</a>
           <a href="/impactmakers.html" class="community__view-all">See the whole network</a>
         </div>
       </div>
@@ -69,18 +87,8 @@ export function initCommunityCarousel() {
   const track = document.getElementById("impactmakers-track");
   if (!track) return;
 
-  const arrows = [...document.querySelectorAll(".community__arrow")];
-  const prevBtn = arrows.find((b) => b.dataset.direction === "prev");
-  const nextBtn = arrows.find((b) => b.dataset.direction === "next");
-
-  // arrows are disabled at either end, like the testimonials carousel
-  function updateArrows() {
-    const maxScroll = track.scrollWidth - track.clientWidth - 1;
-    prevBtn.disabled = track.scrollLeft <= 0;
-    nextBtn.disabled = track.scrollLeft >= maxScroll;
-  }
-
-  arrows.forEach((btn) => {
+  // arrow scroll buttons
+  document.querySelectorAll(".community__arrow").forEach((btn) => {
     btn.addEventListener("click", () => {
       const card = track.querySelector(".community__card");
       const cardWidth = card?.offsetWidth ?? 220;
@@ -91,26 +99,6 @@ export function initCommunityCarousel() {
       });
     });
   });
-
-  track.addEventListener("scroll", updateArrows, { passive: true });
-  window.addEventListener("resize", updateArrows);
-
-  // Fire-and-forget: fill the track once the data arrives. Nothing else
-  // on the page waits for this.
-  loadCards(track).then(updateArrows);
-}
-
-async function loadCards(track) {
-  try {
-    const makers = await fetchImpactmakers();
-    track.innerHTML =
-      makers.length > 0
-        ? makers.slice(0, CAROUSEL_LIMIT).map(makerCard).join("")
-        : `<p>No impactmakers yet. <a href="/become-impactmaker.html">Be the first.</a></p>`;
-  } catch (err) {
-    console.error("Failed to load impactmakers:", err);
-    track.innerHTML = `<p>Couldn't load impactmakers right now. Please try again later.</p>`;
-  }
 }
 
 
@@ -123,35 +111,45 @@ async function loadCards(track) {
 
   ARCHITECTURE OVERVIEW:
   The "People Behind the Impacts" carousel: a horizontal scroll of
-  impactmaker cards (photo, name, SDG focus). The shell renders
-  instantly with a "Loading…" line; initCommunityCarousel() then
-  fetches the approved impactmakers from the database
-  (data/impactmakers.js) and swaps the cards in. Only the first
-  CAROUSEL_LIMIT are shown; "See the whole network" leads to the full
-  directory, and "Become an impactmaker" to the application form.
+  impactmaker cards (photo, name, SDG focus). It follows the same
+  pattern as the homepage project list: it renders from a LOCAL array
+  and never calls the API, so it always shows the featured people even
+  if /api is down. The full, database-backed list lives on
+  impactmakers.html ("See the whole network").
 
-  What changed: the hardcoded list is gone, and cards are now plain
-  links to each person's profile page instead of auth-gated stubs,
-  because profile pages exist. To make profiles members-only again,
-  bring back requireAuth() in a click handler on the track.
+  THE LINK BETWEEN LOCAL AND DATABASE: each card links to
+  impactmaker.html?slug=<slug>, and the profile page loads that slug
+  from the database (approved profiles only). So `slug` here MUST equal
+  the slug of the same person in impactmaker_profiles. The nine people
+  below are seeded there as approved by db/impactmaker-profiles.sql.
+  If a slug is missing or not approved, the profile page shows its
+  "Impactmaker not found" view; it deliberately does not fall back to
+  this local data (see the "Slug fallback" decision in
+  CODING_STANDARDS.md).
 
-  Every name and SDG goes through escapeHtml() because profile text is
-  typed in by visitors.
+  TRADE-OFF TO KNOW: because this list is local, a newly approved
+  impactmaker appears in the directory but NOT in this carousel until
+  you add them to the array. Likewise, hiding someone in the database
+  does not remove their card here; remove them from the array too.
+
+  Cards are plain links; there is no login gate on them, because
+  profiles are public.
 
   Class names follow BEM where "community" is the block, and the file
   keeps that name even though the visible heading text says
   "Impactmakers", since the block name tracks the filename.
 
   BLOCKS DEFINITIONS:
-  ① CONFIG               — how many cards the homepage shows.
-  ② RENDERING — CARD      — makerCard() builds one escaped card.
-  ③ RENDERING — SHELL     — renderCommunity(): heading, arrows, the
-                            track (starts as a loading line), and the
-                            two footer links.
-  ④ CAROUSEL CONTROL      — arrow scrolling, arrows disabling at the
-                            ends, and loadCards(), which fetches and
-                            fills the track (with empty and error
-                            messages).
+  ① IMPACTMAKERS DATA  — the featured people (slug, name, SDG) and the
+                         fallback photo path used when a real photo is
+                         missing or fails to load.
+  ② RENDERING — CARD    — makerCard() builds one card, linked to the
+                         person's profile page.
+  ③ RENDERING — SHELL    — renderCommunity() builds the section's outer
+                         shell: heading, prev/next arrows, the
+                         scrollable card track, and the two footer links.
+  ④ CAROUSEL CONTROL     — wires up the prev/next arrow buttons (native
+                         scrollBy, matching the track's own gap value).
 
   CLASS NAME GLOSSARY:
   .community            The whole section.

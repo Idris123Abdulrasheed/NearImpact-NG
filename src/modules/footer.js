@@ -54,10 +54,10 @@ function renderContact() {
       <div class="footer__contact-item">
         ${phoneIcon}
         <span>
-          <a class="footer__contact-link" href="${CONTACT.whatsapp.href}" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp: ${CONTACT.whatsapp.label}">${CONTACT.whatsapp.label} <small>WhatsApp</small></a>
           ${CONTACT.phones
             .map((p) => `<a class="footer__contact-link" href="${p.href}">${p.label}</a>`)
             .join("")}
+          <a class="footer__contact-link" href="${CONTACT.whatsapp.href}" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp: ${CONTACT.whatsapp.label}">${CONTACT.whatsapp.label} <small>WhatsApp</small></a>
         </span>
       </div>
 

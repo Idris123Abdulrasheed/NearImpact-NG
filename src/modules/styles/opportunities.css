@@ -39,8 +39,9 @@
   font-size: 17px;}
 
 @media (max-width: 640px) {
+
   .opportunities__header h2 {
-    font-size: 34px;
+    font-size: 31.5px;
     line-height: 1.3;
   }
 }

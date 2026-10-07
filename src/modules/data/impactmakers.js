@@ -40,11 +40,13 @@ export async function fetchImpactmaker(slug) {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  This file used to hold nine hardcoded people. The carousel, the
-  directory and the profile page now all read the database through
-  these two functions instead, so a newly approved impactmaker shows
-  up everywhere without a code change. The API only ever returns
-  APPROVED profiles; pending ones stay invisible.
+  This file used to hold nine hardcoded people. The directory page and
+  the profile page now read the database through these two functions
+  instead, so a newly approved impactmaker shows up in both without a
+  code change. The API only ever returns APPROVED profiles; pending
+  ones stay invisible. The homepage carousel (community.js) is the
+  exception: it renders from its own local array and never calls
+  these functions.
 
   Callers must handle failure: both functions throw on a network or
   server error, so each page shows its own "couldn't load" message.

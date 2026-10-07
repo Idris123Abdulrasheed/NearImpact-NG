@@ -1,5 +1,5 @@
 import "./styles/opportunities.css";
-import { fetchOpportunities } from "./data/opportunities.js";
+import { getMockOpportunities } from "./data/opportunities-mock.js";
 import { renderOpportunityCard } from "./ui/opportunity-card.js";
 // Landing-page preview: first 4 OPEN opportunities per category, and
 // "Show More" is now a link to the full page. DEVELOPERS NOTE below.
@@ -24,16 +24,15 @@ export function renderOpportunities() {
         <div class="opportunities__tabs-scroll">
           <div class="opportunities__tabs">
             <button class="active" data-category="all">All</button>
-            <button data-category="fellowship">Fellowships</button>
-            <button data-category="grant">Grants</button>
             <button data-category="internship">Internships</button>
+            <button data-category="grant">Grants</button>
+            <button data-category="fellowship">Fellowships</button>
             <button data-category="job">Jobs</button>
           </div>
           <span class="opportunities__tabs-chevron">›</span>
         </div>
 
-        <div class="opportunities__grid" id="opp-grid">
-          <p class="opportunities__status">Loading opportunities…</p>
+        <div    class="opportunities__grid" id="opp-grid">
         </div>
 
         <div class="opportunities__footer">
@@ -49,35 +48,23 @@ export function renderOpportunities() {
 const cache = new Map(); // category -> items, so re-clicking a tab is instant
 let latestRequest = 0;   // ignores a slow response if the user already switched tab
 
-async function loadCategory(category) {
+// ③ DATA LOADING:
+// Local mock list, same pattern as the projects section: no network call, so
+// the homepage always shows everything. "Show More" opens the database-backed page.
+function loadCategory(category) {
   const grid = document.getElementById("opp-grid");
   const showMore = document.getElementById("opp-show-more");
   if (!grid || !showMore) return;
 
   showMore.href = category === "all" ? ALL_PAGE : `${ALL_PAGE}?type=${category}`;
-  const requestId = ++latestRequest;
 
-  try {
-    if (!cache.has(category)) {
-      grid.innerHTML = `<p class="opportunities__status">Loading opportunities…</p>`;
-      const data = await fetchOpportunities({
-        type: category === "all" ? "" : category,
-        status: "open",
-        pageSize: PREVIEW_COUNT,
-      });
-      cache.set(category, data.items);
-    }
-    if (requestId !== latestRequest) return;
+  const items = getMockOpportunities()
+    .filter((opp) => category === "all" || opp.type === category)
+    .slice(0, PREVIEW_COUNT);
 
-    const items = cache.get(category);
-    grid.innerHTML = items.length
-      ? items.map(renderOpportunityCard).join("")
-      : `<p class="opportunities__status">No open opportunities in this category yet.</p>`;
-  } catch (err) {
-    if (requestId !== latestRequest) return;
-    console.error("Failed to load opportunities:", err);
-    grid.innerHTML = `<p class="opportunities__status">Couldn't load opportunities. Please try again later.</p>`;
-  }
+  grid.innerHTML = items.length
+    ? items.map(renderOpportunityCard).join("")
+    : `<p class="opportunities__status">No opportunities in this category yet.</p>`;
 }
 
 // ④ INITIALIZATION:
