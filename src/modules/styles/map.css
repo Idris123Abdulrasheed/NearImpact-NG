@@ -1,5 +1,4 @@
 /* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/map.js for my class glossary*/
-
 .explore {
   padding: 0 32px;
 
@@ -16,7 +15,6 @@
   border: 1px solid var(--border);
   border-radius: 22px;
   box-shadow: var(--shadow);
-
   @media (max-width: 1024px) {
     margin: 0 auto 16px;
     padding: 14px;
@@ -26,7 +24,6 @@
 
 .map__header-section {
   padding: 32px 32px 20px;
-
   @media (max-width: 1024px) {
     padding: 20px 20px 12px;
   }
@@ -52,35 +49,36 @@
   color:var(--ink);
   margin-bottom:10px;
 }
- 
+
 .map__header p {
   max-width: 700px;
   color: var(--muted);
   line-height: 1.8;
   font-size: 17px;}
-
 .map__frame {
   position: relative;
   z-index: 0;
   margin-bottom: 24px;
-
   @media (max-width: 1024px) {
     margin-bottom: 18px;
   }
 }
-
+/* The part that actually goes full screen. The frame stays in the page
+   (map.js pins its height) so nothing below jumps while the stage is
+   fixed over everything. */
+.map__stage {
+  position: relative;
+}
 .map__canvas {
   width: 100%;
   height: 460px;
   border-radius: 18px;
   overflow: hidden;
-
   @media (max-width: 1024px) {
     height: 340px;
     border-radius: 14px;
   }
 }
-
 
 .map__credit {
   position: absolute;
@@ -100,7 +98,6 @@
   background: var(--bg);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   pointer-events: none;
-
   @media (max-width: 1024px) {
     left: 50%;
     right: auto;
@@ -123,7 +120,6 @@
   background: var(--indigo);
   color: #fff;
   font-size: 16px;
-
   @media (max-width: 1024px) {
     width: 24px;
     height: 24px;
@@ -138,37 +134,142 @@
   }
 }
 
+/* FULL SCREEN BUTTON (top right of the map) */
+.map__fullscreen-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1100; /* above Leaflet's own controls (1000) */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-h);
+  box-shadow: var(--shadow);
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
 
+.map__fullscreen-btn:hover {
+  background: var(--explore-bg-softer);
+  color: var(--explore-accent-dark);
+}
+.map__fullscreen-btn:focus-visible {
+  outline: 2px solid var(--explore-accent);
+  outline-offset: 2px;
+}
+
+/* TWO-FINGER HINT (touch devices, inline map only) */
+.map__gesture-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  border-radius: 18px;
+  background: rgba(18, 36, 28, 0.55);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  @media (max-width: 1024px) {
+    border-radius: 14px;
+  }
+}
+/* state: map.js toggles this while the hint should be on screen */
+.map__gesture-hint.is-visible {
+  opacity: 1;
+}
+/* FULL SCREEN MODE: map.js adds .is-fullscreen to .map__frame */
+.map__frame.is-fullscreen {
+  z-index: auto; /* a z-index here would trap the stage below the nav */
+}
+.map__frame.is-fullscreen .map__stage {
+  position: fixed;
+  inset: 0;
+  z-index: 2000; /* above nav (1200), user dropdown (1300), auth modal (1400) */
+  background: var(--bg);
+}
+
+.map__frame.is-fullscreen .map__canvas {
+  height: 100%;
+  border-radius: 0;
+}
+.map__frame.is-fullscreen .map__fullscreen-btn {
+  top: calc(12px + env(safe-area-inset-top, 0px));
+}
+.map__frame.is-fullscreen .map__credit {
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+.map__frame.is-fullscreen .map__gesture-hint {
+  display: none;
+}
+
+/* Zoom buttons move to the side, vertically centred, in full screen */
+.map__frame.is-fullscreen .leaflet-top.leaflet-left {
+  top: 50%;
+  left: auto;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+/* PROJECT PINS: rounded square with the type icon and a small pointer */
 .map__pin {
   background: none;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
 .map__pin span {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(45deg);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: var(--bg);
-  border: 2px solid var(--explore-accent);
+  color: var(--explore-accent);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  font-size: 15px;
+  font-size: 18px;
+  transform-origin: 50% calc(100% + 6px); /* grow from the pointer tip */
+  transition: transform 0.15s ease;
 }
 
-.map__pin span > * {
-  transform: rotate(-45deg);
+/* the pointer: a rotated square that shares the pin's background */
+.map__pin span::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-left: none;
+  transform: translateX(-50%) rotate(45deg);
 }
 
 .map__pin--selected span {
   background: var(--explore-accent);
-  transform: rotate(45deg) scale(1.15);
+  color: #fff;
+  border-color: var(--explore-accent);
+  transform: scale(1.15);
   box-shadow: 0 0 0 4px var(--explore-bg-soft);
+}
+.map__pin--selected span::after {
+  border-color: var(--explore-accent);
 }
 
 .map__user-marker {
@@ -177,7 +278,6 @@
   stroke-width: 3 !important;
   fill-opacity: 1 !important;
 }
-
 /* LEAFLET LIBRARY OVERRIDES: these class names belong to Leaflet,
    not the codebase. Leaflet applies them internally, so BEM cannot apply*/
 .leaflet-popup-content-wrapper {
@@ -210,7 +310,3 @@
   font-size: 10px !important;
   background: color-mix(in srgb, var(--bg) 80%, transparent) !important;
 }
-
-
-
-  

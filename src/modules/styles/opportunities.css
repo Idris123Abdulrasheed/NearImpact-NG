@@ -117,7 +117,7 @@
 
 .opportunities__grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:24px;
 }
 
@@ -231,6 +231,12 @@
 }
 
 @media(max-width:1000px){
+  .opportunities__grid{
+    grid-template-columns:(2, 1fr);
+  }
+}
+
+@media(max-width:640px){
   .opportunities__grid{
     grid-template-columns:1fr;
   }
