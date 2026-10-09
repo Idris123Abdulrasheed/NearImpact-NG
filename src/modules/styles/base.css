@@ -1,8 +1,10 @@
- /* Global design tokens + resets: every other CSS file in this CODEBASE
+/* Global design tokens + resets: every other CSS file in this CODEBASE
    reads from the variables defined here rather than hardcoding
    colors/fonts directly. */
 
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap");
+/* Fonts are loaded by the <link> tags in index.html, not here: a CSS @import
+   makes the browser download this file first and only then discover the
+   fonts, which delays text from appearing. See TYPE SYSTEM below. */
 
 
 /* DESIGN TOKENS
@@ -52,6 +54,10 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* serif voices: opt-in per component, nothing uses them by default */
+  --font-hero: "Fraunces", Georgia, "Times New Roman", serif;   /* big, thick headline */
+  --font-serif: "Merriweather", Georgia, "Times New Roman", serif; /* editorial headings, quotes */
 }
 
 
@@ -178,4 +184,19 @@ h3 {
    rose, plum) intentionally stay the same in both modes, just
    re-tinted, so the palette stays recognizable rather than becoming
    a completely different color scheme at night. 
+
+   TYPE SYSTEM:
+     --font-display  Space Grotesk. The site-wide default for headings
+                     (through --heading).
+     --font-body     Inter. Everything that is just reading.
+     --font-mono     IBM Plex Mono. Numbers and data.
+     --font-hero     Fraunces. Thick, warm serif for the hero headline
+                     ONLY. Looks best at 40px+. Opt-in: a component uses
+                     it by writing font-family: var(--font-hero).
+     --font-serif    Merriweather. Editorial serif for section headings
+                     and quotes. Opt-in, same way.
+   Rule: a component picks a token and never types a font name, so a font
+   can be swapped later by editing one line here. Every font must also be
+   requested in the <link> in index.html, or the browser silently falls
+   back to the next font in the stack.
    ===================================================================== */

@@ -105,7 +105,7 @@ html {
   border-radius: 50%;
   background: transparent;
   color: var(--ink);
-  font-size: 22px;
+  font-size: 27px;
   cursor: pointer;
   transition: background-color .2s ease;
 }
@@ -118,7 +118,9 @@ html {
 .nav__btn:focus-visible,
 .nav__link:focus-visible,
 .nav__drawer-row:focus-visible,
-.nav__drawer-switch-row:focus-visible,
+.nav__sub-link:focus-visible,
+.nav__signin:focus-visible,
+.nav__account-item:focus-visible,
 .nav__search-clear:focus-visible,
 .nav__brand:focus-visible {
   outline: 2px solid var(--accent);
@@ -170,7 +172,7 @@ html {
 .nav__search-icon {
   display: inline-flex;
   color: var(--muted);
-  font-size: 18px;
+  font-size: 25px;
   flex: none;
 }
 
@@ -277,14 +279,54 @@ html {
   display: none;
 }
 
-.nav__theme-btn span {
+.nav__theme-btn span,
+.nav__drawer-theme span {
   display: inline-flex;
 }
 
-/* sun/moon swap straight off <html data-theme>, no JS needed */
+/* sun/moon swap straight off <html data-theme>, no JS needed.
+   Shared by the bar button and the drawer button. */
 html[data-theme="dark"] .nav__theme-moon,
 html:not([data-theme="dark"]) .nav__theme-sun {
   display: none;
+}
+
+/* ===== Hamburger: big, solid deep blue ===== */
+/* Double class beats .nav__icon-btn and its :hover, whatever the order.
+   The border is always 3px (transparent when closed) so the button never
+   changes size when it opens. White glyph on the always-dark indigo
+   fill: the one allowed #fff exception, same as other brand fills. */
+.nav__icon-btn.nav__menu-button {
+  width: 50px;
+  height: 43px;
+  border: 3px solid transparent;
+  border-radius: 14px;
+  background: #fff;
+  color: #0c4a3e;
+  font-size: 28px;
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .1s ease;
+}
+
+.nav__icon-btn.nav__menu-button:hover {
+  background: #fff;
+}
+
+.nav__menu-button svg {
+  width: 50px;
+  height: 45px;
+  stroke-width: 3.; /* bold bars / bold X */
+}
+
+/* pressed or open: bright ring + soft outer halo around the button */
+.nav__icon-btn.nav__menu-button:active,
+.nav__icon-btn.nav__menu-button[aria-expanded="true"] {
+  background: #fff;
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 3px var(--indigo-tint);
+}
+
+.nav__icon-btn.nav__menu-button:active {
+  transform: scale(.96);
 }
 
 .nav__menu-icon {
@@ -490,135 +532,310 @@ body.no-scroll {
   font-size: 20px;
 }
 
+/* ===== Dropdown groups (native <details>) ===== */
+/* <summary> is a .nav__drawer-row; just remove the browser's marker. */
+.nav__group-summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.nav__group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav__group-chevron svg {
+  transition: transform .22s ease;
+}
+
+/* [open] is a native attribute: the browser sets it, nav.js never touches it */
+.nav__group[open] > .nav__group-summary {
+  color: var(--canopy);
+  background: var(--canopy-tint);
+}
+
+.nav__group[open] .nav__group-chevron {
+  border-color: var(--line-green);
+  background: var(--bg);
+  color: var(--canopy);
+}
+
+.nav__group[open] .nav__group-chevron svg {
+  transform: rotate(90deg);
+}
+
+/* a group holding the page you are on is tinted too */
+.nav__group:has(.nav__sub-link.is-active) > .nav__group-summary {
+  color: var(--canopy);
+}
+
+.nav__group-panel {
+  display: grid;
+  gap: 2px;
+  padding: 8px 14px 14px 20px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  animation: nav-group-in .22s ease;
+}
+
+@keyframes nav-group-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav__sub-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 14px 0 12px;
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.nav__sub-link::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--canopy-light);
+}
+
+a.nav__sub-link:hover {
+  background: var(--bg);
+  color: var(--canopy);
+}
+
+.nav__sub-link.is-active {
+  color: var(--canopy);
+  background: var(--bg);
+}
+
+.nav__sub-link.is-active::before {
+  background: var(--canopy);
+  box-shadow: 0 0 0 4px var(--canopy-tint);
+}
+
+/* pages that are not built yet: a label, not a link */
+.nav__sub-link.is-soon {
+  color: var(--muted);
+  cursor: default;
+}
+
+.nav__sub-link.is-soon::before {
+  background: var(--muted-light);
+}
+
+/* solid brand background + white text: safe in both themes */
+.nav__soon {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sun-dark);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ===== Drawer bottom bar: Sign in + theme button ===== */
 .nav__drawer-footer {
   flex: none;
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 12px;
   padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
   background: var(--paper);
   border-top: 1px solid var(--line);
 }
 
-.nav__drawer-auth {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.nav__drawer-auth .nav__btn {
-  height: 48px;
-}
-
-.nav__drawer-user {
-  display: grid;
-  grid-template-columns: auto 1fr;
+/* Dark brand button. #fff and white alphas sit on the always-dark
+   canopy-dark fill, the allowed exception for brand-fill buttons. */
+.nav__signin {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
+  padding: 0 18px;
+  border: 1px solid var(--canopy);
+  border-radius: 14px;
+  background: var(--canopy-dark);
+  color: #fff;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease, filter .2s ease;
 }
 
-.nav__drawer-user .nav__btn {
-  grid-column: 1 / -1;
-  height: 46px;
+.nav__signin:hover {
+  filter: brightness(1.12);
 }
 
-.nav__drawer-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.nav__signin > svg {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
+
+.nav__signin--user {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 14px 0 8px;
+}
+
+.nav__signin-avatar {
+  width: 36px;
+  height: 36px;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--canopy);
-  color: #fff; /* white on an always-dark brand fill */
-  font-size: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .18);
+  font-size: 13px;
   font-weight: 700;
+  letter-spacing: .02em;
 }
 
-.nav__drawer-who {
+.nav__signin-name {
+  flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* points up while closed (the pop-up opens upward), down while open */
+.nav__signin-caret {
+  display: inline-flex;
+  flex: none;
+  font-size: 18px;
+  transform: rotate(-90deg);
+  transition: transform .2s ease;
+}
+
+.nav__signin--user[aria-expanded="true"] .nav__signin-caret {
+  transform: rotate(90deg);
+}
+
+/* theme button: same icon button as the desktop bar, given a frame here */
+.nav__icon-btn.nav__drawer-theme {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--bg);
+  font-size: 24px;
+}
+
+.nav__icon-btn.nav__drawer-theme:hover {
+  background: var(--paper-deep);
+}
+
+/* Account pop-up (signed in) */
+.nav__drawer-account {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.nav__account-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 10px);
+  z-index: 2;
+  padding: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, .14);
+  animation: nav-group-in .18s ease;
+}
+
+.nav__account-header {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding: 10px 12px 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
 }
 
-.nav__drawer-who strong,
-.nav__drawer-who span {
+.nav__account-header strong,
+.nav__account-header span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.nav__drawer-who strong {
+.nav__account-header strong {
   color: var(--ink);
   font-size: 15px;
 }
 
-.nav__drawer-who span {
+.nav__account-header span {
   color: var(--muted);
   font-size: 13px;
 }
 
-.nav__drawer-switch-row {
+.nav__account-item {
   width: 100%;
+  min-height: 48px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 4px;
+  padding: 0 12px;
   border: none;
   border-radius: 10px;
   background: transparent;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 600;
   color: var(--ink);
+  font: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
   text-align: left;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.nav__drawer-switch-icon {
+.nav__account-item:hover {
+  background: var(--paper);
+}
+
+.nav__account-item > span:first-child {
   display: inline-flex;
-  font-size: 20px;
-}
-
-.nav__drawer-switch-label {
-  flex: 1;
-}
-
-/* Pill switch; state comes from aria-checked, so it can't drift */
-.nav__switch {
-  position: relative;
-  width: 40px;
-  height: 24px;
-  flex: none;
-  border-radius: 999px;
-  background: var(--line-green);
-  transition: background-color .2s ease;
-}
-
-.nav__switch::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff; /* knob stays white on both tracks */
-  transition: transform .2s ease;
-}
-
-.nav__drawer-switch-row[aria-checked="true"] .nav__switch {
-  background: var(--canopy);
-}
-
-.nav__drawer-switch-row[aria-checked="true"] .nav__switch::before {
-  transform: translateX(16px);
+  font-size: 18px;
 }
 
 /* Dark mode: --canopy has too little contrast as TEXT on dark surfaces */
 [data-theme="dark"] .nav__link:hover,
 [data-theme="dark"] .nav__link.is-active,
-[data-theme="dark"] .nav__drawer-row.is-active {
+[data-theme="dark"] .nav__drawer-row.is-active,
+[data-theme="dark"] .nav__group[open] > .nav__group-summary,
+[data-theme="dark"] .nav__group:has(.nav__sub-link.is-active) > .nav__group-summary,
+[data-theme="dark"] .nav__group[open] .nav__group-chevron,
+[data-theme="dark"] .nav__sub-link.is-active,
+[data-theme="dark"] a.nav__sub-link:hover {
   color: var(--canopy-light);
 }
 
@@ -743,5 +960,13 @@ body.no-scroll {
     left: auto;
     width: min(420px, 100%);
     border-left: 1px solid var(--line);
+  }
+}
+
+/* The 1180px rule above hides .nav__menu-button, but the double-class
+   hamburger rule is more specific: restate the hide with the same weight. */
+@media (min-width: 1180px) {
+  .nav__icon-btn.nav__menu-button {
+    display: none;
   }
 }
