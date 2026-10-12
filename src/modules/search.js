@@ -2,6 +2,7 @@
  //DEVELOPERS NOTE at the buttom
 
 import { escapeHtml } from "./ui/escape-html.js";
+import { renderLoader } from "./ui/loader.js";
 
 // ① CONFIG:
 const DEBOUNCE_MS = 300;
@@ -117,7 +118,9 @@ function wireSearchInput({ inputId, resultsId, clearId }) {
       return;
     }
 
-    showResults(`<div class="search-dropdown__loading">Searching…</div>`);
+    showResults(`<div class="search-dropdown__loading">          
+         ${renderLoader({ size: "sm", label: "Searching…" })}
+      </div>`);
     runSearch(term);
   });
 

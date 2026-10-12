@@ -5,14 +5,15 @@ import { ALL_GOALS, goalUrl } from "./data/sdg-data.js";
 // page. DEVELOPERS NOTE at the bottom has the full story.
 
 // ① CONFIG:
-const INITIAL_VISIBLE = 10; // ~2 rows at the 5-col desktop breakpoint
+const PREVIEW_COUNT =8; 
 
 // ② RENDERING:
-function sdgCard(goal, index) {
-  const extra = index >= INITIAL_VISIBLE ? " sdgs__card--extra" : "";
+
+
+function sdgCard(goal) {
   const label = goal.id === 18 ? "The Global Goals: what can I do?" : `Goal ${goal.id}: ${goal.name}`;
   return `
-    <a class="sdgs__card${extra}" href="${goalUrl(goal.id)}" aria-label="${label}">
+    <a class="sdgs__card" href="${goalUrl(goal.id)}" aria-label="${label}">
       <img class="sdgs__card-image" src="/sdgs/sdg${goal.id}.png" alt="SDG ${goal.id} - ${goal.name}">
     </a>
   `;
@@ -33,13 +34,12 @@ export function renderSdgs() {
             </p>
           </div>
         </div>
-
         <div class="sdgs__grid" id="sdg-grid">
-          ${ALL_GOALS.map(sdgCard).join("")}
+          ${ALL_GOALS.slice(0, PREVIEW_COUNT).map(sdgCard).join("")}
         </div>
 
         <div class="sdgs__toggle-wrap">
-          <a class="sdgs__toggle-btn" href="/sdgs.html">View more</a>
+          <a class="sdgs__toggle-btn" href="/sdgs.html">View all the 17 goals</a>
         </div>
 
       </div>

@@ -635,8 +635,8 @@ const renderBackIcon = () => `
 `;
 
 const renderMenuIcon = () => `
-  <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-    <path d="M4 7h16M4 12h16M4 17h16"/>
+  <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+    <path d="M6.5 8h11M4 12h16M6.5 16h11"/>
   </svg>
 `;
 

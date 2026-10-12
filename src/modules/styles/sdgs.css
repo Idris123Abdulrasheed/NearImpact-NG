@@ -37,7 +37,7 @@
 
 .sdgs__grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 
@@ -68,8 +68,9 @@
 
 .sdgs__card-image {
   width: 100%;
-  height: 150px;
-  object-fit: fill;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   display: block;
   transition: transform .4s ease;
 }
@@ -109,7 +110,7 @@
 
 @media (max-width:1200px){
 .sdgs__grid{
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(3,1fr);
 }
 
 }
@@ -149,10 +150,6 @@ gap:18px;
 
 }
 
-.sdgs__card-image{
-height:110px;
-}
-
 }
 
 /* ===========================
@@ -163,9 +160,4 @@ height:110px;
 grid-template-columns:2fr;
 
 }
-
-.sdgs__card-image{
-height:60px;
-}
-
 }

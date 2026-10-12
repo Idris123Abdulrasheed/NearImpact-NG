@@ -24,7 +24,7 @@ function tileHtml(goal) {
        style="--sdg-color:${goal.color}">
       <img class="sdgs-page__tile-image" src="/sdgs/sdg${goal.id}.png" alt="SDG ${goal.id} - ${escapeHtml(goal.name)}" loading="lazy">
       <span class="sdgs-page__tile-body">
-        <strong>${escapeHtml(goal.tagline)}</strong>
+        <strong title="${escapeHtml(goal.tagline)}">${escapeHtml(goal.tagline)}</strong>
         <span>${escapeHtml(meta)}</span>
       </span>
     </a>

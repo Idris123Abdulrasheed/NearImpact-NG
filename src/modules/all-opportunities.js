@@ -3,6 +3,8 @@ import { STATE_LGAS } from "./data/projects.js";
 import { fetchOpportunities } from "./data/opportunities.js";
 import { renderOpportunityCard } from "./ui/opportunity-card.js";
 import { escapeHtml } from "./ui/escape-html.js";
+import { renderLoader } from "./ui/loader.js";
+
 // The full /all-opportunities.html page. Filters are a plain GET form,
 // so the URL IS the state. DEVELOPERS NOTE at the bottom.
 
@@ -94,8 +96,10 @@ export function renderAllOpportunities() {
           </div>
         </form>
 
-        <p class="all-opportunities__count" id="ao-count" aria-live="polite">Loading…</p>
-        <div class="all-opportunities__grid" id="ao-grid"></div>
+        <p class="all-opportunities__count" id="ao-count" aria-live="polite"></p>
+        <div class="all-opportunities__grid" id="ap-grid">
+          ${renderLoader({ size: "lg", variant: "block", label: "Loading opportunities…" })}
+        </div>
         <nav class="all-opportunities__pagination" id="ao-pagination" aria-label="Pagination" hidden></nav>
 
       </div>

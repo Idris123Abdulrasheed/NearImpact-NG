@@ -291,37 +291,43 @@ html:not([data-theme="dark"]) .nav__theme-sun {
   display: none;
 }
 
-/* ===== Hamburger: big, solid deep blue ===== */
+/* ===== Hamburger: clean dark bars, ring when open ===== */
 /* Double class beats .nav__icon-btn and its :hover, whatever the order.
    The border is always 3px (transparent when closed) so the button never
-   changes size when it opens. White glyph on the always-dark indigo
-   fill: the one allowed #fff exception, same as other brand fills. */
+   changes size when it opens. Colours are tokens, so dark mode follows. */
 .nav__icon-btn.nav__menu-button {
-  width: 50px;
-  height: 43px;
+  width: 52px;
+  height: 52px;
   border: 3px solid transparent;
   border-radius: 14px;
-  background: #fff;
-  color: #0c4a3e;
-  font-size: 28px;
+  background: transparent;
+  color: rgba(30, 85, 30, 0.922);
+  font-size: 30px;
   transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .1s ease;
 }
 
 .nav__icon-btn.nav__menu-button:hover {
-  background: #fff;
+  background: var(--paper);
 }
 
 .nav__menu-button svg {
   width: 50px;
-  height: 45px;
-  stroke-width: 3.; /* bold bars / bold X */
+  height: 50px;
+  stroke-width: 2.1;
 }
 
-/* pressed or open: bright ring + soft outer halo around the button */
+/* the X is drawn bolder than the bars so it reads clearly */
+.nav__menu-icon--close svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 2.3;
+}
+
+/* pressed or open: indigo ring + soft halo around the button */
 .nav__icon-btn.nav__menu-button:active,
 .nav__icon-btn.nav__menu-button[aria-expanded="true"] {
-  background: #fff;
-  border-color: var(--green-light);
+  background: var(--bg);
+  border-color: var(--indigo-light);
   box-shadow: 0 0 0 3px var(--indigo-tint);
 }
 

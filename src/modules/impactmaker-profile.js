@@ -1,6 +1,8 @@
 import "./styles/impactmaker-profile.css";
 import { FALLBACK_PHOTO } from "./data/impactmakers.js";
 import { escapeHtml } from "./ui/escape-html.js";
+import { renderLoader } from "./ui/loader.js";
+
 // One impactmaker's profile page. Every section except the header is
 // optional and appears only when the record has data for it.
 // DEVELOPERS NOTE at the bottom.
@@ -145,7 +147,7 @@ function renderNotice(content) {
 }
 
 export function renderProfileLoading() {
-  return renderNotice(`<p class="maker-profile__empty" role="status">Loading profile…</p>`);
+  return renderNotice(renderLoader({ size: "lg", variant: "block", label: "Loading profile…"}));
 }
 
 export function renderProfileNotFound() {

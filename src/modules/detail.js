@@ -8,6 +8,8 @@ import { isLoggedIn, subscribe } from "./auth.js";
 import { escapeHtml } from "./ui/escape-html.js";
 import { formatClosing } from "./ui/opportunity-card.js";
 import { fetchProject } from "./data/projects-api.js";
+import { renderLoader } from "./ui/loader.js";
+
 // ONE public detail page for both kinds of listing, with the
 // register / login box on the page. DEVELOPERS NOTE at the bottom.
 
@@ -169,7 +171,9 @@ function renderAction(record) {
 export function renderDetail() {
   return `
     <section class="detail" id="detail">
-      <div id="detail-root"><p class="detail__status">Loading…</p></div>
+      <div id="detail-root">
+          ${renderLoader({ size: "lg", variant: "block", label: "Loading…" })}
+      </div>
     </section>
   `;
 }

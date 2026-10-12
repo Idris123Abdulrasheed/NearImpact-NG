@@ -1,6 +1,8 @@
 import "./styles/impactmakers-page.css";
 import { fetchImpactmakers, FALLBACK_PHOTO } from "./data/impactmakers.js";
 import { escapeHtml } from "./ui/escape-html.js";
+import { renderLoader } from "./ui/loader.js";
+
 // The full impactmakers directory: a grid of everyone approved, each
 // card linking to that person's profile. DEVELOPERS NOTE at the bottom.
 
@@ -39,7 +41,8 @@ export function renderImpactmakersPage() {
         </header>
 
         <div class="impactmakers-page__grid" id="impactmakers-grid">
-          <p class="impactmakers-page__status" role="status">Loading impactmakers…</p>
+          ${renderLoader({ size: "lg", variant: "block", label: "Loading impactmakers…" })}
+       </div>
         </div>
 
       </div>

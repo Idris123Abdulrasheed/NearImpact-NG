@@ -5,6 +5,7 @@ import { getTypeMeta, TYPE_META } from "./data/type-meta.js";
 import { renderProjectCard, bindProjectCardActions } from "./ui/project-card.js";
 import { renderPagination } from "./ui/pagination.js";
 import { escapeHtml } from "./ui/escape-html.js";
+import { renderLoader } from "./ui/loader.js";
 // The full /all-projects.html page behind the homepage "Show More".
 // Filters are a plain GET form, so the URL IS the state. DEVELOPERS NOTE at the bottom.
 
@@ -112,8 +113,10 @@ export function renderAllProjects() {
           </p>
         </form>
 
-        <p class="all-projects__count" id="ap-count" aria-live="polite">Loading…</p>
-        <div class="all-projects__grid" id="ap-grid"></div>
+        <p class="all-projects__count" id="ap-count" aria-live="polite"></p>
+       <div class="all-projects__grid" id="ap-grid">
+          ${renderLoader({ size: "lg", variant: "block", label: "Loading projects…" })}
+       </div>
         <nav class="pagination" id="ap-pagination" aria-label="Pagination" hidden></nav>
 
       </div>

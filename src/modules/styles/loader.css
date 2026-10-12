@@ -1,0 +1,70 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/ui/loader.js for my class glossary*/
+
+.loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.loader__img {
+  display: block;
+  width: var(--loader-size, 48px);
+  height: auto; /* keeps the aspect ratio; transparency is untouched */
+  animation: loader-spin 1.8s linear infinite;
+}
+
+@keyframes loader-spin{
+ to {transform: rotate(360deg);}
+}
+
+.loader--sm { --loader-size: 24px; }
+.loader--md { --loader-size: 48px; }
+.loader--lg { --loader-size: 96px; }
+
+/* inline: text is for screen readers only */
+.loader--inline .loader__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* block: centred in whatever holds it (also works inside a CSS grid) */
+.loader--block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  grid-column: 1 / -1;
+  padding: 40px 0;
+  text-align: center;
+}
+
+/* page: full-screen overlay. 1500 = above the auth modal (1400),
+   below the full-screen map (2000). Update the z-index list in the standards. */
+.loader--page {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader__img { display: none; }
+  .loader--inline .loader__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    clip: auto;
+  }
+}
