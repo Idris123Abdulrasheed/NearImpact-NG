@@ -327,8 +327,7 @@ html:not([data-theme="dark"]) .nav__theme-sun {
 .nav__icon-btn.nav__menu-button:active,
 .nav__icon-btn.nav__menu-button[aria-expanded="true"] {
   background: var(--bg);
-  border-color: var(--indigo-light);
-  box-shadow: 0 0 0 3px var(--indigo-tint);
+  border: 2px solid rgb(121, 161, 62);
 }
 
 .nav__icon-btn.nav__menu-button:active {

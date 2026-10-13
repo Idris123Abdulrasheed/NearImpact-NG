@@ -2,18 +2,20 @@
 
 .testimonials {
   background: var(--paper);
-  padding: 40px 32px;
+  padding: 40px 0 48px;
+  overflow: hidden;
 }
 
 .testimonials__wrap {
   max-width: 1180px;
   margin: 0 auto;
+  padding: 0 32px;
 }
 
 .testimonials__header {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto 42px;
+  margin: 0 auto 14px;
 }
 
 .testimonials__header h2 {
@@ -21,81 +23,127 @@
   font-size: 42px;
   line-height: 1.12;
   font-weight: 700;
-  margin: 0 0 14px;
+  margin: 0;
 }
 
-/* ===== Carousel shell ===== */
-.testimonials__carousel {
-  position: relative;
+/* ===== Rows ===== */
+.testimonials__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A real scrollable strip: testimonials.js drifts it by moving scrollLeft,
+   and the visitor can swipe it at any time. The scrollbar is hidden. The
+   top padding gives the quote badge (and its ring) room above the cards,
+   and the bottom padding keeps their shadow, because overflow clips anything
+   outside the row. */
+.testimonials__row {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain; /* a sideways swipe never triggers browser "back" */
+  scrollbar-width: none;
+  padding: 30px 0 20px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.testimonials__row::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials__row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .testimonials__track {
   display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 4px;
-  padding: 4px 4px 12px;
-  margin: 0 -4px;
-  /* hide scrollbar visually; buttons + swipe still work */
-  scrollbar-width: none;
+  width: max-content;
 }
 
-.testimonials__track::-webkit-scrollbar {
-  display: none;
+.testimonials__set {
+  display: flex;
 }
 
+/* ===== Cards: landscape, every card exactly the same size ===== */
+/* margin-right (not flex gap) so every card carries its own spacing and
+   the track's width is exactly 2 x one set; that keeps the -50% loop seamless. */
 .testimonials__card {
-  flex: 0 0 min(360px, 86vw);
-  scroll-snap-align: start;
-  background: var(--bg);  
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  height: 212px;
+  margin-right: 18px;
+  padding: 26px 24px 18px;
+  background: var(--bg);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 30px;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
 }
 
-/* modifier: the one card with a distinct gradient background */
-.testimonials__card--featured {
-  background: linear-gradient(135deg, var(--bg), var(--canopy-tint));
-  border-color: var(--line-green);
-}
-
+/* Round quote badge sitting on the top-right corner. The paper-coloured ring
+   around it makes the card's border look cut through behind it. */
 .testimonials__quote-mark {
-  width: 48px;
-  height: 48px;
-  background: var(--canopy-tint);
+  position: absolute;
+  top: -20px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  padding: 11px 10px;
+  display: block;
+  border-radius: 50%;
+  background: var(--canopy);
+  color: #ffffff;
+  box-shadow: 0 0 0 5px var(--paper);
+}
+
+/* The result, read first by skimmers. One line, cut with an ellipsis. */
+.testimonials__outcome {
+  margin: 0 0 6px;
   color: var(--canopy);
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 22px;
-}
-
-.testimonials__card p {
-  color: var(--ink-soft);
-  line-height: 1.8;
   font-size: 16px;
-  margin: 0 0 30px;
+  line-height: 1.3;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Quote takes the free space and is cut at three lines, so a long quote
+   can never make its card taller than the others. */
+.testimonials__card p {
+  flex: 1;
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* A thin divider separates what was said from who said it */
 .testimonials__person {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--paper-deep);
 }
 
 .testimonials__avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   background: var(--canopy);
   color: #ffffff;
   display: grid;
   place-items: center;
+  font-size: 13px;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -111,61 +159,89 @@
 .testimonials__person strong {
   display: block;
   color: var(--ink);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
 }
 
 .testimonials__person span {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
 }
-
-/* ===== Carousel controls ===== */
-.testimonials__nav {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-.testimonials__nav-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  border: 1px solid var(--line-green);
-  background: var(--bg);  
-  color: var(--canopy);
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.testimonials__nav-btn:hover {
-  background: var(--canopy-tint);
-}
-
-.testimonials__nav-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-  background: var(--bg);  
-}
-
 
 @media (max-width: 640px) {
-  .testimonials__card {
-    padding: 24px;
+  .testimonials {
+    padding: 32px 0 36px;
   }
-  
+
+  .testimonials__wrap {
+    padding: 0 20px;
+  }
+
   .testimonials__header h2 {
     font-size: 33px;
   }
 
-  .testimonials__header {
-  margin: 0 auto 32px;
+  /* Narrower card, so the quote gets a fourth line and the card a little height */
+  .testimonials__card {
+    width: 290px;
+    height: 236px;
+    margin-right: 14px;
+    padding: 24px 20px 16px;
+  }
+
+  .testimonials__card p {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 }
 
+/* People who ask for less motion get two plain rows they can swipe,
+   and the duplicate copy is hidden since nothing loops. */
+/* People who ask for less motion get two plain rows they can swipe
+   (testimonials.js doesn't drift them), and the extra copies are hidden
+   since nothing loops. */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__row {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .testimonials__set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+
+
+
+
+/*
+  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣EXPLANATIONS▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+
+    FREE SCROLL: .testimonials__row is a normal horizontally scrollable box
+  with its scrollbar hidden. testimonials.js moves its scrollLeft to make
+  it drift, and pauses while the visitor touches, hovers or scrolls it, so
+  swiping always works. There is no CSS animation any more, and no
+  touch-action rule: the browser's default lets a finger pan both ways.
+  overscroll-behavior-x stops a sideways swipe from triggering "back".
+
+  SEAMLESS LOOP: the track holds three identical copies of the cards. The
+  script keeps the position in the middle copy and jumps by exactly one
+  copy's width when it leaves it. Every card carries its own margin-right
+  (no flex gap), so a copy's width is exact and the jump is invisible.
+
+  SPEED: set in testimonials.js (LOOP_SECONDS), not here. One copy is about
+  2,900px wide, so 48s is roughly 60px per second. More stories make a copy
+  longer, so raise both times in proportion to keep the same speed.
+
+  CARD SHAPE: landscape (340 x 212) with a 20px radius. The quote is cut at
+  three lines, or four on phones where the card is narrower. If you change a
+  card's width, check the longest quote still fits within its line count.
+
+  QUOTE BADGE: the 5px ring uses --paper, the section background, so the
+  card's border looks cut behind the badge. If the section background
+  changes, change the ring colour to match. The 30px top padding on
+  .testimonials__row is what stops the badge being clipped; keep it larger
+  than the badge's overhang (20px + 5px ring).
+*/

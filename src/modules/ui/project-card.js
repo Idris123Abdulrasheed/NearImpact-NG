@@ -13,13 +13,14 @@ export function projectDetailUrl(id) {
 
 // ② RENDERING — CARD:
 // project.distanceKm exists only on the homepage when a location is set.
-export function renderProjectCard(project, { saved = false, selected = false } = {}) {
+export function renderProjectCard(project, { selected = false } = {}) {
   const meta = getTypeMeta(project.types[0]);
-  const place = escapeHtml(project.lga);
-  const distanceLabel =
+  // "Eti-Osa, Lagos": the state tells visitors where an unfamiliar LGA is.
+  const placeLabel = `${escapeHtml(project.lga)}, ${escapeHtml(project.state)}`;
+  const distanceMarkup =
     typeof project.distanceKm === "number"
-      ? `${icon("pin")} ${project.distanceKm.toFixed(1)} km`
-      : `${icon("pin")} ${place}`;
+      ? `<span class="project-list__card-distance">${project.distanceKm.toFixed(1)} km</span>`
+      : "";
 
   const imageMarkup = project.image
     ? `<img class="project-list__card-illustration" src="${escapeHtml(project.image)}" alt="${escapeHtml(project.name)}" loading="lazy">`
@@ -32,25 +33,20 @@ export function renderProjectCard(project, { saved = false, selected = false } =
       <div class="project-list__card-image project-list__card-image--${meta.img}">
         ${imageMarkup}
         <span class="project-list__card-type project-list__card-type--${meta.badge}">${escapeHtml(meta.label)}</span>
-        <button
-          class="project-list__save-btn ${saved ? "is-saved" : ""}"
-          data-id="${id}"
-          aria-label="${saved ? "Remove from saved" : "Save project"}"
-          aria-pressed="${saved}"
-        >${icon(saved ? "heartFilled" : "heartOutline")}</button>
       </div>
 
       <div class="project-list__card-content">
         <div class="project-list__card-meta">
-          <span>${distanceLabel}</span>
-          <span>${icon("star")} ${escapeHtml(String(project.rating))}</span>
+          ${icon("pin")}
+          <span class="project-list__card-place" title="${placeLabel}">${placeLabel}</span>
+          ${distanceMarkup}
         </div>
 
-        <h3>${escapeHtml(project.name)}</h3>
-        <p>${escapeHtml(project.orgName)} · ${place}, ${escapeHtml(project.state)}</p>
+        <h3 title="${escapeHtml(project.name)}">${escapeHtml(project.name)}</h3>
+        <p title="${escapeHtml(project.orgName)}">${escapeHtml(project.orgName)}</p>
 
         <div class="project-list__card-footer">
-          <div class="project-list__card-sdg-tags">
+          <div class="project-list__card-sdg-tags" aria-label="Sustainable Development Goals">
             ${project.sdgs.map((s) => `<span>${escapeHtml(String(s))}</span>`).join("")}
           </div>
           <div class="project-list__card-volunteers">${icon("people")} ${escapeHtml(String(project.volunteers))} volunteers</div>
@@ -65,9 +61,8 @@ export function renderProjectCard(project, { saved = false, selected = false } =
 }
 
 // ③ EVENT WIRING:
-// Call after the cards are in the DOM. savedIds is a Set the CALLER owns, so
-// "liked" survives that caller's re-renders. onSelect is optional (homepage only).
-export function bindProjectCardActions(grid, { savedIds, onSelect } = {}) {
+// Call after the cards are in the DOM. onSelect is optional (homepage only).
+export function bindProjectCardActions(grid, { onSelect } = {}) {
   grid.querySelectorAll(".project-list__card").forEach((card) => {
     card.addEventListener("click", () => onSelect?.(card.dataset.id));
   });
@@ -76,23 +71,6 @@ export function bindProjectCardActions(grid, { savedIds, onSelect } = {}) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       window.location.href = projectDetailUrl(btn.dataset.id);
-    });
-  });
-
-  // Like/save toggle — visual, session-only state. Real saved lists need a table later.
-  grid.querySelectorAll(".project-list__save-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const id = btn.dataset.id;
-      const nowSaved = !savedIds.has(id);
-
-      if (nowSaved) savedIds.add(id);
-      else savedIds.delete(id);
-
-      btn.classList.toggle("is-saved", nowSaved);
-      btn.setAttribute("aria-pressed", String(nowSaved));
-      btn.setAttribute("aria-label", nowSaved ? "Remove from saved" : "Save project");
-      btn.innerHTML = icon(nowSaved ? "heartFilled" : "heartOutline");
     });
   });
 }
@@ -106,25 +84,32 @@ export function bindProjectCardActions(grid, { savedIds, onSelect } = {}) {
   ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣DEVELOPERS NOTE▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 
   ARCHITECTURE OVERVIEW:
-  Your project card, unchanged in look, moved out of project-list.js so
-  the homepage list and the all-projects page render identical markup
-  (DRY, same idea as ui/opportunity-card.js). It imports both project
+  The project card shared by the homepage list and the all-projects
+  page, so both render identical markup (DRY). It imports both project
   stylesheets itself, so any page using the card gets its styles.
 
-  What changed: every value now goes through escapeHtml() (the old card
-  dropped names straight into the template, which is unsafe once the
-  data comes from a database); and the View Project button navigates to
-  the detail page itself, because that page is public and holds the
-  register/login box.
+  WHAT CHANGED: the heart (save) button and the star rating are gone,
+  so the card takes no "saved" option and the binder needs no savedIds
+  Set. Every row of the card is ONE line: place ("LGA, State", so
+  visitors who don't know an LGA still see where it is), project name,
+  organisation, and the SDG/volunteers footer. Anything too long for
+  its line is cut with an ellipsis, and the full text is kept in a
+  title attribute (hover tooltip). When a location is set, the distance
+  sits at the right end of the place row in its own non-shrinking span,
+  so the ellipsis never eats it. The "rating" field still exists in the
+  project data; it just isn't displayed.
+
+  Every value goes through escapeHtml() because the data will come from
+  a database. View Project navigates to the public detail page.
 
   The card keeps the "project-list__" class names on purpose: renaming
   them would mean rewriting two stylesheets for no visible change.
 
   BLOCKS DEFINITIONS:
   ① HELPERS          — projectDetailUrl() builds the detail link once.
-  ② RENDERING — CARD — renderProjectCard(project, {saved, selected}).
-  ③ EVENT WIRING     — bindProjectCardActions(): card select (optional),
-                       View Project navigation, save toggle.
+  ② RENDERING — CARD — renderProjectCard(project, {selected}).
+  ③ EVENT WIRING     — bindProjectCardActions(): optional card select
+                       and View Project navigation.
 
   CLASS NAME GLOSSARY:
   All classes belong to the "project-list" block; see the glossary in

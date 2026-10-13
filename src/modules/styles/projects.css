@@ -1,4 +1,4 @@
-/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/projects.js for my class glossary*/
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/project-list.js for my class glossary*/
 
 .project-list {
   background: var(--paper);
@@ -85,9 +85,8 @@
   display: block;
 }
 
-/* Keep the buttons above the image */
-.project-list__card-type,
-.project-list__save-btn {
+/* Keep the type label above the image */
+.project-list__card-type {
   z-index: 2;
 }
 
@@ -154,29 +153,17 @@
   background: var(--sun-dark);
 }
 
-/* Save/favourite button */
-.project-list__save-btn {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--bg) 90%, transparent);  color: var(--muted);
-  font-size: 18px;
-  cursor: pointer;
-}
-
 /* Card bottom content */
 .project-list__card-content {
   padding: 20px 22px 22px;
 }
 
+/* The place owns this whole row, so it never wraps (see ellipsis rules on
+   .project-list__card-place in project-list-controls.css). */
 .project-list__card-meta {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  gap: 6px;
   color: var(--muted-light);
   font-family: var(--font-mono);
   font-size: 13px;
@@ -184,21 +171,24 @@
   margin-bottom: 10px;
 }
 
-.project-list__card-meta span:last-child {
-  color: var(--sun-dark);
-}
-
+/* One line each; anything longer is cut with an ellipsis */
 .project-list__card-content h3 {
   color: var(--ink);
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-list__card-content p {
   color: var(--muted);
   font-size: 14px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Bottom row with SDGs and volunteers */
@@ -216,7 +206,8 @@
 .project-list__card-sdg-tags {
   display: flex;
   gap: 4px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
 .project-list__card-sdg-tags span {
@@ -245,6 +236,7 @@
   color: var(--muted);
   font-size: 13px;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 /* Responsive */
@@ -258,7 +250,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-
-
-

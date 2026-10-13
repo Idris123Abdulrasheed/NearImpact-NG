@@ -6,21 +6,12 @@ import { getTypeMeta } from "./data/type-meta.js";
 import { icon } from "./data/icons.js";
 import { renderProjectCard, bindProjectCardActions } from "./ui/project-card.js";
 // This re-renders on every store change no matter who triggered it.
-// "Show More" now opens the full /all-projects.html page.
+// "Show More" opens the full /all-projects.html page.
 // See DEVELOPERS NOTE at the bottom if anything seems odd.
 
-// ① CONFIG / LOCAL STATE:
+// ① CONFIG:
 const PREVIEW_COUNT = 4;
 const ALL_PAGE = "/all-projects.html";
-
-// Local session state, not persisted anywhere, just kept as a Set so "is
-// this card liked" survives every re-render.
-const savedIds = new Set();
-
-const SORT_OPTIONS = [
-  { value: "nearest", label: "Nearest" },
-  { value: "rating", label: "Top Rated" },
-];
 
 const FILTER_TYPES = ["all", "volunteer", "internship", "training", "fellowship"];
 
@@ -49,15 +40,6 @@ export function renderProjectList() {
             </div>
             <span class="project-list__scroll-hint" aria-hidden="true">${icon("chevronRight")}</span>
           </div>
-
-          <div class="project-list__sort-tabs" id="pl-sort-tabs" role="group" aria-label="Sort projects by">
-            ${SORT_OPTIONS.map(
-              (o, i) => `
-              <button type="button" data-sort="${o.value}" class="${i === 0 ? "active" : ""}">
-                ${o.label}
-              </button>`
-            ).join("")}
-          </div>
         </div>
 
         <div class="project-list__grid" id="projects-grid"></div>
@@ -74,7 +56,7 @@ export function renderProjectList() {
 }
 
 // ③ SHOW MORE LINK:
-// Carries whatever the visitor has chosen here (type, state, LGA, sort) over to
+// Carries whatever the visitor has chosen here (type, state, LGA) over to
 // the full page. Coordinates ("use my location" / map click) can't be turned
 // into a state, so that case opens the page unfiltered; it points to the map.
 function allProjectsHref(storeState) {
@@ -86,7 +68,6 @@ function allProjectsHref(storeState) {
     params.set("state", storeState.selectedState);
     if (storeState.selectedLga) params.set("lga", storeState.selectedLga);
   }
-  if (storeState.sortBy === "rating") params.set("sort", "rating");
 
   const query = params.toString();
   return query ? `${ALL_PAGE}?${query}` : ALL_PAGE;
@@ -118,7 +99,6 @@ function renderGrid() {
   grid.innerHTML = visible
     .map((project) =>
       renderProjectCard(project, {
-        saved: savedIds.has(project.id),
         selected: storeState.selectedProjectId === project.id,
       })
     )
@@ -130,7 +110,6 @@ function renderGrid() {
   subtitle.textContent = `Showing ${visible.length} of ${results.length} project${results.length === 1 ? "" : "s"}`;
 
   bindProjectCardActions(grid, {
-    savedIds,
     onSelect: (id) => setState({ selectedProjectId: id }),
   });
 }
@@ -151,17 +130,6 @@ export function initProjectList() {
     setState({ filterType: btn.dataset.type });
   });
 
-  document.getElementById("pl-sort-tabs").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-sort]");
-    if (!btn) return;
-
-    document
-      .querySelectorAll("#pl-sort-tabs button")
-      .forEach((b) => b.classList.toggle("active", b === btn));
-
-    setState({ sortBy: btn.dataset.sort });
-  });
-
   subscribe(() => renderGrid());
   renderGrid();
 }
@@ -176,66 +144,64 @@ export function initProjectList() {
 
   ARCHITECTURE OVERVIEW:
   The "Nearby Impacts Found" grid: a preview of the first
-  PREVIEW_COUNT projects for the current filters, plus type/sort tabs.
+  PREVIEW_COUNT projects for the current filters, plus the type tabs.
   It re-renders on EVERY store change (see map-store.js), whether that
   came from its own tabs, the location filter, or the map. It still
   reads the mock list through projects-query.js, because "nearest"
   sorting and the map markers depend on it.
 
-  WHAT CHANGED: (1) the card markup moved to ui/project-card.js so the
-  new all-projects page shows the identical card; (2) "Show More" used
-  to reveal 4 more cards in place and is now a link to
-  /all-projects.html, built by allProjectsHref() from the current store
-  state, so the visitor's type / state / LGA / sort choices carry over;
-  (3) the local visibleCount counter is gone, and the View Project
-  navigation moved into the card module (the detail page is public and
-  holds the register/login box, so no auth gate is needed here).
+  WHAT CHANGED: the Nearest / Top Rated sort tabs are gone, and so is
+  the local savedIds Set (the heart button no longer exists). Sorting
+  still happens: the store's sortBy defaults to "nearest", which sorts
+  by distance when a location is known and by volunteer count when not.
+  Nothing in the UI changes sortBy any more, so allProjectsHref() no
+  longer passes a sort to the all-projects page either.
 
-  The link is hidden only when this preview already shows everything
-  for the current filters, as the old button was.
+  The Show More link is hidden only when this preview already shows
+  everything for the current filters.
 
   Class names follow BEM where "project-list" is the block. The card
-  keeps these names even though it now lives in ui/project-card.js.
+  keeps these names even though it lives in ui/project-card.js.
 
   BLOCKS DEFINITIONS:
-  ① CONFIG / LOCAL STATE — preview size, the all-projects path, the
-                            savedIds Set, and the sort/filter option lists.
-  ② RENDERING — SHELL      — heading, tabs, EMPTY grid, and the Show More link.
-  ③ SHOW MORE LINK         — allProjectsHref() turns store state into a URL.
-  ④ RENDERING — GRID       — renderGrid() queries the store, renders the
-                            preview cards via renderProjectCard(), updates the
-                            link, and wires the card actions.
-  ⑤ INITIALIZATION         — wires type + sort tabs, then subscribes to the
-                            store so renderGrid() re-runs on every change.
+  ① CONFIG               — preview size, the all-projects path, and the
+                           type-tab list.
+  ② RENDERING — SHELL     — heading, type tabs, EMPTY grid, Show More link.
+  ③ SHOW MORE LINK        — allProjectsHref() turns store state into a URL.
+  ④ RENDERING — GRID      — renderGrid() queries the store, renders the
+                           preview cards, updates the link, wires the cards.
+  ⑤ INITIALIZATION        — wires the type tabs, then subscribes to the
+                           store so renderGrid() re-runs on every change.
 
   CLASS NAME GLOSSARY:
   .project-list                    The whole "Nearby Impacts" section.
   .project-list__wrap              Width-constrained inner wrapper.
   .project-list__header            Heading + subtitle row.
-  .project-list__controls          Row holding type tabs and sort tabs.
+  .project-list__controls          Row holding the type tabs.
   .project-list__type-tabs-scroll  Scrollable container for the type tabs.
   .project-list__type-tabs         The row of type tab buttons.
   .project-list__scroll-hint       Mobile-only "more to scroll" chevron.
-  .project-list__sort-tabs         The Nearest / Top Rated tabs.
   .project-list__grid              The grid cards are inserted into.
   .project-list__card              One project card (ui/project-card.js).
   .project-list__card-image        Image / colour-panel area of a card.
   .project-list__card-image--*     Panel colour when there's no photo.
   .project-list__card-illustration The photo, when a project has one.
   .project-list__card-image-icon   Fallback icon instead of a photo.
-  .project-list__card-type         Coloured type pill.
+  .project-list__card-type         Coloured type pill, top-left of image.
   .project-list__card-type--*      Pill colour per type (from type-meta.js).
-  .project-list__save-btn          Heart save/like toggle.
   .project-list__card-content      Text area below the image.
-  .project-list__card-meta         Row with distance/LGA + rating.
-  .project-list__card-footer       Row with SDG tags + volunteer count.
+  .project-list__card-meta         Row holding the pin icon + place (+ distance);
+                                    owns the whole line.
+  .project-list__card-place        "LGA, State" text; one line, ellipsis if long.
+  .project-list__card-distance     Distance in km, shown only when a location is set.
+  .project-list__card-footer       Row with SDG tags (left) + volunteers (right).
   .project-list__card-sdg-tags     Small SDG number pills.
-  .project-list__card-volunteers   Volunteer headcount line.
+  .project-list__card-volunteers   The volunteer headcount line.
   .project-list__view-btn          The "View Project" button.
   .project-list__footer            Wrapper around the Show More link.
   .project-list__view-more         The Show More link (styled as a button).
   .project-list__empty             "No projects found" placeholder.
 
-  State classes "is-selected" (card) and "is-saved" (save button) are
-  deliberately not BEM'd; they are flags flipped by store changes/clicks.
+  State class "is-selected" (card) is deliberately not BEM'd; it is a
+  flag flipped by store changes.
 */

@@ -18,12 +18,9 @@ const STATE_OPTIONS = Object.keys(STATE_LGAS).map((state) => [state, state]);
 const SDG_OPTIONS = Array.from({ length: 17 }, (_, i) => [String(i + 1), `SDG ${i + 1}`]);
 const SORT_OPTIONS = [
   ["popular", "Most volunteers"],
-  ["rating", "Top rated"],
   ["newest", "Newest"],
 ];
 
-// "Liked" hearts, kept for this page visit only (same behaviour as the homepage list).
-const savedIds = new Set();
 
 // ② FILTERS FROM THE URL:
 function readFilters() {
@@ -171,9 +168,9 @@ export async function initAllProjects() {
     const to = from + data.items.length - 1;
     count.textContent = `Showing ${from}–${to} of ${data.total} project${data.total === 1 ? "" : "s"}`;
     grid.innerHTML = data.items
-      .map((project) => renderProjectCard(project, { saved: savedIds.has(project.id) }))
+      .map((project) => renderProjectCard(project))
       .join("");
-    bindProjectCardActions(grid, { savedIds });
+    bindProjectCardActions(grid);
 
     if (data.totalPages > 1) {
       pagination.innerHTML = renderPagination(data.page, data.totalPages, (n) => pageHref(filters, n));
