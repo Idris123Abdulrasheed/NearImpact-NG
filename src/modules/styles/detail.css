@@ -28,17 +28,28 @@
   margin: 0 auto;
 }
 
+/* The back link is the shared ui/more-link.js link, recoloured for the
+   always-dark title band (#fff on a brand fill is the allowed exception).
+   The dark-theme selector is repeated because more-link.css sets its own
+   dark colour at equal weight and loads after this file. */
 .detail__back {
-  display: inline-block;
-  margin-bottom: 20px;
-  color: #fff;
-  opacity: 0.8;
-  font-size: 14px;
-  text-decoration: none;
+  margin-bottom: 16px;
 }
 
-.detail__back:hover {
+.detail__back .more-link,
+[data-theme="dark"] .detail__back .more-link {
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.detail__back .more-link:hover {
   opacity: 1;
+}
+
+/* the default focus ring is canopy green, invisible on this band */
+.detail__back .more-link:focus-visible {
+  outline-color: #fff;
 }
 
 .detail__badge {
@@ -94,12 +105,17 @@
 .detail__sdg {
   padding: 4px 10px;
   border-radius: 4px;
-  background: var(--canopy-tint);
-  color: var(--canopy-dark);
+  background: var(--canopy);
+  color: #fff;  
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+/* --canopy is too dim as an icon colour on the dark card */
+[data-theme="dark"] .detail__fact-icon {
+  color: var(--canopy-light);
 }
 
 .detail__facts-list {

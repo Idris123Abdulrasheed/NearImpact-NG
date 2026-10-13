@@ -5,6 +5,7 @@ import { getState, setState, subscribe } from "./state/map-store.js";
 import { getTypeMeta } from "./data/type-meta.js";
 import { icon } from "./data/icons.js";
 import { renderProjectCard, bindProjectCardActions } from "./ui/project-card.js";
+import { renderMoreLink } from "./ui/more-link.js";
 // This re-renders on every store change no matter who triggered it.
 // "Show More" opens the full /all-projects.html page.
 // See DEVELOPERS NOTE at the bottom if anything seems odd.
@@ -45,9 +46,7 @@ export function renderProjectList() {
         <div class="project-list__grid" id="projects-grid"></div>
 
         <div class="project-list__footer">
-          <a id="pl-view-more" class="project-list__view-more" href="${ALL_PAGE}" hidden>
-            Show More
-          </a>
+          ${renderMoreLink({ id: "pl-view-more", href: ALL_PAGE, label: "See all projects", hidden: true })}
         </div>
 
       </div>
@@ -190,7 +189,7 @@ export function initProjectList() {
   .project-list__card-type         Coloured type pill, top-left of image.
   .project-list__card-type--*      Pill colour per type (from type-meta.js).
   .project-list__card-content      Text area below the image.
-  .project-list__card-meta         Row holding the pin icon + place (+ distance);
+  .project-list__card-meta         “Row with distance or LGA”.
                                     owns the whole line.
   .project-list__card-place        "LGA, State" text; one line, ellipsis if long.
   .project-list__card-distance     Distance in km, shown only when a location is set.
@@ -199,7 +198,7 @@ export function initProjectList() {
   .project-list__card-volunteers   The volunteer headcount line.
   .project-list__view-btn          The "View Project" button.
   .project-list__footer            Wrapper around the Show More link.
-  .project-list__view-more         The Show More link (styled as a button).
+  The link is ui/more-link.js (.more-link).
   .project-list__empty             "No projects found" placeholder.
 
   State class "is-selected" (card) is deliberately not BEM'd; it is a

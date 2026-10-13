@@ -16,6 +16,7 @@ const DEFAULT_SORT = "popular";
 const TYPE_OPTIONS = Object.keys(TYPE_META).map((key) => [key, getTypeMeta(key).label]);
 const STATE_OPTIONS = Object.keys(STATE_LGAS).map((state) => [state, state]);
 const SDG_OPTIONS = Array.from({ length: 17 }, (_, i) => [String(i + 1), `SDG ${i + 1}`]);
+
 const SORT_OPTIONS = [
   ["popular", "Most volunteers"],
   ["newest", "Newest"],

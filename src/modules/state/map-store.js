@@ -8,7 +8,7 @@ const state = {
   selectedLga: null,        // string | null
   selectedCoords: null,     // { lat, lng } | null  (from geolocation or map click)
   selectedProjectId: null,  // string | null
-  sortBy: "nearest",        // "nearest" | "popular" | "rating" | "type"
+  sortBy: "nearest",        // "nearest" | "popular"
   filterType: "all"         // "all" | "volunteer" | "internship" | "training" | "fellowship"
 };
 

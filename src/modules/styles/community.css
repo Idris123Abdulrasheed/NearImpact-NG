@@ -127,13 +127,6 @@
   margin: 0;
 }
 
-.community__view-all {
-  color: var(--canopy);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0px 32px;
-}
-
 .community__footer {
   display: flex;
   justify-content: flex-end;
@@ -206,23 +199,6 @@
   margin-top: 24px;
 }
 
-.community__view-all {
-  display: inline-block;
-  padding: 12px 22px;
-  border: 0px solid var(--line-green);
-  border-radius: 6px;
-  color: var(--canopy);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.2;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: background-color 0.15s ease;
-}
-
-.community__view-all:hover {
-  background: var(--canopy-tint);
-}
 
 @media (max-width: 640px) {
   .community__header {

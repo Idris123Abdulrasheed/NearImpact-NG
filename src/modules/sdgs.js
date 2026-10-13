@@ -1,5 +1,6 @@
 import "./styles/sdgs.css";
 import { ALL_GOALS, goalUrl } from "./data/sdg-data.js";
+import { renderMoreLink } from "./ui/more-link.js";
 // Homepage SDG teaser. Every card is a real link to its goal page, and
 // the old Show More toggle is now a "View more" link to the full SDG
 // page. DEVELOPERS NOTE at the bottom has the full story.
@@ -39,7 +40,7 @@ export function renderSdgs() {
         </div>
 
         <div class="sdgs__toggle-wrap">
-          <a class="sdgs__toggle-btn" href="/sdgs.html">View all the 17 goals</a>
+          ${renderMoreLink({ href: "/sdgs.html", label: "View all 17 goals" })}
         </div>
 
       </div>
@@ -73,5 +74,5 @@ export function renderSdgs() {
                  section shell and the View more link.
 
   CLASS NAME GLOSSARY:
-  Unchanged from before. .sdgs__toggle-btn is now an <a>, not a button.
+  Unchanged from before. ..sdgs__toggle-wrap holds the link, which is now ui/more-link.js.
 */

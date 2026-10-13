@@ -9,6 +9,7 @@ import { escapeHtml } from "./ui/escape-html.js";
 import { formatClosing } from "./ui/opportunity-card.js";
 import { fetchProject } from "./data/projects-api.js";
 import { renderLoader } from "./ui/loader.js";
+import { renderMoreLink } from "./ui/more-link.js";
 
 // ONE public detail page for both kinds of listing, with the
 // register / login box on the page. DEVELOPERS NOTE at the bottom.
@@ -45,7 +46,6 @@ function fromProject(p) {
     facts: [
       { icon: "pin", label: "Location", value: `${p.lga}, ${p.state}` },
       { icon: "people", label: "Volunteers", value: String(p.volunteers) },
-      { icon: "star", label: "Rating", value: String(p.rating) },
       ...(p.benefits ? [{ icon: "sparkle", label: "You get", value: p.benefits }] : []),
     ],
     applyUrl: null,
@@ -109,7 +109,9 @@ function renderRecord(record) {
   return `
     <div class="detail__header">
       <div class="detail__header-wrap">
-        <a class="detail__back" href="${record.backHref}">← ${escapeHtml(record.backLabel)}</a>
+        <div class="detail__back">
+          ${renderMoreLink({ href: record.backHref, label: record.backLabel, direction: "back" })}
+        </div>
         <span class="detail__badge">${escapeHtml(record.label)}</span>
         <h1>${escapeHtml(record.title)}</h1>
         ${record.organisation ? `<p class="detail__org">${escapeHtml(record.organisation)}</p>` : ""}
@@ -266,7 +268,7 @@ export async function initDetail() {
   .detail__status         Loading / not-found / error message.
   .detail__header         Dark title band.
   .detail__header-wrap    Narrow inner wrapper of the band.
-  .detail__back           "← All opportunities" link.
+  .detail__back           Wrapper around the shared back link (ui/more-link.js).
   .detail__badge          Type pill (Grant, Volunteer, ...).
   .detail__org            Organisation line under the title.
   .detail__wrap           Narrow content column.

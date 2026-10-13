@@ -87,22 +87,6 @@
   margin-top: 40px;
 }
 
-.sdgs__toggle-btn {
-  display: inline-block;
-  text-decoration: none;
-  border: 1px solid var(--line-green);
-  background: var(--bg);  
-  color: var(--canopy);
-  font-weight: 700;
-  border-radius: 6px;
-  padding: 12px 22px;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-
-.sdgs__toggle-btn:hover {
-  background: var(--canopy-tint);
-}
 
 /* ===========================
    Tablet

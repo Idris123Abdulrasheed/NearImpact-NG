@@ -15,13 +15,12 @@ const MAX_SLUG_LENGTH = 60;
 // Whitelist: the user picks a KEY, the SQL text comes from here, never from the request.
 const SORTS = {
   popular: "volunteers DESC, id ASC",
-  rating: "rating DESC, id ASC",
   newest: "created_at DESC, id ASC",
 };
 
 // Column aliases make the JSON match the field names the frontend card already uses.
 const LIST_COLUMNS = `slug AS id, title AS name, organisation AS orgName, state, lga, lat, lng,
-  types, sdgs, volunteers, rating, benefits, image`;
+  types, sdgs, volunteers, benefits, image`;
 const DETAIL_COLUMNS = `${LIST_COLUMNS}, description`;
 
 // ② HELPERS:
@@ -39,13 +38,12 @@ function splitList(value) {
   return value ? value.split(",").map((s) => s.trim()).filter(Boolean) : [];
 }
 
-// DECIMAL columns arrive from mysql2 as strings, so numbers are converted here.
+// DECIMAL columns arrive from mysql2 as strings, so numbers are converted here. “volunteers is converted here”
 function shapeRow(row) {
   return {
     ...row,
     types: splitList(row.types),
     sdgs: splitList(row.sdgs).map(Number).filter(Number.isInteger),
-    rating: Number(row.rating),
     volunteers: Number(row.volunteers),
   };
 }
@@ -170,7 +168,7 @@ export default async function handler(req, res) {
 
   RESPONSE SHAPE COUPLING: list -> { items, total, page, pageSize,
   totalPages }; detail -> { item }. Each item has id, name, orgName,
-  state, lga, lat, lng, types[], sdgs[], volunteers, rating, benefits,
+  state, lga, lat, lng, types[], sdgs[], volunteers, benefits,
   image (detail adds description): the SAME fields as the mock projects,
   so ui/project-card.js and detail.js work with either source. Rename a
   field here and those files change in the same edit.

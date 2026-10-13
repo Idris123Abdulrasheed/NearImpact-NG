@@ -2,6 +2,7 @@ import "./styles/impactmaker-profile.css";
 import { FALLBACK_PHOTO } from "./data/impactmakers.js";
 import { escapeHtml } from "./ui/escape-html.js";
 import { renderLoader } from "./ui/loader.js";
+import { renderMoreLink } from "./ui/more-link.js";
 
 // One impactmaker's profile page. Every section except the header is
 // optional and appears only when the record has data for it.
@@ -101,7 +102,9 @@ export function renderImpactmakerProfile(maker) {
     <main class="maker-profile">
       <div class="maker-profile__wrap">
 
-        <a class="maker-profile__back" href="/impactmakers.html">&larr; All impactmakers</a>
+        <div class="maker-profile__back">
+          ${renderMoreLink({ href: "/impactmakers.html", label: "All impactmakers", direction: "back" })}
+        </div>
 
         <header class="maker-profile__hero">
           <div class="maker-profile__photo">
@@ -156,15 +159,23 @@ export function renderProfileNotFound() {
     <p class="maker-profile__bio">
       We couldn't find that profile. It may have moved, or the link may be incomplete.
     </p>
-    <a class="maker-profile__back" href="/impactmakers.html">&larr; See all impactmakers</a>
+
+    <div class="maker-profile__back">
+      ${renderMoreLink({ href: "/impactmakers.html", label: "See all impactmakers" })}
+    </div>
   `);
 }
 
 export function renderProfileError() {
   return renderNotice(`
     <h1>Couldn't load this profile</h1>
-    <p class="maker-profile__bio">Something went wrong on our side. Please try again in a moment.</p>
-    <a class="maker-profile__back" href="/impactmakers.html">&larr; See all impactmakers</a>
+    <p class="maker-profile__bio">
+    Something went wrong on our side. Please try again in a moment.
+    </p>
+
+    <div class="maker-profile__back">
+      ${renderMoreLink({ href: "/impactmakers.html", label: "See all impactmakers" })}
+    </div>
   `);
 }
 
@@ -207,7 +218,7 @@ export function renderProfileError() {
   .maker-profile               The <main> element.
   .maker-profile__wrap         Width-constrained wrapper.
   .maker-profile__wrap--narrow Modifier — used by the notice views.
-  .maker-profile__back         The "back to all impactmakers" link.
+  .maker-profile__back         Wrapper around the shared more-link (ui/more-link.js).
   .maker-profile__hero         Photo + intro, side by side on wide screens.
   .maker-profile__photo        Photo frame.
   .maker-profile__intro        SDG label, name, meta line, bio.

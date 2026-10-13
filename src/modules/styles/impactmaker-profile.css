@@ -15,16 +15,12 @@
 }
 
 .maker-profile__back {
-  display: inline-block;
-  color: var(--canopy);
-  font-weight: 600;
-  font-size: 15px;
-  text-decoration: none;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
-.maker-profile__back:hover {
-  text-decoration: underline;
+/* in the not-found / error views the link sits right under a paragraph */
+.maker-profile__wrap--narrow .maker-profile__back {
+  margin: 16px 0 0;
 }
 
 .maker-profile a:focus-visible {
@@ -58,8 +54,8 @@
 
 .maker-profile__sdg {
   display: inline-block;
-  background: var(--canopy-tint);
-  color: var(--canopy-dark);
+  background: var(--canopy);
+  color: #fff;
   font-size: 13px;
   font-weight: 700;
   padding: 6px 12px;

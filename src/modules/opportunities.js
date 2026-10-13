@@ -1,6 +1,7 @@
 import "./styles/opportunities.css";
 import { getMockOpportunities } from "./data/opportunities-mock.js";
 import { renderOpportunityCard } from "./ui/opportunity-card.js";
+import { renderMoreLink } from "./ui/more-link.js";
 // Landing-page preview: first 4 OPEN opportunities per category, and
 // "Show More" is now a link to the full page. DEVELOPERS NOTE below.
 
@@ -35,8 +36,8 @@ export function renderOpportunities() {
         <div    class="opportunities__grid" id="opp-grid">
         </div>
 
-        <div class="opportunities__footer">
-          <a class="opportunities__show-more" id="opp-show-more" href="${ALL_PAGE}">Show More</a>
+                <div class="opportunities__footer">
+          ${renderMoreLink({ id: "opp-show-more", href: ALL_PAGE, label: "See all opportunities" })}
         </div>
 
       </div>
@@ -136,7 +137,7 @@ export function initOpportunities() {
   .opportunities__card-details  Row with location + closing date.
   .opportunities__card-footer   Row with reward text + Apply link.
   .opportunities__footer        Wrapper around the Show More link.
-  .opportunities__show-more     The Show More link (styled as a button).
+  The Show More link is now ui/more-link.js (.more-link).
 
   State class "active" (on a tab) is deliberately not BEM-ified.
 */

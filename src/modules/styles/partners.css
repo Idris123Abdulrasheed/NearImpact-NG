@@ -21,28 +21,41 @@
 
 .partners__track-outer {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain; /* a sideways swipe never triggers browser "back" */
+  scrollbar-width: none;
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
-.partners__track {
-  display: flex;
-  gap: 20px;
-  width: max-content;
-  animation: partners-scroll 28s linear infinite;
+.partners__track-outer::-webkit-scrollbar {
+  display: none;
 }
 
-.partners__track:hover {
-  animation-play-state: paused;
+.partners__track-outer:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.partners__track {
+  display: flex;
+  width: max-content;
+}
+
+.partners__set {
+  display: flex;
 }
 
 /* Real logos sit directly on the section background.
-   We stick to transparent/pre-cropped PNGs */
+   We stick to transparent/pre-cropped PNGs.
+   margin-right (not flex gap): every tile carries its own spacing, so a
+   set's width is exact and the loop jump in drift-row.js is invisible. */
 .partners__tile {
   flex-shrink: 0;
   height: 96px;
   min-width: 150px;
+  margin-right: 20px;
   padding: 4px 16px;
   display: flex;
   align-items: center;
@@ -67,27 +80,31 @@
   text-transform: uppercase;
 }
 
-@keyframes partners-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-
+/* Reduced motion: partners.js doesn't drift, so show ONE plain, centred,
+   wrapped group of logos (repeats and extra sets are hidden). */
 @media (prefers-reduced-motion: reduce) {
   .partners__track-outer {
     -webkit-mask-image: none;
     mask-image: none;
   }
+
   .partners__track {
-    animation: none;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
     width: 100%;
   }
-}
 
+  .partners__set {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .partners__set[aria-hidden="true"],
+  .partners__tile--copy {
+    display: none;
+  }
+
+  .partners__tile {
+    margin-right: 0;
+  }
+}

@@ -1,0 +1,64 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/ui/more-link.js for my class glossary*/
+
+/* The vertical padding makes the tap area about 44px high without
+   making the link look big. */
+.more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px;
+  color: var(--canopy);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* The underline sits on the label only, so the arrow is never underlined.
+   It starts faint and turns solid on hover. */
+.more-link__label {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.more-link:hover .more-link__label {
+  text-decoration-color: currentColor;
+}
+
+.more-link__icon {
+  display: inline-flex;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* a lighter stroke than the carousel arrows, so it reads as a pointer, not a button */
+.more-link__icon svg path {
+  stroke-width: 2;
+}
+
+.more-link:hover .more-link__icon {
+  transform: translateX(4px);
+}
+
+.more-link--back:hover .more-link__icon {
+  transform: translateX(-4px);
+}
+
+.more-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* display above would beat the hidden attribute (project-list.js uses it) */
+.more-link[hidden] {
+  display: none;
+}
+
+/* Dark mode: --canopy has too little contrast as TEXT on dark surfaces
+   (same fix as the links in nav.css) */
+[data-theme="dark"] .more-link {
+  color: var(--canopy-light);
+}

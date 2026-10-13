@@ -44,9 +44,6 @@ export function getFilteredSortedProjects(storeState) {
     case "popular":
       list.sort((a, b) => b.volunteers - a.volunteers);
       break;
-    case "rating":
-      list.sort((a, b) => b.rating - a.rating);
-      break;
   }
 
   return list;

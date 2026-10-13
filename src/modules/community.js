@@ -1,6 +1,7 @@
 import "./styles/community.css";
 import { escapeHtml } from "./ui/escape-html.js";
 import { icon } from "./data/icons.js";
+import { renderMoreLink } from "./ui/more-link.js";
 // The homepage carousel of impactmakers, rendered from the LOCAL array
 // below (no API call), the same way the homepage project list renders
 // from projects.js. DEVELOPERS NOTE at the bottom has the full story.
@@ -75,7 +76,7 @@ export function renderCommunity() {
         </div>
 
         <div class="community__footer">
-          <a href="/impactmakers.html" class="community__view-all">See the whole network</a>
+          ${renderMoreLink({ href: "/impactmakers.html", label: "See the whole network" })}
         </div>
       </div>
     </section>
@@ -163,5 +164,5 @@ export function initCommunityCarousel() {
   .community__card-badge  The small arrow badge on a card's photo.
   .community__card-sdg    The SDG focus line under a card's name.
   .community__footer    Wrapper around the two footer links.
-  .community__view-all  Both footer links share this style.
+  .community__view-all  holds the link, which is now ui/more-link.js.
 */
