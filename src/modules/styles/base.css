@@ -128,10 +128,6 @@ body {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: var(--font-body);
   background: var(--paper);
@@ -146,9 +142,7 @@ h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

@@ -27,7 +27,7 @@ function fromOpportunity(o) {
     facts: [
       { icon: "location", label: "Location", value: o.location || "Nigeria" },
       { icon: "hourglass", label: "Deadline", value: formatClosing(o.closesOn, { withYear: true }) },
-      ...(o.reward ? [{ icon: "coin", label: "Reward", value: o.reward }] : []),
+      ...(o.reward ? [{ icon: "coinStack", label: "Reward", value: o.reward }] : []),
     ],
     applyUrl: o.applyUrl || null,
     backHref: "/all-opportunities.html",
@@ -46,7 +46,7 @@ function fromProject(p) {
     facts: [
       { icon: "pin", label: "Location", value: `${p.lga}, ${p.state}` },
       { icon: "people", label: "Volunteers", value: String(p.volunteers) },
-      ...(p.benefits ? [{ icon: "sparkle", label: "You get", value: p.benefits }] : []),
+      ...(p.benefits ? [{ icon: "gift", label: "You get", value: p.benefits }] : []),
     ],
     applyUrl: null,
     backHref: "/all-projects.html",

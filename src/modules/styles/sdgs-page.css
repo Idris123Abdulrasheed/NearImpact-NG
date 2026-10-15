@@ -6,29 +6,74 @@
   padding: 24px 20px 64px;
 }
 
-.sdgs-page__crumbs {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-
-.sdgs-page__crumbs a {
-  color: var(--canopy);
-  text-decoration: none;
-}
-
 .sdgs-page__hero {
   margin-bottom: 36px;
 }
 
-.sdgs-page__eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+/* COVER: full-width wordmark banner straight under the nav, no border.
+   One font-size on the block scales every part (em). The colours are fixed
+   brand blues (data, like --sdg-color) so it looks the same in light and
+   dark mode and always stands apart from the nav above it. */
+.sdgs-page__cover {
+  --cover-bg: #0b3558;
+  --cover-ink: #ffffff;
+  --cover-accent: #7fd0f5;
+  --cover-muted: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28em;
+  width: 100%;
+  margin: 0;
+  padding: 0.7em 16px;
+  font-size: clamp(42px, 13vw, 104px);
+  background: var(--cover-bg);
+  color: var(--cover-ink);
+}
+
+.sdgs-page__cover-un {
+  display: flex;
+  flex-direction: column;
+  font-size: max(13px, 0.3em);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--cover-accent);
+}
+
+.sdgs-page__cover-divider {
+  align-self: stretch;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.sdgs-page__cover-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.08em;
+}
+
+.sdgs-page__cover-sub {
+  font-size: max(9px, 0.13em);
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--canopy);
-  margin-bottom: 10px;
+  color: var(--cover-muted);
+}
+
+.sdgs-page__cover-word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.sdgs-page__cover-o {
+  display: inline-block;
+  width: 0.8em;
+  height: auto; /* keeps the image's own aspect ratio */
+  vertical-align: -0.03em;
 }
 
 .sdgs-page__hero h1 {
@@ -44,33 +89,56 @@
   line-height: 1.7;
 }
 
+/* STATS: one panel, hairline dividers, a 17-colour rule across the top */
+.sdgs-page__panel {
+  margin-top: 28px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sdgs-page__segments {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+}
+
+.sdgs-page__segments span {
+  min-width: 0;
+  background: var(--sdg-color); /* official goal colour, passed in inline */
+}
+
 .sdgs-page__stats {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 28px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;                  /* the gap shows the --line colour as dividers */
+  background: var(--line);
 }
 
-.sdgs-page__stats li {
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
+.sdgs-page__stat {
+  text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-weight: 600;
+  padding: 18px 18px 16px;
+  background: var(--bg);
 }
 
-.sdgs-page__stats strong {
+.sdgs-page__stat-value {
   font-family: var(--font-mono);
-  font-size: 30px;
-  color: var(--accent);
+  font-size: 36px;
+  font-weight: 600;
   line-height: 1;
+  color: var(--text-h);
+  font-variant-numeric: tabular-nums;
 }
 
-.sdgs-page__stats span {
-  font-size: 13px;
+.sdgs-page__stat-label {
+  font-size: 13.5px;
   color: var(--text);
 }
 
@@ -174,9 +242,11 @@
   .sdgs-page__hero h1 {
     font-size: 48px;
   }
+    .sdgs-page__panel {
+    max-width: 860px;
+  }
   .sdgs-page__stats {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 720px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .sdgs-page__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -187,14 +257,5 @@
 @media (min-width: 1100px) {
   .sdgs-page__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .sdgs-page__tile--wide {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 699px) {
-  .sdgs-page__tile--wide {
-    grid-column: 1 / -1;
   }
 }

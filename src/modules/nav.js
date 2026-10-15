@@ -7,6 +7,7 @@ import { icon } from "./data/icons.js";
 import { renderUserMenu, getInitials } from "./user-menu.js";
 import { getTheme, toggleTheme } from "./theme.js";
 import { getCurrentUser, isLoggedIn, logout, subscribe } from "./auth.js";
+import { scrollToTop } from "./anchor-reveal.js";
 
 // ① CONFIG:
 // Keep these two in sync with the @media rules in nav.css.
@@ -298,7 +299,7 @@ const openAuth = (mode) => {
 const handleHomeClick = (event) => {
   if (!isHomePage()) return; // on sub pages the link just goes to "/"
   event.preventDefault();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  scrollToTop();  
   closeDrawer({ returnFocus: false });
 };
 

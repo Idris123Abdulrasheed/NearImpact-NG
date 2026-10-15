@@ -1,0 +1,50 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/anchor-reveal.js */
+
+/* FALLBACK: fade/slide on the target (browsers without View Transitions) */
+.is-revealing {
+  animation: anchor-reveal-in 0.45s cubic-bezier(0.22, 0.8, 0.3, 1) backwards;
+}
+
+@keyframes anchor-reveal-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* CROSS-FADE: the whole page fades out fast, the new view fades in with a
+   small upward slide. Timing: out 0.18s, in 0.32s. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-fade-out 0.11s ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-fade-in 0.22s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+  }
+
+  /* state: anchor-reveal.js adds this class only while a transition runs,
+     so the sticky nav stays put instead of fading with the page */
+  .vt-nav {
+    view-transition-name: site-nav;
+  }
+
+  ::view-transition-group(site-nav) {
+    animation: none;
+  }
+
+  ::view-transition-old(site-nav) {
+    display: none;
+  }
+
+  ::view-transition-new(site-nav) {
+    animation: none;
+  }
+}
+
+@keyframes vt-fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+  from { opacity: 0;  }
+  to   { opacity: 1; transform: none; }
+}

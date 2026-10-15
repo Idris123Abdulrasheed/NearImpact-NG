@@ -39,6 +39,7 @@ import { initSearch } from "./modules/search.js";
 import { initTheme } from "./modules/theme.js";
 import { initUserMenu } from "./modules/user-menu.js";
 import { initAuth } from "./modules/auth.js";
+import { initAnchorReveal } from "./modules/anchor-reveal.js";
 
 // ③ PAGE ASSEMBLY:
 document.querySelector("#app").innerHTML = `
@@ -88,6 +89,7 @@ initAuthModal();
 // above depends on knowing login state synchronously — components that
 // care react to the subscription instead of waiting on this.
 initAuth();
+initAnchorReveal();
 
 
 

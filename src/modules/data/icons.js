@@ -43,6 +43,8 @@ export const ICONS = {
   cap: wrap(`<path d="M12 4l10 4.5L12 13 2 8.5 12 4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 10.8V15c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`),
   briefcase: wrap(`<rect x="3" y="7.5" width="18" height="11" rx="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" stroke="currentColor" stroke-width="1.6"/>`),
   coin: wrap(`<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5v9M9.3 9.5c0-1.1 1.2-2 2.7-2s2.7.7 2.7 1.7c0 2.3-5.4 1.2-5.4 3.5 0 1 1.2 1.8 2.7 1.8s2.7-.9 2.7-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`),
+  coinStack: wrap(`<ellipse cx="12" cy="6" rx="9" ry="3" stroke="currentColor" stroke-width="1.6"/><path d="M3 10c0 1.7 4 3 9 3s9-1.3 9-3M3 14c0 1.7 4 3 9 3s9-1.3 9-3M3 6v12c0 1.7 4 3 9 3s9-1.3 9-3V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`),
+  gift: wrap(`<path d="M12 7v14M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="7" width="18" height="4" rx="1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>`),
   sparkle: wrap(`<path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>`),
 
   moon: wrap(`<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>`),

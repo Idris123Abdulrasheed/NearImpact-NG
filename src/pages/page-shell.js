@@ -7,6 +7,7 @@ import { initSearch } from "../modules/search.js";
 import { initTheme } from "../modules/theme.js";
 import { initUserMenu } from "../modules/user-menu.js";
 import { initAuth } from "../modules/auth.js";
+import { initAnchorReveal } from "../modules/anchor-reveal.js";
 // The "mini main.js" for every page besides the homepage.
 // DEVELOPERS NOTE at the bottom explains why it exists.
 
@@ -31,6 +32,7 @@ export function mountPage({ title, html, onMounted }) {
   initFooter();
   initAuthModal();
   initAuth();
+  initAnchorReveal();
 
   if (onMounted) onMounted();
 }

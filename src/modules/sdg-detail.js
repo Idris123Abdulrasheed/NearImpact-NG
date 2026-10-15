@@ -2,6 +2,7 @@ import "./styles/sdg-detail.css";
 import { ALL_GOALS, SDG_SOURCES, getSdgById, goalUrl } from "./data/sdg-data.js";
 import { PROJECTS } from "./data/projects.js";
 import { getTypeMeta } from "./data/type-meta.js";
+import { icon } from "./data/icons.js";
 import { escapeHtml } from "./ui/escape-html.js";
 // One page template for every goal (sdg.html?n=1..18). Goals 1-17 share a
 // layout, goal 18 gets the "what can I do" layout. See DEVELOPERS NOTE.
@@ -44,11 +45,33 @@ function pagerHtml(goal) {
   const i = ALL_GOALS.findIndex((g) => g.id === goal.id);
   const prev = ALL_GOALS[(i - 1 + ALL_GOALS.length) % ALL_GOALS.length];
   const next = ALL_GOALS[(i + 1) % ALL_GOALS.length];
+  // short label on the card, full title kept for screen readers and hover
+  const short = (g) => (g.id === 18 ? "Way forward" : `Goal ${g.id}`);
+  const link = (g, isPrev) => {
+    const dir = isPrev ? "Previous" : "Next";
+    const arrow = `<span class="sdg-detail__pager-icon" aria-hidden="true">${icon(isPrev ? "arrowLeft" : "arrowRight")}</span>`;
+    const text = `
+        <span class="sdg-detail__pager-text">
+          <span class="sdg-detail__pager-dir">${dir}</span>
+          <strong>${short(g)}</strong>
+        </span>`;
+    return `
+      <a class="sdg-detail__pager-link sdg-detail__pager-link--${isPrev ? "prev" : "next"}" href="${goalUrl(g.id)}"
+         aria-label="${dir}: ${escapeHtml(g.name)}" title="${escapeHtml(g.name)}">
+        ${isPrev ? arrow + text : text + arrow}
+      </a>`;
+  };
   return `
     <nav class="sdg-detail__pager" aria-label="Other goals">
-      <a href="${goalUrl(prev.id)}"><span>Previous</span><strong>${escapeHtml(prev.name)}</strong></a>
-      <a href="/sdgs.html" class="sdg-detail__pager-all">All goals</a>
-      <a href="${goalUrl(next.id)}"><span>Next</span><strong>${escapeHtml(next.name)}</strong></a>
+      ${link(prev, true)}
+      <a class="sdg-detail__pager-all" href="/sdgs.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="4" y="4" width="6.5" height="6.5" rx="1.4"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.4"/>
+          <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.4"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.4"/>
+        </svg>
+        All goals
+      </a>
+      ${link(next, false)}
     </nav>`;
 }
 
@@ -259,7 +282,8 @@ export function initSdgDetail(goal) {
 
   BLOCKS DEFINITIONS:
   ① SMALL HELPERS        — list() and cardGrid() markup builders.
-  ② SHARED PIECES        — banner, breadcrumb, prev/next pager, sources.
+  ② SHARED PIECES        — banner, breadcrumb, prev/next pager (same
+                           look as the All goals button), sources.
   ③ PROJECTS             — matching mock projects as link cards.
   ④ GOALS 1-17           — renderGoal().
   ⑤ GOAL 18              — renderWayForward().
@@ -290,5 +314,11 @@ export function initSdgDetail(goal) {
   .sdg-detail__empty          Empty, loading and error messages.
   .sdg-detail__more           Text link under a section.
   .sdg-detail__pager          Previous, all, next navigation.
+  .sdg-detail__pager-link     A previous or next card, styled like the All
+                              goals button; --prev / --next place it.
+  .sdg-detail__pager-icon     The arrow (arrowLeft / arrowRight in icons.js).
+  .sdg-detail__pager-text     Label and goal number, stacked.
+  .sdg-detail__pager-dir      Small uppercase "Previous" / "Next".
+  .sdg-detail__pager-all      The "All goals" button between them.
   .sdg-detail__sources        Sources footer.
 */
