@@ -4,7 +4,7 @@ import { PROJECTS } from "./data/projects.js";
 import { fetchOpportunity } from "./data/opportunities.js";
 import { getMockOpportunity } from "./data/opportunities-mock.js";
 import { getTypeMeta } from "./data/type-meta.js";
-import { isLoggedIn, subscribe } from "./auth.js";
+import { goToAuth, isLoggedIn, subscribe } from "./auth.js";
 import { escapeHtml } from "./ui/escape-html.js";
 import { formatClosing } from "./ui/opportunity-card.js";
 import { fetchProject } from "./data/projects-api.js";
@@ -215,12 +215,10 @@ export async function initDetail() {
   root.addEventListener("click", (e) => {
     const button = e.target.closest("[data-auth-mode]");
     if (!button) return;
-    window.dispatchEvent(
-      new CustomEvent("ni:open-auth-modal", { detail: { mode: button.dataset.authMode } })
-    );
+    goToAuth(button.dataset.authMode);
   });
 
-  // Registering or logging in from the modal flips this box to its signed-in state.
+  // Signing in flips this box to its signed-in state.
   subscribe(() => {
     const box = document.getElementById("detail-action");
     if (box) box.innerHTML = renderAction(record);
@@ -244,11 +242,8 @@ export async function initDetail() {
   kind later means one more normaliser, not a third page.
 
   The page is PUBLIC. The register / login box sits at the bottom
-  (like the reference) and just dispatches "ni:open-auth-modal" with
-  mode "register" or "login". It reads login state only through
-  auth.js (isLoggedIn / subscribe), never its own flag. After the
-  modal succeeds, the subscription re-renders the box into the
-  signed-in state. A logged-in visitor on a listing with an apply_url
+  (like the reference) and just sends the visitor to /login (auth.js goToAuth) in mode "register" or "login". It reads login state only through
+  auth.js (isLoggedIn / subscribe), never its own flag. After signing in they return to this page (?next=) and the box renders its signed-in state. A logged-in visitor on a listing with an apply_url
   gets an "Apply now" link; otherwise a short "not open yet" note.
 
   All listing text goes through escapeHtml(); descriptions are split

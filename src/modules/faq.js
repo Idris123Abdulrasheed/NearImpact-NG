@@ -21,6 +21,18 @@ const faqItems = [
     a: "No. Users can explore projects, learn about SDGs, discover opportunities, and connect with impactmakers for completely free."
   },
   {
+    q: "How do I create an account?",
+    a: "Select Log In, then Create Account. Choose Create Account on the sign-in page and enter your full name, email address, role and a password. You are signed in straight away."
+  },
+  {
+    q: "Can I sign in with Google or LinkedIn?",
+    a: "Not yet. The buttons are on the sign-in screen because we are working on them, but for now please continue with your email and password."
+  },
+  {
+    q: "I forgot my password. What do I do?",
+    a: "Automatic reset emails are not switched on yet. Send us a message using the contact details in the footer and we will help you back into your account."
+  },
+  {
     q: "Do we support the UN SDGs?",
     a: "Yes. Every project and opportunity in this platform can be linked to one or more Sustainable Development Goals, helping users understand the impact areas being addressed."
   },

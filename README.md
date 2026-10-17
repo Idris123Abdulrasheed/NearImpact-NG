@@ -42,13 +42,9 @@ to their communities.
   rather than utility classes. [Tailwind CSS](https://tailwindcss.com/)
   will be used later as the UI grows, but not in use yet.
 
-**Backend:** still taking shape. The current experiment is serverless
-JS functions on Vercel (`api/`, `lib/db.js`); quick to build and ship
-alongside the frontend on the same platform. PHP, likely with Laravel,
-is the direction we'd move toward for a more traditional backend if
-that ends up being the better fit; which path we settle on partly comes
-down to hosting and cost. This README will be updated once that's
-decided for real.
+**Backend:** serverless JS functions on Vercel (`api/`, `lib/`) with
+MySQL on Aiven and cookie-JWT auth; quick to build and ship alongside
+the frontend on the same platform.
 
 **Tooling:** Git & GitHub for version control and collaboration.
 
@@ -79,38 +75,42 @@ decided for real.
 
 ```
 nearimpact/
-├── api/                    → Vercel serverless functions (current backend experiment)
-│   └── search.js
+├── index.html, about.html, privacy.html, terms.html, login.html (sign in + create account), sdg.html, sdgs.html
+├── list-project.html, impactmakers.html, impactmaker.html,
+│   become-impactmaker.html, all-opportunities.html, all-projects.html,
+│   detail.html            → one HTML entry per page (listed in vite.config.js)
+├── vite.config.js / package.json / README.md
+├── api/                    → Vercel serverless functions
+│   ├── auth/ (login.js, logout.js, me.js, register.js)
+│   └── impactmakers.js, listings.js, newsletter.js, opportunities.js,
+│       projects.js, search.js
+├── db/                     → schema + seed SQL, run manually per file
+├── certs/                  → Aiven CA certificate
+├── lib/                    → auth.js (bcrypt + JWT), db.js (MySQL pool)
 ├── docs/
 │   └── CODING_STANDARDS.md
-├── lib/
-│   └── db.js
 ├── public/                 → static assets served as-is
-│   ├── partners/
-│   ├── projects/
-│   ├── sdgs/
-│   ├── socials/
-│   ├── Impactmakers/
-│   ├── favicon.svg
-│   └── icons.svg
-├── src/
-│   ├── assets/              → images imported directly into JS (brand, hero)
-│   ├── modules/             → one section/feature per file
-│   │   ├── data/             → static/query data (projects, geo, icons, type-meta)
-│   │   ├── state/            → shared app state (e.g. map-store.js)
-│   │   ├── styles/           → one CSS file per module, same name
-│   │   ├── ui/               → small reusable UI pieces (e.g. toast.js)
-│   │   ├── nav.js, hero.js, projects.js, map.js, ...
-│   │   └── main.js
-│   └── main.js
-├── .env / .env.example
-├── index.html
-├── package.json
-└── README.md
+│   ├── partners/, projects/, sdgs/, socials/, impactmakers/
+│   └── favicon.svg, icons.svg
+└── src/
+    ├── main.js             → homepage entry
+    ├── pages/              → one module per HTML entry (page-shell.js + about.js, ...)
+    ├── assets/             → images imported directly into JS (brand, hero)
+    └── modules/            → one section/feature per file
+        ├── data/            → static/query data, icons, type-meta, geo
+        ├── state/           → shared app state (map-store.js)
+        ├── ui/              → small reusable pieces (toast, loader, pagination,
+        │                      password-toggle, form-draft, cards, escape-html)
+        ├── styles/          → one CSS file per module, same name, plus:
+        │                      base.css (tokens) and glass.css (shared form surface)
+        └── nav.js, hero.js, list-project.js, auth-form.js (the sign-in card),
+        login-page.js (body of /login), ...
 ```
 
-Each homepage section is a module: a `render<Section>()` function paired
-with a same-named stylesheet. The structure will keep evolving as the
+Each section or page body is a module: a `render<Section>()` function
+paired with a same-named stylesheet. Every form shares one look through
+`modules/styles/glass.css` (frosted panel, fields, buttons), driven by
+the `--glass-*` tokens in `base.css`. The structure will keep evolving as the
 project grows — this tree reflects what's actually here today, not a
 plan.
 

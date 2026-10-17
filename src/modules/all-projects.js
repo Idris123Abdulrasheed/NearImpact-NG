@@ -1,3 +1,4 @@
+import "./styles/glass.css";
 import "./styles/all-projects.css";
 import { STATE_LGAS } from "./data/projects.js";
 import { fetchProjects } from "./data/projects-api.js";
@@ -60,7 +61,7 @@ function optionsHtml(options, selected) {
 
 function renderSelect({ name, label, placeholder, options, selected, disabled = false }) {
   return `
-    <label class="all-projects__field">
+    <label class="all-projects__field glass-field">
       <span>${label}</span>
       <select name="${name}" id="ap-${name}"${disabled ? " disabled" : ""}>
         ${placeholder ? `<option value="">${placeholder}</option>` : ""}
@@ -75,7 +76,7 @@ export function renderAllProjects() {
   const lgaOptions = (STATE_LGAS[filters.state] || []).map((lga) => [lga, lga]);
 
   return `
-    <section class="all-projects">
+    <section class="all-projects glass-stage">
 
       <div class="all-projects__banner">
         <div class="all-projects__banner-wrap">
@@ -86,7 +87,7 @@ export function renderAllProjects() {
 
       <div class="all-projects__wrap">
 
-        <form class="all-projects__filters" method="get" action="${PAGE_PATH}">
+        <form class="all-projects__filters glass-panel" method="get" action="${PAGE_PATH}">
           <h2 class="all-projects__filters-title">Filter projects</h2>
           <div class="all-projects__filters-row">
             ${renderSelect({ name: "type", label: "Type", placeholder: "All types", options: TYPE_OPTIONS, selected: filters.type })}
@@ -103,8 +104,8 @@ export function renderAllProjects() {
             ${renderSelect({ name: "sort", label: "Sort by", options: SORT_OPTIONS, selected: filters.sort })}
           </div>
           <div class="all-projects__filters-actions">
-            <button type="submit" class="all-projects__apply">Apply Filters</button>
-            <a href="${PAGE_PATH}" class="all-projects__clear">Clear</a>
+            <button type="submit" class="all-projects__apply glass-btn">Apply Filters</button>
+            <a href="${PAGE_PATH}" class="all-projects__clear glass-btn glass-btn--ghost">Clear</a>
           </div>
           <p class="all-projects__map-hint">
             Want a visual search? <a href="/#map">Open the map</a> to find projects near you.
@@ -240,4 +241,8 @@ export async function initAllProjects() {
   .all-projects__message         Empty / error text inside the grid.
   Pagination uses the shared "pagination" block (ui/pagination.js).
   Cards use the "project-list" block (ui/project-card.js).
+
+  GLASS (form surface): the filter panel, its selects and both buttons
+  mix in glass-panel / glass-field / glass-btn from styles/glass.css; the
+  section also carries glass-stage so there is colour behind the frost.
 */

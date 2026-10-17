@@ -14,6 +14,7 @@ export default defineConfig({
         about: page("./about.html"),
         privacy: page("./privacy.html"),
         terms: page("./terms.html"),
+        login: page("./login.html"),
         impactmakers: page("./impactmakers.html"),
         impactmaker: page("./impactmaker.html"),
         becomeImpactmaker: page("./become-impactmaker.html"),

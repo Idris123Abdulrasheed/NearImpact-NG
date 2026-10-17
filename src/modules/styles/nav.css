@@ -353,10 +353,13 @@ html:not([data-theme="dark"]) .nav__theme-sun {
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  background: var(--bg);
-  border: 1px solid var(--line);
+  /* frosted: the page scrolls softly behind the results */
+  background: color-mix(in srgb, var(--white) 86%, transparent);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+  box-shadow: var(--glass-shadow);
   text-align: left;
   max-height: 360px;
   max-height: min(360px, 60dvh);
@@ -904,13 +907,19 @@ a.nav__sub-link:hover {
     padding: 0 8px 0 16px;
     border-radius: 999px;
     background: var(--paper);
-    border: 1px solid var(--line);
-    transition: border-color .2s ease, box-shadow .2s ease;
+    border: 1px solid var(--glass-field-border);
+    transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
   }
 
+  .nav__search:hover {
+    background: var(--glass-field-bg-hover);
+  }
+
+  /* same focus ring as every form field */
   .nav__search:focus-within {
-    border-color: var(--accent-border);
-    box-shadow: 0 0 0 3px var(--accent-bg);
+    border-color: var(--glass-focus);
+    background: var(--bg);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 28%, transparent);
   }
 
   .nav__search-input {
@@ -973,5 +982,18 @@ a.nav__sub-link:hover {
 @media (min-width: 1180px) {
   .nav__icon-btn.nav__menu-button {
     display: none;
+  }
+}
+
+/* no backdrop-filter / reduced transparency: results stay on a solid surface */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .search-dropdown { background: var(--bg); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .search-dropdown {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

@@ -5,6 +5,8 @@
   background: var(--paper);
 }
 
+
+
 .all-opportunities__banner {
   background: var(--canopy-dark);
   padding: 48px 20px;
@@ -37,14 +39,11 @@
   padding: 28px 20px 64px;
 }
 
-/* Filter panel */
+/* Filter panel: surface comes from glass-panel */
 .all-opportunities__filters {
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
   padding: 20px;
   margin-bottom: 28px;
+  --glass-radius-panel: 16px;
 }
 
 .all-opportunities__filters-title {
@@ -62,73 +61,14 @@
   gap: 12px;
 }
 
-.all-opportunities__field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.all-opportunities__field span {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-h);
-}
-
-.all-opportunities__field select {
-  font: inherit;
-  font-size: 15px;
-  height: 46px;
-  padding: 0 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-h);
-  cursor: pointer;
-}
-
-.all-opportunities__field select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
-}
-
 .all-opportunities__filters-actions {
   display: flex;
   gap: 10px;
   margin-top: 16px;
 }
 
-.all-opportunities__apply,
-.all-opportunities__clear {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 46px;
-  padding: 0 22px;
-  border-radius: 10px;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .all-opportunities__apply {
   flex: 1 1 auto;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-}
-
-.all-opportunities__apply:hover {
-  filter: brightness(1.05);
-}
-
-.all-opportunities__clear {
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-h);
 }
 
 /* Results */

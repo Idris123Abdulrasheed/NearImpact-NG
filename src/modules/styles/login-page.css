@@ -1,0 +1,26 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/login-page.js for my class glossary*/
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--nav-h, 84px));
+  padding: 48px 20px 64px;
+}
+
+.login-page__card {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 28px 28px;
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    align-items: flex-start;
+    padding: 28px 16px 48px;
+  }
+
+  .login-page__card {
+    padding: 28px 20px 22px;
+  }
+}

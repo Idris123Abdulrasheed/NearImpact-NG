@@ -1,8 +1,10 @@
+import "./styles/glass.css";
 import "./styles/become-impactmaker.css";
 import { SDG_TITLES } from "./data/sdg-titles.js";
 import { CONTACT } from "./data/footer-config.js";
 import { escapeHtml } from "./ui/escape-html.js";
-import { getCurrentUser, requireAuth, subscribe } from "./auth.js";
+import { getCurrentUser, isLoggedIn, requireAuth, subscribe } from "./auth.js";
+import { saveDraft, restoreDraft } from "./ui/form-draft.js";
 // The "Become an impactmaker" application form. DEVELOPERS NOTE at the
 // bottom explains the login gate and the review step.
 
@@ -17,22 +19,22 @@ function renderSdgOptions() {
 
 function renderContributionGroup(n) {
   return `
-    <fieldset class="become-impactmaker__group">
-      <legend>Contribution ${n} <em>(optional)</em></legend>
+    <fieldset class="become-impactmaker__group glass-subgroup">
+      <legend class="glass-legend">Contribution ${n} <em>(optional)</em></legend>
 
       <div class="become-impactmaker__row become-impactmaker__row--year">
-        <label class="become-impactmaker__field">
+        <label class="become-impactmaker__field glass-field">
           <span>Year</span>
           <input type="number" name="contribYear${n}" min="2000" max="${NEXT_YEAR}" inputmode="numeric" />
         </label>
 
-        <label class="become-impactmaker__field">
+        <label class="become-impactmaker__field glass-field">
           <span>What did you do?</span>
           <input type="text" name="contribTitle${n}" maxlength="120" placeholder="e.g. Led a school tree-planting drive" />
         </label>
       </div>
 
-      <label class="become-impactmaker__field">
+      <label class="become-impactmaker__field glass-field">
         <span>Result or details</span>
         <textarea name="contribDescription${n}" rows="3" maxlength="300"></textarea>
       </label>
@@ -43,7 +45,7 @@ function renderContributionGroup(n) {
 // ③ RENDERING — PAGE:
 export function renderBecomeImpactmaker() {
   return `
-    <main class="become-impactmaker">
+    <main class="become-impactmaker glass-stage">
       <div class="become-impactmaker__wrap">
 
         <header class="become-impactmaker__header">
@@ -56,16 +58,16 @@ export function renderBecomeImpactmaker() {
           </p>
         </header>
 
-        <div class="become-impactmaker__panel" id="become-impactmaker-panel">
+        <div class="become-impactmaker__panel glass-panel" id="become-impactmaker-panel">
           <form class="become-impactmaker__form" id="become-impactmaker-form">
 
             <div class="become-impactmaker__row">
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Full name</span>
                 <input type="text" name="fullName" minlength="2" maxlength="100" required autocomplete="name" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Main SDG focus</span>
                 <select name="sdg" required>
                   <option value="">Choose a goal</option>
@@ -75,47 +77,47 @@ export function renderBecomeImpactmaker() {
             </div>
 
             <div class="become-impactmaker__row">
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Role <em>(optional)</em></span>
                 <input type="text" name="role" maxlength="100" placeholder="e.g. Project coordinator" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Organisation <em>(optional)</em></span>
                 <input type="text" name="organisation" maxlength="150" autocomplete="organization" />
               </label>
             </div>
 
             <div class="become-impactmaker__row">
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Location <em>(optional)</em></span>
                 <input type="text" name="location" maxlength="100" placeholder="e.g. Akure, Ondo" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Impactmaker since <em>(optional)</em></span>
                 <input type="number" name="since" min="2000" max="${NEXT_YEAR - 1}" inputmode="numeric" placeholder="Year" />
               </label>
             </div>
 
-            <label class="become-impactmaker__field">
+            <label class="become-impactmaker__field glass-field">
               <span>About you <em>(optional)</em></span>
               <textarea name="bio" rows="4" maxlength="600"
                 placeholder="Two or three sentences about you and your work."></textarea>
             </label>
 
             <div class="become-impactmaker__row become-impactmaker__row--three">
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Projects <em>(optional)</em></span>
                 <input type="number" name="statProjects" min="0" max="1000000" inputmode="numeric" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Impact hours <em>(optional)</em></span>
                 <input type="number" name="statHours" min="0" max="1000000" inputmode="numeric" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Communities reached <em>(optional)</em></span>
                 <input type="number" name="statCommunities" min="0" max="1000000" inputmode="numeric" />
               </label>
@@ -123,18 +125,18 @@ export function renderBecomeImpactmaker() {
 
             ${CONTRIBUTION_SLOTS.map(renderContributionGroup).join("")}
 
-            <label class="become-impactmaker__field">
+            <label class="become-impactmaker__field glass-field">
               <span>Skills and interests <em>(optional, separate with commas)</em></span>
               <input type="text" name="skills" maxlength="250" placeholder="Community organising, Public speaking" />
             </label>
 
             <div class="become-impactmaker__row">
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>LinkedIn <em>(optional)</em></span>
                 <input type="url" name="linkedin" maxlength="255" placeholder="https://" />
               </label>
 
-              <label class="become-impactmaker__field">
+              <label class="become-impactmaker__field glass-field">
                 <span>Website <em>(optional)</em></span>
                 <input type="url" name="website" maxlength="255" placeholder="https://" />
               </label>
@@ -149,9 +151,9 @@ export function renderBecomeImpactmaker() {
               </span>
             </label>
 
-            <p class="become-impactmaker__error" id="become-impactmaker-error" role="alert" tabindex="-1" hidden></p>
+            <p class="become-impactmaker__error glass-error" id="become-impactmaker-error" role="alert" tabindex="-1" hidden></p>
 
-            <button type="submit" class="become-impactmaker__submit" id="become-impactmaker-submit">
+            <button type="submit" class="become-impactmaker__submit glass-btn" id="become-impactmaker-submit">
               Submit application
             </button>
           </form>
@@ -231,8 +233,8 @@ export function initBecomeImpactmaker() {
           with your full name.
         </p>
         <div class="become-impactmaker__done-actions">
-          <a href="/impactmakers.html" class="become-impactmaker__done-btn">See the network</a>
-          <a href="/" class="become-impactmaker__done-btn become-impactmaker__done-btn--ghost">Back to home</a>
+          <a href="/impactmakers.html" class="become-impactmaker__done-btn glass-btn">See the network</a>
+          <a href="/" class="become-impactmaker__done-btn glass-btn glass-btn--ghost">Back to home</a>
         </div>
       </div>
     `;
@@ -262,13 +264,17 @@ export function initBecomeImpactmaker() {
     }
   }
 
+  // refill anything typed before a trip to /login
+  restoreDraft(form, "become-impactmaker");
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     hideError();
 
-    // Capture the answers NOW; if login is needed, requireAuth() runs
-    // send() automatically once the person signs in.
+    // Logged out: keep the answers for the trip to /login (they are
+    // refilled on return and the person presses submit again).
     const payload = readPayload();
+    if (!isLoggedIn()) saveDraft(form, "become-impactmaker");
     requireAuth(() => send(payload));
   });
 }
@@ -284,8 +290,7 @@ export function initBecomeImpactmaker() {
   ARCHITECTURE OVERVIEW:
   How a new person joins the impactmakers network. Same shape as
   list-project.js: anyone can fill the form in, submitting goes
-  through auth.js's requireAuth(), and the answers captured before
-  login are sent automatically after sign-in. The server enforces the
+  through auth.js's requireAuth(), and a logged-out visitor is sent to /login with their answers saved (ui/form-draft.js) and refilled on return. The server enforces the
   login again (POST /api/impactmakers returns 401 without a session).
 
   REVIEW STEP: submissions are saved with status "pending" and are
@@ -333,5 +338,9 @@ export function initBecomeImpactmaker() {
   .become-impactmaker__done      Success panel.
   .become-impactmaker__done-actions  Row of buttons in the success panel.
   .become-impactmaker__done-btn      One button there.
-  .become-impactmaker__done-btn--ghost  Modifier — outlined version.
+
+  GLASS (form surface): panel, fields, contribution groups, error and
+  buttons mix in the shared glass-* classes from styles/glass.css
+  (glass-stage, glass-panel, glass-field, glass-legend, glass-subgroup,
+  glass-error, glass-btn). become-impactmaker__* now only handles layout.
 */

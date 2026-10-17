@@ -1,7 +1,6 @@
 import "../modules/styles/base.css";
 import { renderNav, initNav } from "../modules/nav.js";
 import { renderFooter, initFooter } from "../modules/footer.js";
-import { renderAuthModal, initAuthModal } from "../modules/auth-modal.js";
 import { renderDocPage } from "../modules/doc-page.js";
 import { initSearch } from "../modules/search.js";
 import { initTheme } from "../modules/theme.js";
@@ -21,7 +20,6 @@ export function mountPage({ title, html, onMounted }) {
     ${renderNav()}
     ${html}
     ${renderFooter()}
-    ${renderAuthModal()}
   `;
 
   // same order as main.js
@@ -30,7 +28,6 @@ export function mountPage({ title, html, onMounted }) {
   initUserMenu();
   initTheme();
   initFooter();
-  initAuthModal();
   initAuth();
   initAnchorReveal();
 
@@ -53,7 +50,7 @@ export function mountDocPage(doc) {
 
   ARCHITECTURE OVERVIEW:
   main.js builds the homepage; this file builds every other page. It
-  assembles the same shared pieces (nav, footer, login modal) around a
+  assembles the same shared pieces (nav, footer) around a
   page's own content, so the nav, theme, search and login state behave
   identically everywhere without copying code.
 
@@ -69,7 +66,7 @@ export function mountDocPage(doc) {
 
   BLOCKS DEFINITIONS:
   ① PAGE MOUNT      — mountPage() sets the tab title, renders nav +
-                      the page's html + footer + auth modal into #app,
+                      the page's html + footer into #app,
                       runs the same init calls main.js does (minus the
                       homepage-only ones), then the page's onMounted.
   ② DOCUMENT PAGES  — mountDocPage() is mountPage() for plain text

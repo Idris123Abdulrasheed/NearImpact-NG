@@ -1,0 +1,278 @@
+/* See DEVELOPERS NOTE at the bottom of this file's RELATED JS: src/modules/auth-form.js for my class glossary*/
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* the display values below would otherwise beat the hidden attribute */
+.auth-form [hidden] {
+  display: none;
+}
+
+/* BRAND BLOCK */
+.auth-form__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.auth-form__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.auth-form__title {
+  font-size: clamp(24px, 6vw, 28px);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.auth-form__subtitle {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* SOCIAL BUTTONS */
+.auth-form__social {
+  display: grid;
+  gap: 10px;
+}
+
+.auth-form__social-btn {
+  width: 100%;
+  font-weight: 600;
+}
+
+.auth-form__social-icon {
+  display: inline-flex;
+  font-size: 20px;
+}
+
+.auth-form__social-icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.auth-form__divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.auth-form__divider::before,
+.auth-form__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--glass-field-border);
+}
+
+/* FORM */
+.auth-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form__password-wrap {
+  position: relative;
+}
+
+.auth-form__password-wrap input {
+  padding-right: 54px;
+}
+
+.auth-form__hint {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.auth-form__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: -4px;
+}
+
+/* Remember me: the real checkbox stays in the page (keyboard + screen
+   readers) but is invisible; .auth-form__check is what people see. */
+.auth-form__remember {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.auth-form__remember input {
+  position: absolute;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.auth-form__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--glass-field-border);
+  border-radius: 6px;
+  background: var(--glass-field-bg);
+  box-shadow: var(--glass-field-inset);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* the checkmark, drawn with two borders */
+.auth-form__check::after {
+  content: "";
+  width: 5px;
+  height: 10px;
+  margin-top: -2px;
+  border: solid var(--on-brand);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.auth-form__remember:hover .auth-form__check {
+  border-color: var(--glass-focus);
+}
+
+.auth-form__remember input:checked + .auth-form__check {
+  background: var(--canopy);
+  border-color: var(--canopy);
+}
+
+.auth-form__remember input:checked + .auth-form__check::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.auth-form__remember input:focus-visible + .auth-form__check {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 40%, transparent);
+}
+
+.auth-form__submit {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.auth-form__notice {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-h);
+  background: var(--glass-field-bg);
+  border: 1px solid var(--glass-field-border);
+  border-radius: var(--glass-radius-control);
+}
+
+.auth-form__notice a {
+  color: inherit;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* TEXT-STYLE BUTTONS + MODE SWITCH ROWS */
+.auth-form__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--glass-focus);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.auth-form__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.auth-form__link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 40%, transparent);
+}
+
+.auth-form__link--strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.auth-form__switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.auth-form__plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--canopy);
+  color: var(--on-brand);
+  font-size: 14px;
+}
+
+.auth-form__plus svg,
+.auth-form__back svg {
+  width: 1em;
+  height: 1em;
+}
+
+.auth-form__back {
+  display: inline-flex;
+  font-size: 16px;
+}
+
+.auth-form__legal {
+  margin: 0;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.auth-form__legal a {
+  color: inherit;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .auth-form {
+    gap: 18px;
+  }
+}

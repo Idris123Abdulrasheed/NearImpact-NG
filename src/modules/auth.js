@@ -1,24 +1,19 @@
 // The single source of truth for "is anyone logged in, and who." Every
 // component that needs to read or change that — user-menu.js,
-// project-list.js, community.js, auth-modal.js — goes through this
+// project-list.js, community.js, auth-form.js — goes through this
 // file, the same way every component reads/writes map-store.js instead
 // of keeping its own copy of location state. DEVELOPERS NOTE at the
 // bottom has the full story on what changed from the old stub version.
 
 // ① STATE:
 let user = null; // { id, name, email } | null
-let pendingCallback = null; // set by requireAuth(), run after a successful login/register
 const listeners = new Set();
 
 function notify() {
   for (const fn of listeners) fn(user);
 }
 
-function resolvePendingAuth() {
-  const callback = pendingCallback;
-  pendingCallback = null;
-  if (callback) callback();
-}
+
 
 // ② PUBLIC STATE ACCESS:
 export function getCurrentUser() {
@@ -51,11 +46,11 @@ export async function initAuth() {
 }
 
 // ④ AUTH ACTIONS:
-export async function login(email, password) {
+export async function login(email, password, remember = false) {
   const res = await fetch("/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, remember }),
   });
 
   const data = await res.json();
@@ -63,15 +58,14 @@ export async function login(email, password) {
 
   user = data.user;
   notify();
-  resolvePendingAuth();
   return user;
 }
 
-export async function register(email, password) {
+export async function register(name, email, role, password) {
   const res = await fetch("/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, email, role, password }),
   });
 
   const data = await res.json();
@@ -79,7 +73,6 @@ export async function register(email, password) {
 
   user = data.user;
   notify();
-  resolvePendingAuth();
   return user;
 }
 
@@ -95,23 +88,36 @@ export async function logout() {
 }
 
 // ⑤ AUTH GATE:
+// Sign in and create account live on ONE page, /login.html. Anything
+// that needs a login sends the visitor there with goToAuth(); the
+// current address rides along as ?next= so login-page.js can bring
+// them back to exactly where they were.
+export function goToAuth(mode = "login") {
+  const params = new URLSearchParams();
+  if (mode !== "login") params.set("mode", mode);
+
+  // Already on the login page: next would just point back at it.
+  if (!window.location.pathname.endsWith("/login.html")) {
+    params.set("next", window.location.pathname + window.location.search + window.location.hash);
+  }
+
+  const query = params.toString();
+  window.location.assign(`/login.html${query ? `?${query}` : ""}`);
+}
+
 // Anything wanting to gate an action behind login calls this instead
 // of checking isLoggedIn() itself, so the "not logged in" experience
-// stays identical everywhere it's used. Unlike the old stub (which
-// just showed a toast), this opens the real login/register modal —
-// see auth-modal.js. onAuthenticated is stashed and run automatically
-// once login/register succeeds, so e.g. clicking "View Project" while
-// logged out and then logging in actually resumes viewing that
-// project, instead of dropping the original intent on the floor.
+// stays identical everywhere it's used. Logged in, the action runs now.
+// Logged out, the visitor is sent to /login and the page reloads when
+// they come back, so the callback can NOT be resumed. Forms that would
+// lose typed answers save them first (see ui/form-draft.js).
 export function requireAuth(onAuthenticated) {
   if (isLoggedIn()) {
     onAuthenticated();
     return;
   }
-  pendingCallback = onAuthenticated || null;
-  window.dispatchEvent(new CustomEvent("ni:open-auth-modal", { detail: { mode: "login" } }));
+  goToAuth("login");
 }
-
 
 
 
@@ -145,7 +151,7 @@ export function requireAuth(onAuthenticated) {
 
   BLOCKS DEFINITIONS:
   ① STATE                  — the current user (or null), the listener
-                             set, and pendingCallback (see ⑤).
+                             set.
   ② PUBLIC STATE ACCESS     — getCurrentUser(), isLoggedIn(), and
                              subscribe(), the read side every component
                              uses.
@@ -156,15 +162,14 @@ export function requireAuth(onAuthenticated) {
                              talking to its matching /api/auth/*
                              endpoint, updating `user`, and notifying
                              subscribers.
-  ⑤ AUTH GATE               — requireAuth(), the one function anything
-                             else in the app should call to gate an
-                             action behind login. Stashes the intended
-                             action in pendingCallback and opens the
-                             modal via a CustomEvent rather than
-                             importing auth-modal.js directly — this
-                             file has no idea the modal exists, which
-                             keeps the dependency one-directional (the
-                             modal depends on auth.js, not the other
-                             way around).
+  ⑤ AUTH GATE               — goToAuth() sends the visitor to
+                             /login.html (mode + ?next= return address);
+                             requireAuth() is the one function anything
+                             else should call to gate an action behind
+                             login, and uses goToAuth() when logged out.
+                             The old popup and its pendingCallback are
+                             gone: a page navigation cannot carry a
+                             callback, so forms save their own drafts.
+                             auth.js still never imports any UI file.
 
 */

@@ -1,47 +1,65 @@
+NearImpact Nigeria: project structure (updated 17 Oct 2026)
+[new] = added in the sign in / sign up round.  [changed] = edited in it.
+[DELETE] = remove from your repo. Everything else is unchanged.
+
 nearimpact/
-├── about.html                      [new]
-├── privacy.html                    [new]
-├── terms.html                      [new]
-├── list-project.html               [new]
-├── impactmakers.html               [new]
-├── impactmaker.html                [new]
-├── become-impactmaker.html         [new]
-├── vite.config.js                  [new, or merge the input block into yours]
-├── db/                             [optional folder to keep the .sql files]
-│   ├── newsletter.sql
-│   ├── listing-submissions.sql
-│   └── impactmaker-profiles.sql
-├── api/
-│   ├── newsletter.js               [new]
-│   ├── listings.js                 [new]
-│   └── impactmakers.js             [new]
+├── index.html                      homepage entry
+├── about.html, privacy.html, terms.html
+├── login.html                      [new]  THE place to sign in or create an account
+├── sdgs.html, sdg.html, detail.html
+├── list-project.html, impactmakers.html, impactmaker.html,
+│   become-impactmaker.html, all-opportunities.html, all-projects.html
+├── vite.config.js                  [changed]  login.html added to build inputs
+├── package.json / package-lock.json / README.md / @Project_Structure.txt
+├── api/                            Vercel serverless functions
+│   ├── auth/
+│   │   ├── register.js             [changed]  name + email + role + password
+│   │   └── login.js, logout.js, me.js
+│   └── search.js, newsletter.js, listings.js, impactmakers.js,
+│       projects.js, opportunities.js
+├── db/
+│   ├── users-add-role.sql          [new]  RUN ONCE on Aiven before deploying register.js
+│   └── ...other schema + seed SQL, run manually per file
+├── certs/                          Aiven CA certificate
+├── lib/                            auth.js (bcrypt + JWT), db.js (MySQL pool)
+├── docs/CODING_STANDARDS.md        [changed]  structure section brought up to date
+├── public/                         partners/, projects/, sdgs/, socials/, impactmakers/,
+│                                   favicon.svg, icons.svg
 └── src/
-    ├── pages/                      [new folder]
-    │   ├── page-shell.js, about.js, privacy.js, terms.js,
-    │   │   list-project.js, impactmakers.js, impactmaker.js,
-    │   │   become-impactmaker.js    [all new]
+    ├── main.js                     [changed]  login popup removed
+    ├── assets/                     brand/logo.png, hero/*
+    ├── pages/                      one small entry per HTML file
+    │   ├── page-shell.js           [changed]  login popup removed
+    │   ├── login.js                [new]
+    │   ├── privacy.js              [changed]  account details wording, new date
+    │   └── about.js, terms.js, sdgs.js, sdg.js, detail.js, list-project.js,
+    │       impactmakers.js, impactmaker.js, become-impactmaker.js,
+    │       all-opportunities.js, all-projects.js
     └── modules/
-        ├── footer.js               [REPLACE]
-        ├── community.js            [REPLACE, full file]
-        ├── doc-page.js             [new]
-        ├── list-project.js         [new]
-        ├── impactmakers-page.js    [new]
-        ├── impactmaker-profile.js  [new]
-        ├── become-impactmaker.js   [new]
+        ├── auth.js                 [changed]  goToAuth(), requireAuth() redirects,
+        │                           register(name, email, role, password)
+        ├── auth-form.js            [new]  the sign in / create account / forgot card
+        ├── login-page.js           [new]  body of login.html, handles ?mode= and ?next=
+        ├── auth-modal.js           [DELETE]  the popup is gone
+        ├── nav.js                  [changed]  Log In / Sign Up go to /login
+        ├── detail.js               [changed]  register box goes to /login
+        ├── user-menu.js            [changed]  comment only
+        ├── list-project.js         [changed]  saves/refills answers around login
+        ├── become-impactmaker.js   [changed]  saves/refills answers around login
+        ├── faq.js                  [changed]  three new account questions
+        ├── hero.js, map.js, footer.js, search.js, theme.js, community.js,
+        │   testimonials.js, sdgs.js, cta.js, partners.js, impact-stats.js, ...
         ├── data/
-        │   ├── footer-config.js    [new]
-        │   ├── impactmakers.js     [new]
-        │   └── sdg-titles.js       [new]
+        │   ├── icons.js            [changed]  google, linkedinBrand, plus added
+        │   └── footer-config.js, geo.js, projects*.js, opportunities*.js,
+        │       sdg-*.js, impactmakers.js, type-meta.js
+        ├── state/map-store.js
         ├── ui/
-        │   └── escape-html.js      [new]
-        └── styles/
-            ├── footer.css              [REPLACE]
-            ├── doc-page.css            [new]
-            ├── list-project.css        [new]
-            ├── impactmakers-page.css   [new]
-            ├── impactmaker-profile.css [new]
-            └── become-impactmaker.css  [new]
-
-
-
-
+        │   ├── form-draft.js       [new]  keeps typed answers across a trip to /login
+        │   └── password-toggle, toast, loader, pagination, escape-html,
+        │       cards, more-link, drift-row
+        └── styles/                 one CSS file per module, same name
+            ├── auth-form.css       [new]
+            ├── login-page.css      [new]
+            ├── auth-modal.css      [DELETE]
+            └── base.css (tokens), glass.css (shared form surface), ...

@@ -8,7 +8,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { email:rawEmail, password } = req.body || {};
+  const { email: rawEmail, password, remember } = req.body || {};
+  const stayLoggedIn = remember === true;
 
   const email = (rawEmail || "").trim().toLowerCase();
 
@@ -40,8 +41,8 @@ export default async function handler(req, res) {
     }
 
     const user = { id: account.id, name: account.name, email: account.email };
-    const token = signToken({ userId: user.id });
-    setSessionCookie(res, token);
+    const token = signToken({ userId: user.id }, stayLoggedIn);
+    setSessionCookie(res, token, stayLoggedIn);
 
     return res.status(200).json({ user });
   } catch (err) {

@@ -1,8 +1,10 @@
+import "./styles/glass.css";
 import "./styles/list-project.css";
 import { TYPE_META } from "./data/type-meta.js";
 import { STATE_LGAS } from "./data/projects.js";
 import { SDG_TITLES } from "./data/sdg-titles.js";
-import { getCurrentUser, requireAuth, subscribe } from "./auth.js";
+import { getCurrentUser, isLoggedIn, requireAuth, subscribe } from "./auth.js";
+import { saveDraft, restoreDraft } from "./ui/form-draft.js";
 // The "List your project or opportunity" form. DEVELOPERS NOTE at the
 // bottom explains the login gate and where submissions go.
 
@@ -19,7 +21,7 @@ function renderTypeOptions() {
 function renderSdgChoices() {
   return SDG_TITLES.map(
     (title, i) => `
-      <label class="list-project__sdg">
+      <label class="list-project__sdg glass-choice">
         <input type="checkbox" name="sdgs" value="${i + 1}" />
         <span><strong>${i + 1}</strong> ${title}</span>
       </label>
@@ -34,7 +36,7 @@ export function renderListProject() {
     .join("");
 
   return `
-    <main class="list-project">
+    <main class="list-project glass-stage">
       <div class="list-project__wrap">
 
         <header class="list-project__header">
@@ -46,11 +48,11 @@ export function renderListProject() {
           </p>
         </header>
 
-        <div class="list-project__panel" id="list-project-panel">
+        <div class="list-project__panel glass-panel" id="list-project-panel">
           <form class="list-project__form" id="list-project-form">
 
             <div class="list-project__row">
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>What are you listing?</span>
                 <select name="type" required>
                   <option value="">Choose a type</option>
@@ -58,66 +60,66 @@ export function renderListProject() {
                 </select>
               </label>
 
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>Organisation or your name</span>
                 <input type="text" name="organisation" maxlength="150" required autocomplete="organization" />
               </label>
             </div>
 
-            <label class="list-project__field">
+            <label class="list-project__field glass-field">
               <span>Title</span>
               <input type="text" name="title" minlength="3" maxlength="150" placeholder="e.g. Community tree planting in Akure" required />
             </label>
 
             <div class="list-project__row">
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>State</span>
                 <input type="text" name="state" list="list-project-states" maxlength="50" required />
                 <datalist id="list-project-states">${stateOptions}</datalist>
               </label>
 
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>LGA or town <em>(optional)</em></span>
                 <input type="text" name="lga" maxlength="100" />
               </label>
             </div>
 
-            <label class="list-project__field">
+            <label class="list-project__field glass-field">
               <span>Description</span>
               <textarea name="description" rows="6" minlength="20" maxlength="1500" required
                 placeholder="What is it, who is it for, and what will people do?"></textarea>
             </label>
 
             <fieldset class="list-project__sdgs">
-              <legend>Which SDGs does it support? <em>Pick up to ${MAX_SDGS}</em></legend>
+              <legend class="glass-legend">Which SDGs does it support? <em>Pick up to ${MAX_SDGS}</em></legend>
               <div class="list-project__sdg-grid">${renderSdgChoices()}</div>
               <p class="list-project__hint" id="list-project-sdg-hint" aria-live="polite"></p>
             </fieldset>
 
             <div class="list-project__row">
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>What do participants get? <em>(optional)</em></span>
                 <input type="text" name="benefits" maxlength="150" placeholder="e.g. Certificate, stipend, mentorship" />
               </label>
 
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>Closing date <em>(optional)</em></span>
                 <input type="date" name="deadline" />
               </label>
             </div>
 
-            <label class="list-project__field">
+            <label class="list-project__field glass-field">
               <span>Link to apply or learn more <em>(optional)</em></span>
               <input type="url" name="applyUrl" maxlength="255" placeholder="https://" />
             </label>
 
             <div class="list-project__row">
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>Contact email</span>
                 <input type="email" name="contactEmail" maxlength="255" required autocomplete="email" />
               </label>
 
-              <label class="list-project__field">
+              <label class="list-project__field glass-field">
                 <span>Contact phone <em>(optional)</em></span>
                 <input type="tel" name="contactPhone" maxlength="30" autocomplete="tel" />
               </label>
@@ -131,9 +133,9 @@ export function renderListProject() {
               </span>
             </label>
 
-            <p class="list-project__error" id="list-project-error" role="alert" tabindex="-1" hidden></p>
+            <p class="list-project__error glass-error" id="list-project-error" role="alert" tabindex="-1" hidden></p>
 
-            <button type="submit" class="list-project__submit" id="list-project-submit">Submit for review</button>
+            <button type="submit" class="list-project__submit glass-btn" id="list-project-submit">Submit for review</button>
           </form>
         </div>
 
@@ -205,8 +207,8 @@ export function initListProject() {
         <h2>Listing received</h2>
         <p>${message}</p>
         <div class="list-project__done-actions">
-          <a href="/list-project.html" class="list-project__done-btn">List another</a>
-          <a href="/" class="list-project__done-btn list-project__done-btn--ghost">Back to home</a>
+          <a href="/list-project.html" class="list-project__done-btn glass-btn">List another</a>
+          <a href="/" class="list-project__done-btn glass-btn glass-btn--ghost">Back to home</a>
         </div>
       </div>
     `;
@@ -236,6 +238,9 @@ export function initListProject() {
     }
   }
 
+  // refill anything typed before a trip to /login
+  restoreDraft(form, "list-project");
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     hideError();
@@ -245,9 +250,10 @@ export function initListProject() {
       return;
     }
 
-    // Capture the answers NOW; if login is needed, requireAuth() runs
-    // send() automatically once the person signs in.
+    // Logged out: keep the answers for the trip to /login (they are
+    // refilled on return and the person presses submit again).
     const payload = readPayload();
+    if (!isLoggedIn()) saveDraft(form, "list-project");
     requireAuth(() => send(payload));
   });
 }
@@ -267,9 +273,7 @@ export function initListProject() {
   site already knows how to display.
 
   LOGIN GATE: anyone can fill in the form, but submitting goes through
-  auth.js's requireAuth(). Logged out, the login modal opens and the
-  already-captured answers are sent automatically after sign-in, so
-  nothing typed is lost. The server checks the session cookie again
+  auth.js's requireAuth(). Logged out, the answers are saved in this tab (ui/form-draft.js) and the visitor is sent to /login; back on this page the form is refilled and they press submit again, so nothing typed is lost. The server checks the session cookie again
   (POST /api/listings returns 401 without one); the client gate is
   for experience, the server gate is the real one.
 
@@ -313,5 +317,9 @@ export function initListProject() {
   .list-project__done           Success panel.
   .list-project__done-actions   Row of buttons in the success panel.
   .list-project__done-btn       One button there.
-  .list-project__done-btn--ghost  Modifier — outlined version.
+
+  GLASS (form surface): the panel, fields, SDG chips, error and buttons
+  mix in the shared glass-* classes from styles/glass.css (glass-stage,
+  glass-panel, glass-field, glass-legend, glass-choice, glass-error,
+  glass-btn). The list-project__* classes now only handle layout.
 */

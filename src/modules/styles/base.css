@@ -118,6 +118,64 @@
   --shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
+/* GLASS TOKENS (forms)
+   Every glass surface reads these, see glass.css. All are built from
+   the tokens above with color-mix(), so they follow the theme. The
+   --white token flips to a dark green in dark mode, which is why the
+   border/highlight values are redefined in the dark block below. */
+:root {
+  --on-brand: #ffffff; /* text on the always-dark brand fills; fixed in both themes */
+
+  --glass-bg: color-mix(in srgb, var(--white) 48%, transparent);
+  --glass-border: color-mix(in srgb, var(--white) 75%, transparent);
+  --glass-shadow:
+    0 24px 48px -20px color-mix(in srgb, var(--ink) 30%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--white) 80%, transparent);
+  --glass-blur: 18px;
+  --glass-saturate: 150%;
+
+  --glass-field-bg: color-mix(in srgb, var(--white) 55%, transparent);
+  --glass-field-bg-hover: color-mix(in srgb, var(--white) 72%, transparent);
+  --glass-field-bg-focus: color-mix(in srgb, var(--white) 88%, transparent);
+  --glass-field-border: color-mix(in srgb, var(--ink) 16%, transparent);
+  --glass-field-inset: inset 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+  --glass-focus: var(--canopy);
+  --glass-error: var(--rose);
+  --glass-btn-edge: color-mix(in srgb, var(--white) 35%, transparent);
+  --glass-scheme: light;
+
+  --glass-blob-a: color-mix(in srgb, var(--canopy-light) 16%, transparent);
+  --glass-blob-b: color-mix(in srgb, var(--canopy-light) 9%, transparent);
+
+  --glass-scrim: color-mix(in srgb, var(--canopy-dark) 55%, transparent); /* modal dim: fixed dark green in both themes */
+  --glass-radius-panel: 20px;
+  --glass-radius-control: 12px;
+  --glass-control-h: 48px;
+  --glass-btn-h: 50px;
+}
+
+[data-theme="dark"] {
+  --glass-bg: color-mix(in srgb, var(--white) 55%, transparent);
+  --glass-border: color-mix(in srgb, var(--ink) 16%, transparent);
+  --glass-shadow:
+    0 24px 48px -20px color-mix(in srgb, var(--paper-deep) 90%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--ink) 10%, transparent);
+
+  --glass-field-bg: color-mix(in srgb, var(--ink) 6%, transparent);
+  --glass-field-bg-hover: color-mix(in srgb, var(--ink) 10%, transparent);
+  --glass-field-bg-focus: color-mix(in srgb, var(--ink) 13%, transparent);
+  --glass-field-border: color-mix(in srgb, var(--ink) 20%, transparent);
+  --glass-field-inset: inset 0 1px 2px color-mix(in srgb, var(--paper-deep) 60%, transparent);
+  --glass-focus: var(--canopy-light);
+  /* rose is too dim on dark glass: lift it toward the light ink */
+  --glass-error: color-mix(in srgb, var(--rose) 55%, var(--ink));
+  --glass-btn-edge: color-mix(in srgb, var(--ink) 22%, transparent);
+  --glass-scheme: dark;
+
+  --glass-blob-a: color-mix(in srgb, var(--canopy-light) 14%, transparent);
+  --glass-blob-b: color-mix(in srgb, var(--canopy-light) 8%, transparent);
+}
+
 body {
   transition: background-color .25s ease, color .25s ease;
 }
@@ -178,6 +236,11 @@ h3 {
    rose, plum) intentionally stay the same in both modes, just
    re-tinted, so the palette stays recognizable rather than becoming
    a completely different color scheme at night. 
+
+   GLASS TOKENS:
+   --glass-* (and --on-brand) feed glass.css, the shared form surface.
+   Built with color-mix() on the tokens above; the dark block re-defines
+   the ones whose meaning flips (borders, highlights, focus, error).
 
    TYPE SYSTEM:
      --font-display  Space Grotesk. The site-wide default for headings

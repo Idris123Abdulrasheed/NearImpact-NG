@@ -48,30 +48,34 @@ Standard practice, nothing exotic:
 
 ## 3. Project structure
 
-Current, real layout:
+Current, real layout (the README's Project Structure section has the
+full tree; this is the shape that matters):
 
 ```
+api/ + lib/              serverless functions + shared server helpers
+db/                      schema and seed SQL, run manually per file
+*.html                   one entry per page, each listed in vite.config.js
 src/
-├── assets/           
-├── modules/
-│   ├── nav.js
-│   ├── hero.js
-│   ├── project-list.js
-│   ├── map.js
-│   ├── opportunities.js
-│   ├── sdgs.js
-│   ├── community.js
-│   ├── testimonials.js
-│   ├── cta.js
-│   ├── faq.js
-│   ├── footer.js
-│   └── styles/
-│       ├── base.css      → design tokens + resets
-│       ├── nav.css
-│       ├── hero.css
-│       └── ... one CSS file per module, same name as its JS file
-└── main.js             → imports every module + its CSS, assembles the page
+├── main.js              homepage assembly (the only file that knows section order)
+├── pages/               one small entry per HTML file; page-shell.js mounts
+│                        nav + page body + footer (+ login popup unless
+│                        withAuthModal is false, as on login.html)
+├── assets/              images imported directly into JS
+└── modules/             one section or feature per file
+    ├── data/            static data, icons, config
+    ├── state/           shared stores (map-store.js)
+    ├── ui/              small reusable pieces (toast, password-toggle, cards)
+    ├── auth.js          client login store: the ONE source of truth
+    ├── auth-form.js     the sign in / create account / forgot card, shown by
+    │                    login-page.js on /login (there is no login popup)
+    └── styles/          one CSS file per module, same name as its JS file;
+                         base.css = tokens, glass.css = shared form surface
 ```
+
+> The module/CSS pairing rule below still applies to every file in
+> `modules/`. Anything that needs a login sends the visitor to `/login.html`
+> through `goToAuth()` in `auth.js`; forms that must not lose typed answers
+> save them first with `ui/form-draft.js`.
 
 Each homepage section is a **module**: one `.js` file exporting a single
 `render<Section>()` function, paired with one `.css` file of the same
@@ -240,6 +244,35 @@ glance which one JS is going to be adding or removing.
 ```css
 .nav__sidebar.is-open { }   /* fine — is-open is a flag, not an element */
 ```
+
+**Shared surfaces mix in, they don't replace BEM.** The 1:1 "one CSS
+file per module" rule has one deliberate exception: `glass.css`, the
+shared glassmorphism layer for every form (see below). A module imports
+it before its own CSS and puts the shared class next to its own BEM
+class, for example:
+
+```html
+<div class="list-project__panel glass-panel">
+<label class="list-project__field glass-field">
+```
+
+The BEM class owns layout (padding, grid, spacing); the `glass-*` class
+owns the look (fill, border, blur, focus ring, control height). Don't
+restyle glass surfaces inside a module's own CSS; change `glass.css` or
+its tokens so every form moves together.
+
+**Glass rules:**
+
+- Glass needs something to blur: a section holding a glass panel also
+  carries `glass-stage` (soft colour pools behind it).
+- No nested `backdrop-filter`. The panel blurs; the controls inside get a
+  translucent fill only.
+- Colours come from the `--glass-*` tokens in `base.css`, built with
+  `color-mix()` on existing tokens. Check them in light AND dark: border,
+  focus and error values flip, which is why the dark block redefines them.
+- Every glass surface needs a solid fallback (`@supports not` and
+  `prefers-reduced-transparency`), already handled in `glass.css`.
+- Text sitting on a brand fill uses `var(--on-brand)`, not `#fff`.
 
 **Design tokens live in `base.css`.** Colors, fonts, spacing — reference
 the CSS custom properties defined there (`var(--canopy)`, `var(--ink)`,

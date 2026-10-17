@@ -6,7 +6,7 @@ import logo from "../assets/brand/logo.png";
 import { icon } from "./data/icons.js";
 import { renderUserMenu, getInitials } from "./user-menu.js";
 import { getTheme, toggleTheme } from "./theme.js";
-import { getCurrentUser, isLoggedIn, logout, subscribe } from "./auth.js";
+import { getCurrentUser, goToAuth, isLoggedIn, logout, subscribe } from "./auth.js";
 import { scrollToTop } from "./anchor-reveal.js";
 
 // ① CONFIG:
@@ -293,7 +293,7 @@ const initActiveLink = () => {
 // ⑨ ACTIONS:
 const openAuth = (mode) => {
   closeDrawer({ returnFocus: false });
-  window.dispatchEvent(new CustomEvent("ni:open-auth-modal", { detail: { mode } }));
+  goToAuth(mode);
 };
 
 const handleHomeClick = (event) => {
@@ -707,8 +707,7 @@ const renderAccountIcon = () => `
   includes `summary`, and links inside a closed group are skipped because
   they have no layout box.
 
-  BOTTOM BAR: ONE button. Logged out it is "Sign in" (opens the login
-  modal; the modal's own tab switches to Create Account). Logged in the
+  BOTTOM BAR: ONE button. Logged out it is "Sign in" (goes to the /login page, where Create Account is one tap away). Logged in the
   same slot becomes an account button (initials + name) that opens a
   small pop-up with List Your Project and Sign Out, so a signed-in phone
   user can still log out. Beside it sits the same sun/moon icon button

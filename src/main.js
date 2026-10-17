@@ -17,7 +17,6 @@ import "./modules/styles/cta.css";
 import "./modules/styles/faq.css";
 import "./modules/styles/partners.css";
 import "./modules/styles/footer.css";
-import "./modules/styles/auth-modal.css";
 
 // ② COMPONENT IMPORTS:
 import { renderNav, initNav } from "./modules/nav.js";
@@ -34,7 +33,6 @@ import { renderCta } from "./modules/cta.js";
 import { renderFaq } from "./modules/faq.js";
 import { renderPartners, initPartners } from "./modules/partners.js";
 import { renderFooter, initFooter } from "./modules/footer.js";
-import { renderAuthModal, initAuthModal } from "./modules/auth-modal.js";
 import { initSearch } from "./modules/search.js";
 import { initTheme } from "./modules/theme.js";
 import { initUserMenu } from "./modules/user-menu.js";
@@ -62,7 +60,6 @@ ${renderCta()}
 ${renderFaq()}
 ${renderPartners()}
 ${renderFooter()}
-${renderAuthModal()}
 `;
 
 // ④ INITIALIZATION:
@@ -81,7 +78,6 @@ initTestimonials();
 initPartners();
 initFooter();
 initImpactStats();
-initAuthModal();
 
 // Fire-and-forget: checks for an existing session cookie and, if valid,
 // notifies every subscriber (user-menu.js, anything else that ever
@@ -113,14 +109,6 @@ initAnchorReveal();
   component; it's a layout decision specific to how THIS page
   chooses to present them together as one visual card.
 
-  renderAuthModal() is assembled here too, same as every other
-  section, even though it's not something the person "scrolls to" —
-  it just starts hidden (see auth-modal.css) and toggles open from
-  anywhere in the app via the "ni:open-auth-modal" event. It's placed
-  last in the HTML string purely so it paints on top of everything
-  else by DOM order as a fallback, though its z-index already
-  guarantees that regardless of position.
-
   initAuth() runs after every other init(), not before — it's an
   async network call, and nothing else in this file needs to block on
   its result. Components that care about login state (user-menu.js)
@@ -137,8 +125,7 @@ initAnchorReveal();
                           one line per component.
   ③ PAGE ASSEMBLY        — the actual innerHTML build. Order here is
                           the literal top-to-bottom order sections
-                          appear on the page (renderAuthModal() is the
-                          one exception, as explained above).
+                          appear on the page.
   ④ INITIALIZATION       — every init() call, run only after step ③'s
                           innerHTML assignment has fully completed,
                           plus the one async call (initAuth()) that

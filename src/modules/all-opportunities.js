@@ -1,3 +1,4 @@
+import "./styles/glass.css";
 import "./styles/all-opportunities.css";
 import { STATE_LGAS } from "./data/projects.js";
 import { fetchOpportunities } from "./data/opportunities.js";
@@ -57,7 +58,7 @@ function renderSelect({ name, label, placeholder, options, selected }) {
     .join("");
 
   return `
-    <label class="all-opportunities__field">
+    <label class="all-opportunities__field glass-field">
       <span>${label}</span>
       <select name="${name}">
         <option value="">${placeholder}</option>
@@ -71,7 +72,7 @@ export function renderAllOpportunities() {
   const filters = readFilters();
 
   return `
-    <section class="all-opportunities">
+    <section class="all-opportunities glass-stage">
 
       <div class="all-opportunities__banner">
         <div class="all-opportunities__banner-wrap">
@@ -82,7 +83,7 @@ export function renderAllOpportunities() {
 
       <div class="all-opportunities__wrap">
 
-        <form class="all-opportunities__filters" method="get" action="${PAGE_PATH}">
+        <form class="all-opportunities__filters glass-panel" method="get" action="${PAGE_PATH}">
           <h2 class="all-opportunities__filters-title">Filter opportunities</h2>
           <div class="all-opportunities__filters-row">
             ${renderSelect({ name: "type", label: "Type", placeholder: "All types", options: TYPE_OPTIONS, selected: filters.type })}
@@ -91,8 +92,8 @@ export function renderAllOpportunities() {
             ${renderSelect({ name: "status", label: "Status", placeholder: "All statuses", options: STATUS_OPTIONS, selected: filters.status })}
           </div>
           <div class="all-opportunities__filters-actions">
-            <button type="submit" class="all-opportunities__apply">Apply Filters</button>
-            <a href="${PAGE_PATH}" class="all-opportunities__clear">Clear</a>
+            <button type="submit" class="all-opportunities__apply glass-btn">Apply Filters</button>
+            <a href="${PAGE_PATH}" class="all-opportunities__clear glass-btn glass-btn--ghost">Clear</a>
           </div>
         </form>
 
@@ -228,4 +229,8 @@ export async function initAllOpportunities() {
 
   State class "is-current" (on the active page link) is deliberately
   not BEM'd.
+
+  GLASS (form surface): the filter panel, its selects and both buttons
+  mix in glass-panel / glass-field / glass-btn from styles/glass.css; the
+  section also carries glass-stage so there is colour behind the frost.
 */

@@ -1,0 +1,313 @@
+/* Shared glassmorphism layer for every form. See EXPLANATIONS at the bottom.
+   All colours come from the --glass-* tokens in base.css, nothing is hardcoded here. */
+
+/* ① STAGE: the soft colour field that sits BEHIND glass.
+   Glass only looks like glass when there is something to blur, so any
+   page section holding a glass surface gets this. */
+.glass-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* one pseudo-element covers the whole section; four soft colour
+   pools at fixed pixel size, positioned by % so they spread down a
+   tall form instead of bunching in the corners */
+.glass-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(460px circle at 8% 6%, var(--glass-blob-a), transparent 70%),
+    radial-gradient(420px circle at 96% 30%, var(--glass-blob-b), transparent 70%),
+    radial-gradient(480px circle at 4% 62%, var(--glass-blob-b), transparent 70%),
+    radial-gradient(440px circle at 94% 94%, var(--glass-blob-a), transparent 70%);
+}
+
+/* ② PANEL: the frosted card (form panel, filter panel, modal card) */
+.glass-panel {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius-panel);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+/* ③ FIELD: one label + one control. Controls get a translucent fill
+   but NO blur of their own: a backdrop-filter nested inside another
+   one does not blur correctly, the panel already provides the frost. */
+.glass-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.glass-field > span,
+.glass-legend {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-h);
+}
+
+.glass-field > span em,
+.glass-legend em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.glass-field input:where(:not([type="checkbox"]):not([type="radio"])),
+.glass-field select,
+.glass-field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text-h);
+  color-scheme: var(--glass-scheme);
+  background-color: var(--glass-field-bg);
+  border: 1px solid var(--glass-field-border);
+  border-radius: var(--glass-radius-control);
+  box-shadow: var(--glass-field-inset);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-field input:where(:not([type="checkbox"]):not([type="radio"])),
+.glass-field select {
+  height: var(--glass-control-h);
+  padding: 0 14px;
+}
+
+.glass-field textarea {
+  padding: 12px 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.glass-field input::placeholder,
+.glass-field textarea::placeholder {
+  color: var(--muted-light);
+  opacity: 1;
+}
+
+.glass-field input:hover:not(:disabled),
+.glass-field select:hover:not(:disabled),
+.glass-field textarea:hover:not(:disabled) {
+  background-color: var(--glass-field-bg-hover);
+}
+
+.glass-field input:focus-visible,
+.glass-field select:focus-visible,
+.glass-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--glass-focus);
+  background-color: var(--glass-field-bg-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 28%, transparent);
+}
+
+.glass-field input:disabled,
+.glass-field select:disabled,
+.glass-field textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* selects: native menu, custom caret drawn from two token gradients
+   (no hardcoded SVG stroke colour, so it follows the theme) */
+.glass-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 21px) 50%, calc(100% - 16px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.glass-field option {
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+/* ④ CHOICE + SUBGROUP: checkbox chips and bordered fieldsets */
+.glass-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--glass-field-border);
+  border-radius: var(--glass-radius-control);
+  background: var(--glass-field-bg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.glass-choice:hover {
+  background: var(--glass-field-bg-hover);
+}
+
+.glass-choice:has(input:checked) {
+  border-color: var(--glass-focus);
+  background: color-mix(in srgb, var(--glass-focus) 14%, transparent);
+}
+
+.glass-choice:has(input:focus-visible) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 28%, transparent);
+}
+
+.glass-choice:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.glass-choice input {
+  color-scheme: var(--glass-scheme);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+
+.glass-subgroup {
+  border: 1px solid var(--glass-field-border);
+  border-radius: calc(var(--glass-radius-control) + 2px);
+  background: color-mix(in srgb, var(--glass-field-bg) 55%, transparent);
+  padding: 18px;
+  min-width: 0;
+}
+
+/* ⑤ BUTTON + ERROR */
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--glass-btn-h);
+  padding: 0 22px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--on-brand);
+  border: 1px solid var(--glass-btn-edge);
+  border-radius: var(--glass-radius-control);
+  background: linear-gradient(180deg, var(--canopy-light), var(--canopy) 55%, var(--canopy-dark));
+  box-shadow:
+    0 10px 22px -10px color-mix(in srgb, var(--canopy) 70%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--on-brand) 28%, transparent);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-btn:hover:not(:disabled) {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.glass-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.glass-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glass-focus) 40%, transparent);
+}
+
+.glass-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* quiet variant for Clear / secondary actions */
+.glass-btn--ghost {
+  color: var(--text-h);
+  background: var(--glass-field-bg);
+  border-color: var(--glass-field-border);
+  box-shadow: none;
+}
+
+.glass-error {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--glass-error);
+  background: color-mix(in srgb, var(--rose) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rose) 35%, transparent);
+  border-radius: var(--glass-radius-control);
+}
+
+.glass-error[hidden] {
+  display: none;
+}
+
+/* ⑥ FALLBACKS: no backdrop-filter, or the user asked for less transparency.
+   Same layout, solid surfaces, so text never sits on an unreadable blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel {
+    background: var(--bg);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .glass-stage::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .glass-subgroup {
+    padding: 14px;
+  }
+}
+
+/* =====================================================================
+   EXPLANATIONS
+
+   WHAT THIS FILE IS: the one shared stylesheet for every form surface.
+   Page stylesheets (list-project.css, become-impactmaker.css,
+   auth-modal.css, all-projects.css, all-opportunities.css) keep only
+   their own layout; the look lives here, so every form has the same
+   control height, label gap, radius, focus ring and button.
+
+   HOW IT IS USED: a module imports this file before its own CSS, then
+   MIXES these classes onto its BEM ones, e.g.
+     class="list-project__panel glass-panel"
+     class="list-project__field glass-field"
+   BEM names stay for layout; glass-* names carry the surface.
+
+   BLOCK GLOSSARY:
+   .glass-stage     Section wrapper that paints soft colour pools
+                    behind glass (one ::before, four radial gradients).
+   .glass-panel     Frosted card: translucent fill, blur, light border.
+   .glass-field     Label <span> + one control (input/select/textarea).
+   .glass-legend    Legend text matching the field labels.
+   .glass-choice    Checkbox chip (SDG picker).
+   .glass-subgroup  Bordered fieldset inside a panel.
+   .glass-btn       Primary button; --ghost is the quiet variant.
+   .glass-error     Inline error banner.
+
+   RULES: no nested backdrop-filter (controls only get a fill); every
+   colour is a token; fallbacks for no backdrop-filter and
+   prefers-reduced-transparency.
+   ===================================================================== */

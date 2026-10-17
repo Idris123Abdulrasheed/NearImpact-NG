@@ -118,7 +118,7 @@ export function initUserMenu() {
   });
 
   // Re-renders the avatar/dropdown whenever login state changes,
-  // regardless of what caused it — a successful login in the modal, a
+  // regardless of what caused it — a successful login, a
   // sign-out click, or initAuth() recovering an existing session on page
   // load. Same "react to the store, don't care who triggered it" pattern
   // project-list.js and map.js already use for map-store.js.

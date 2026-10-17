@@ -9,7 +9,7 @@ const email = `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`;
 
 mountDocPage({
   title: "Privacy Policy",
-  updated: "2 October 2026",
+  updated: "17 October 2026",
   intro:
     "This policy explains what personal information NearImpact Nigeria collects when you use this website, why we collect it, and the choices you have.",
   sections: [
@@ -24,7 +24,7 @@ mountDocPage({
       id: "what-we-collect",
       heading: "What we collect",
       items: [
-        "<strong>Account details.</strong> When you create an account we collect your name, email address and password. Your password is stored only as a hashed value, so we cannot read it.",
+        "<strong>Account details.</strong> When you create an account we collect your full name, email address, the role you choose (such as student or volunteer) and a password. Your name is used for the initials on your avatar and to prefill forms. Your password is stored only as a hashed value, so we cannot read it.",
         "<strong>Newsletter email.</strong> If you subscribe in the footer, we store your email address.",
         "<strong>Search text.</strong> What you type into the search box is sent to our server so it can return results. We do not link searches to your account.",
         "<strong>Location.</strong> If you choose &quot;Use current location&quot;, your browser asks for permission first. Your coordinates are used in your browser to sort nearby projects and are not sent to our servers.",
@@ -37,7 +37,7 @@ mountDocPage({
       id: "cookies",
       heading: "Cookies",
       paragraphs: [
-        "When you log in we set one cookie, <code>ni_session</code>, to keep you signed in. It is not readable by scripts on the page, is only sent to our own site, and expires after 7 days or when you sign out.",
+        "When you log in we set one cookie, <code>ni_session</code>, to keep you signed in. It is not readable by scripts on the page and is only sent to our own site. If you tick Remember me (or have just created an account) it lasts 30 days; otherwise it ends when you close your browser. You can also sign out at any time.",
         "We do not currently use advertising or analytics cookies. If that changes, we will update this page first.",
       ],
     },
