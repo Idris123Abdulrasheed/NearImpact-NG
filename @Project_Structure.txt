@@ -24,7 +24,7 @@ nearimpact/
 ├── lib/                            auth.js (bcrypt + JWT), db.js (MySQL pool)
 ├── docs/CODING_STANDARDS.md        [changed]  structure section brought up to date
 ├── public/                         partners/, projects/, sdgs/, socials/, impactmakers/,
-│                                   favicon.svg, icons.svg
+│                                   nearimpact.svg, icons.svg
 └── src/
     ├── main.js                     [changed]  login popup removed
     ├── assets/                     brand/logo.png, hero/*

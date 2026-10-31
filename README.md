@@ -91,7 +91,7 @@ nearimpact/
 │   └── CODING_STANDARDS.md
 ├── public/                 → static assets served as-is
 │   ├── partners/, projects/, sdgs/, socials/, impactmakers/
-│   └── favicon.svg, icons.svg
+│   └── nearimpact.svg, icons.svg
 └── src/
     ├── main.js             → homepage entry
     ├── pages/              → one module per HTML entry (page-shell.js + about.js, ...)
